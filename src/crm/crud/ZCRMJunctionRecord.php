@@ -1,56 +1,57 @@
 <?php
+
 namespace zcrmsdk\crm\crud;
 
 class ZCRMJunctionRecord
 {
-    
     /**
-     * junction record id
+     * junction record id.
      *
      * @var string
      */
     private $id;
-    
+
     /**
-     * module api name of the record
+     * module api name of the record.
      *
      * @var string
      */
     private $apiName;
-    
+
     /**
-     * related data between the modules
+     * related data between the modules.
      *
      * @var array
      */
-    private $relatedDetails = array();
-    
+    private $relatedDetails = [];
+
     /**
-     * constructor to set the api name and id of the junction record
+     * constructor to set the api name and id of the junction record.
      *
      * @param string $apiName module api name of the junction record
-     * @param string $id junction record id
+     * @param string $id      junction record id
      */
     private function __construct($apiName, $id)
     {
         $this->apiName = $apiName;
         $this->id = $id;
     }
-    
+
     /**
-     * methdo to get the instance of the junction record
+     * methdo to get the instance of the junction record.
      *
      * @param string $apiName module api name of the junction record
-     * @param string $id junction record id
+     * @param string $id      junction record id
+     *
      * @return ZCRMJunctionRecord instance of ZCRMJunctionRecord class
      */
     public static function getInstance($apiName, $id)
     {
         return new ZCRMJunctionRecord($apiName, $id);
     }
-    
+
     /**
-     * method to get the ID of the junction record
+     * method to get the ID of the junction record.
      *
      * @return string junction record id
      */
@@ -58,33 +59,32 @@ class ZCRMJunctionRecord
     {
         return $this->id;
     }
-    
+
     /**
-     * method to the module API name of the junction record
+     * method to the module API name of the junction record.
      *
-     * @return String module api name
+     * @return string module api name
      */
     public function getApiName()
     {
         return $this->apiName;
     }
-    
+
     /**
-     * method to get related details between the modules
+     * method to get related details between the modules.
      *
-     * @return Array key-value pairs, key is the field api name, value is the field value
-     *
+     * @return array key-value pairs, key is the field api name, value is the field value
      */
     public function getRelatedDetails()
     {
         return $this->relatedDetails;
     }
-    
+
     /**
-     * method to set the related details between the modules
+     * method to set the related details between the modules.
      *
      * @param string $fieldApiName field api name
-     * @param string $value value of the field
+     * @param string $value        value of the field
      */
     public function setRelatedData($fieldApiName, $value)
     {

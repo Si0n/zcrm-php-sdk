@@ -1,147 +1,148 @@
 <?php
+
 namespace zcrmsdk\crm\crud;
 
 use zcrmsdk\crm\api\response\BulkAPIResponse;
 
 class ZCRMCustomView
 {
-    
     /**
-     * api name of the module
+     * api name of the module.
      *
-     * @var String api name of the module
+     * @var string api name of the module
      */
     private $moduleAPIName = null;
-    
+
     /**
-     * display name of the view
+     * display name of the view.
      *
      * @var string
      */
     private $displayValue = null;
-    
+
     /**
-     * default view
+     * default view.
      *
-     * @var boolean
+     * @var bool
      */
     private $default = null;
-    
+
     /**
-     * custom view id
+     * custom view id.
      *
      * @var string
      */
     private $id = null;
-    
+
     /**
-     * custom view name
+     * custom view name.
      *
-     * @var String
+     * @var string
      */
     private $name = null;
-    
+
     /**
-     * custom view system name
+     * custom view system name.
      *
      * @var string
      */
     private $systemName = null;
-    
+
     /**
-     * field api name
+     * field api name.
      *
-     * @var String
+     * @var string
      */
     private $sortBy = null;
-    
+
     /**
-     * category of the custom view
+     * category of the custom view.
      *
      * @var ZCRMCustomViewCategory
      */
     private $category = null;
-    
+
     /**
-     * fields of the custom view
+     * fields of the custom view.
      *
      * @var array
      */
-    private $fields = array();
-    
+    private $fields = [];
+
     /**
-     * the favourite
+     * the favourite.
      *
-     * @var boolean
+     * @var bool
      */
     private $favorite = null;
-    
+
     /**
-     * the order of sorting of records in the view
+     * the order of sorting of records in the view.
      *
-     * @var String
+     * @var string
      */
     private $sortOrder = null;
-    
+
     /**
-     * criteria pattern of the view
+     * criteria pattern of the view.
      *
-     * @var String
+     * @var string
      */
     private $criteriaPattern = null;
-    
+
     /**
-     * record selection criteria
+     * record selection criteria.
      *
      * @var ZCRMCustomViewCriteria
      */
     private $criteria = null;
     /**
-     * criteria condition
+     * criteria condition.
      *
      * @var string
      */
     private $criteriaCondition = null;
     /**
-     * category list of the view
+     * category list of the view.
      *
      * @var array array instances of ZCRMCustomViewCategory
      */
-    private $categoriesList = array();
-    
+    private $categoriesList = [];
+
     /**
-     * offline status of the view
+     * offline status of the view.
      *
-     * @var boolean
+     * @var bool
      */
     private $offLine = null;
-    
+
     /**
-     * constructor to set the module API name and custom view id
+     * constructor to set the module API name and custom view id.
      *
-     * @param String $moduleAPIName module API name
-     * @param string $id  module API name
+     * @param string $moduleAPIName module API name
+     * @param string $id            module API name
      */
     public function __construct($moduleAPIName, $id)
     {
         $this->moduleAPIName = $moduleAPIName;
         $this->id = $id;
     }
-    
+
     /**
-     * Method to get the instance of the ZCRMCustomView class
+     * Method to get the instance of the ZCRMCustomView class.
      *
-     * @param String $moduleAPIName module API name
-     * @param string $id module API name
+     * @param string $moduleAPIName module API name
+     * @param string $id            module API name
+     *
      * @return ZCRMCustomView instance of ZCRMCustomView class
      */
-    public static function getInstance($moduleAPIName , $id)
+    public static function getInstance($moduleAPIName, $id)
     {
-        return new ZCRMCustomView( $moduleAPIName,$id);
+        return new ZCRMCustomView($moduleAPIName, $id);
     }
-    
+
     /**
-     * Method to get the display Name of the custom View
+     * Method to get the display Name of the custom View.
      *
      * @return string display name of the custom view
      */
@@ -149,9 +150,9 @@ class ZCRMCustomView
     {
         return $this->displayValue;
     }
-    
+
     /**
-     * Method to set the display Name of the custom View
+     * Method to set the display Name of the custom View.
      *
      * @param string $displayValue display name of the custom view
      */
@@ -159,29 +160,29 @@ class ZCRMCustomView
     {
         $this->displayValue = $displayValue;
     }
-    
+
     /**
-     * Method to know whether the custom view is default or not
+     * Method to know whether the custom view is default or not.
      *
-     * @return Boolean value true if default otherwise false
+     * @return bool value true if default otherwise false
      */
     public function isDefault()
     {
         return $this->default;
     }
-    
+
     /**
-     * Method to set the custom view as default or not
+     * Method to set the custom view as default or not.
      *
-     * @param boolean $default  true if default otherwise false
+     * @param bool $default true if default otherwise false
      */
     public function setDefault($default)
     {
         $this->default = $default;
     }
-    
+
     /**
-     * method to get the customview id
+     * method to get the customview id.
      *
      * @return string custom view id
      */
@@ -189,9 +190,9 @@ class ZCRMCustomView
     {
         return $this->id;
     }
-    
+
     /**
-     * method to get the customview id
+     * method to get the customview id.
      *
      * @param string $id custom view id
      */
@@ -199,9 +200,9 @@ class ZCRMCustomView
     {
         $this->id = $id;
     }
-    
+
     /**
-     * Method to get the customview Name
+     * Method to get the customview Name.
      *
      * @return string customview name
      */
@@ -209,9 +210,9 @@ class ZCRMCustomView
     {
         return $this->name;
     }
-    
+
     /**
-     * Method to set the customview Name
+     * Method to set the customview Name.
      *
      * @param string $name customview name
      */
@@ -219,9 +220,9 @@ class ZCRMCustomView
     {
         $this->name = $name;
     }
-    
+
     /**
-     * Method to get the system name of the custom view
+     * Method to get the system name of the custom view.
      *
      * @return string system name of custom view
      */
@@ -229,9 +230,9 @@ class ZCRMCustomView
     {
         return $this->systemName;
     }
-    
+
     /**
-     * Method to set the customview system Name
+     * Method to set the customview system Name.
      *
      * @param string $systemName system name of the custom view
      */
@@ -239,9 +240,9 @@ class ZCRMCustomView
     {
         $this->systemName = $systemName;
     }
-    
+
     /**
-     * Method to get the customview Sorted By field Name
+     * Method to get the customview Sorted By field Name.
      *
      * @return string field api name
      */
@@ -249,9 +250,9 @@ class ZCRMCustomView
     {
         return $this->sortBy;
     }
-    
+
     /**
-     * Method to set the customview Sorted By field Name
+     * Method to set the customview Sorted By field Name.
      *
      * @param string $sortBy field api name
      */
@@ -259,9 +260,9 @@ class ZCRMCustomView
     {
         $this->sortBy = $sortBy;
     }
-    
+
     /**
-     * Method to get the customview Category
+     * Method to get the customview Category.
      *
      * @return string custom view category
      */
@@ -269,9 +270,9 @@ class ZCRMCustomView
     {
         return $this->category;
     }
-    
+
     /**
-     * Method to set the customview Category
+     * Method to set the customview Category.
      *
      * @param string $category custom view category
      */
@@ -279,9 +280,9 @@ class ZCRMCustomView
     {
         $this->category = $category;
     }
-    
+
     /**
-     * Method to get the customview Fields
+     * Method to get the customview Fields.
      *
      * @return array array of field api name of the fields in custom view
      */
@@ -289,9 +290,9 @@ class ZCRMCustomView
     {
         return $this->fields;
     }
-    
+
     /**
-     * Method to set the customview Fields
+     * Method to set the customview Fields.
      *
      * @param array $fields array of field api name
      */
@@ -299,9 +300,9 @@ class ZCRMCustomView
     {
         $this->fields = $fields;
     }
-    
+
     /**
-     * Method to check whether the custom view is favourite one or not
+     * Method to check whether the custom view is favourite one or not.
      *
      * @return int favourite value
      */
@@ -309,9 +310,9 @@ class ZCRMCustomView
     {
         return $this->favorite;
     }
-    
+
     /**
-     * Method to set the custom view as favourite one or not
+     * Method to set the custom view as favourite one or not.
      *
      * @param int $favorite favourite value
      */
@@ -319,29 +320,29 @@ class ZCRMCustomView
     {
         $this->favorite = $favorite;
     }
-    
+
     /**
-     * Method to get the custom view records sort order
+     * Method to get the custom view records sort order.
      *
-     * @return String sortorder (ascending if "asc" or descending if "desc")
+     * @return string sortorder (ascending if "asc" or descending if "desc")
      */
     public function getSortOrder()
     {
         return $this->sortOrder;
     }
-    
+
     /**
-     * Method to set the custom view sort order type
+     * Method to set the custom view sort order type.
      *
-     * @param String $sortOrder sorts the custom view records in ascending-"asc" or descending-"desc" order
+     * @param string $sortOrder sorts the custom view records in ascending-"asc" or descending-"desc" order
      */
     public function setSortOrder($sortOrder)
     {
         $this->sortOrder = $sortOrder;
     }
-    
+
     /**
-     * Method to get the custom view criteria pattern
+     * Method to get the custom view criteria pattern.
      *
      * @return string CriteriaPattern criteria pattern
      */
@@ -349,19 +350,19 @@ class ZCRMCustomView
     {
         return $this->criteriaPattern;
     }
-    
+
     /**
-     * Method to set the custom view criteria pattern
+     * Method to set the custom view criteria pattern.
      *
-     * @param String $criteriaPattern Criteria pattern
+     * @param string $criteriaPattern Criteria pattern
      */
     public function setCriteriaPattern($criteriaPattern)
     {
         $this->criteriaPattern = $criteriaPattern;
     }
-    
+
     /**
-     * Method to get the criteria of the custom view
+     * Method to get the criteria of the custom view.
      *
      * @return array array of instances of ZCRMCustomViewCriteria
      */
@@ -369,9 +370,9 @@ class ZCRMCustomView
     {
         return $this->criteria;
     }
-    
+
     /**
-     * Method to set the criteria of the custom view
+     * Method to set the criteria of the custom view.
      *
      * @param array $criteria array of instance of ZCRMCustomViewCriteria
      */
@@ -379,50 +380,54 @@ class ZCRMCustomView
     {
         $this->criteria = $criteria;
     }
-    
+
     public function getCriteriaCondition()
     {
         return $this->criteriaCondition;
     }
-    
+
     public function setCriteriaCondition($criteriaCondition)
     {
         $this->criteriaCondition = $criteriaCondition;
     }
-    
+
     /**
-     * Method to get the module api name of the custom view
+     * Method to get the module api name of the custom view.
      *
-     * @return String module api name
+     * @return string module api name
      */
     public function getModuleAPIName()
     {
         return $this->moduleAPIName;
     }
+
     /**
-     * Method to get the module api name of the custom view
+     * Method to get the module api name of the custom view.
      *
-     * @param String $moduleapiname  module api name
+     * @param string $moduleapiname module api name
      */
     public function setModuleAPIName($moduleapiname)
     {
-        $this->moduleAPIName=$moduleapiname;
+        $this->moduleAPIName = $moduleapiname;
     }
+
     /**
-     * Method to get the custom view records
+     * Method to get the custom view records.
      *
-     * @param Array  $param_map key-value pair containing parameter names and the value
-     * @param Array  $header_map key-value pair containing header names and the value
-     * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response.
+     * @param array $param_map  key-value pair containing parameter names and the value
+     * @param array $header_map key-value pair containing header names and the value
+     *
+     * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
      */
-    public function getRecords($param_map=array(),$header_map=array())
+    public function getRecords($param_map = [], $header_map = [])
     {
-        $param_map['cvid']=$this->id;
-        return ZCRMModule::getInstance($this->moduleAPIName)->getRecords($param_map,$header_map);
+        $param_map['cvid'] = $this->id;
+
+        return ZCRMModule::getInstance($this->moduleAPIName)->getRecords($param_map, $header_map);
     }
-    
+
     /**
-     * method to get the categories List of the custom view
+     * method to get the categories List of the custom view.
      *
      * @return array array instances of the ZCRMCustomViewCategory
      */
@@ -430,31 +435,31 @@ class ZCRMCustomView
     {
         return $this->categoriesList;
     }
-    
+
     /**
-     * Method to set the category list of the custom view
+     * Method to set the category list of the custom view.
      *
-     * @param array $categoriesList  array instances of ZCRMCustomViewCategory
+     * @param array $categoriesList array instances of ZCRMCustomViewCategory
      */
     public function setCategoriesList($categoriesList)
     {
         $this->categoriesList = $categoriesList;
     }
-    
+
     /**
-     * Method to set the offline status of the custom view
+     * Method to set the offline status of the custom view.
      *
-     * @param boolean $off_line true to set offline
+     * @param bool $off_line true to set offline
      */
     public function setOffLine($off_line)
     {
-        $this->offLine = (boolean) $off_line;
+        $this->offLine = (bool) $off_line;
     }
-    
+
     /**
-     * Method to check whether the custom view is offline or not
+     * Method to check whether the custom view is offline or not.
      *
-     * @return boolean offline value (true if offline )
+     * @return bool offline value (true if offline )
      */
     public function isOffLine()
     {

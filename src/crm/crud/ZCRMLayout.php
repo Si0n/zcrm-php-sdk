@@ -1,90 +1,90 @@
 <?php
+
 namespace zcrmsdk\crm\crud;
 
 use zcrmsdk\crm\setup\users\ZCRMUser;
 
 class ZCRMLayout
 {
-    
     /**
-     * layout id
+     * layout id.
      *
      * @var string
      */
     private $id = null;
-    
+
     /**
-     * layout name
+     * layout name.
      *
      * @var string
      */
     private $name = null;
-    
+
     /**
-     * creation time of layout
+     * creation time of layout.
      *
      * @var string iso 8601 format
      */
     private $createdTime = null;
-    
+
     /**
-     * modification time of layout
+     * modification time of layout.
      *
      * @var string iso 8601 format
      */
     private $modifiedTime = null;
-    
+
     /**
-     * visibility of the layout
+     * visibility of the layout.
      *
-     * @var boolean
+     * @var bool
      */
     private $visible = null;
-    
+
     /**
-     * user who modified the layout
+     * user who modified the layout.
      *
      * @var ZCRMUser instance of ZCRMUser class
      */
     private $modifiedBy = null;
-    
+
     /**
-     * accessible profiles
+     * accessible profiles.
      *
      * @var array array of ZCRMProfile class instances
      */
     private $accessibleProfiles = null;
-    
+
     /**
-     * user who created the layout
+     * user who created the layout.
      *
      * @var ZCRMUser instance of ZCRMUser class
      */
     private $createdBy = null;
-    
+
     /**
-     * sections of the layout
+     * sections of the layout.
      *
      * @var array array of ZCRMSection class instances
      */
     private $sections = null;
-    
+
     /**
-     * status of the layout
+     * status of the layout.
      *
      * @var int
      */
     private $status = null;
-    
+
     /**
-     * convert mapping
+     * convert mapping.
      *
      * @var array array of ZCRMLeadConvertMapping class instances
      */
-    private $convertMapping = array();
-    
+    private $convertMapping = [];
+
     /**
-     * construtor to set the layout id
+     * construtor to set the layout id.
      *
      * @param string $id layout id
      */
@@ -92,20 +92,21 @@ class ZCRMLayout
     {
         $this->id = $id;
     }
-    
+
     /**
-     * method to get the layout instance
+     * method to get the layout instance.
      *
      * @param string $id layout id
+     *
      * @return ZCRMLayout instance of ZCRMLayout class
      */
     public static function getInstance($id)
     {
         return new ZCRMLayout($id);
     }
-    
+
     /**
-     * method to set the layout id
+     * method to set the layout id.
      *
      * @param string $id layout id
      */
@@ -113,9 +114,9 @@ class ZCRMLayout
     {
         $this->id = $id;
     }
-    
+
     /**
-     * method to get the layout id
+     * method to get the layout id.
      *
      * @return string layout id
      */
@@ -123,9 +124,9 @@ class ZCRMLayout
     {
         return $this->id;
     }
-    
+
     /**
-     * method to set the layout name
+     * method to set the layout name.
      *
      * @param string $name layout name
      */
@@ -133,9 +134,9 @@ class ZCRMLayout
     {
         $this->name = $name;
     }
-    
+
     /**
-     * method to get the layout name
+     * method to get the layout name.
      *
      * @return string layout name
      */
@@ -143,9 +144,9 @@ class ZCRMLayout
     {
         return $this->name;
     }
-    
+
     /**
-     * method to set the creation time of the layout
+     * method to set the creation time of the layout.
      *
      * @param string $createdTime creation time of the layout in iso 8601 format
      */
@@ -153,9 +154,9 @@ class ZCRMLayout
     {
         $this->createdTime = $createdTime;
     }
-    
+
     /**
-     * method to get the creation time of the layout
+     * method to get the creation time of the layout.
      *
      * @return string creation time of the layout in iso 8601 format
      */
@@ -163,9 +164,9 @@ class ZCRMLayout
     {
         return $this->createdTime;
     }
-    
+
     /**
-     * method to set the modification time of the layout
+     * method to set the modification time of the layout.
      *
      * @param string $modifiedTime modification time of the layout in iso 8601 format
      */
@@ -173,9 +174,9 @@ class ZCRMLayout
     {
         $this->modifiedTime = $modifiedTime;
     }
-    
+
     /**
-     * method to get the modification time of the layout
+     * method to get the modification time of the layout.
      *
      * @return string modification time of the layout in iso 8601 format
      */
@@ -183,29 +184,29 @@ class ZCRMLayout
     {
         return $this->modifiedTime;
     }
-    
+
     /**
-     * method to set the visibility of the layout
+     * method to set the visibility of the layout.
      *
-     * @param boolean $visible true to set layout as visible otherwise false
+     * @param bool $visible true to set layout as visible otherwise false
      */
     public function setVisible($visible)
     {
         $this->visible = $visible;
     }
-    
+
     /**
-     * method to check whether the layout is visible
+     * method to check whether the layout is visible.
      *
-     * @return boolean true if layout is visible otherwise false
+     * @return bool true if layout is visible otherwise false
      */
     public function isVisible()
     {
         return $this->visible;
     }
-    
+
     /**
-     * Method to set the user who modified the layout
+     * Method to set the user who modified the layout.
      *
      * @param ZCRMUser $modifiedBy user who modified the layout
      */
@@ -213,9 +214,9 @@ class ZCRMLayout
     {
         $this->modifiedBy = $modifiedBy;
     }
-    
+
     /**
-     * Method to get the user who modified the layout
+     * Method to get the user who modified the layout.
      *
      * @return ZCRMUser user who modified the layout
      */
@@ -223,9 +224,9 @@ class ZCRMLayout
     {
         return $this->modifiedBy;
     }
-    
+
     /**
-     * Method to set the creator of that record
+     * Method to set the creator of that record.
      *
      * @param ZCRMUser $createdBy user who created the layout
      */
@@ -233,9 +234,9 @@ class ZCRMLayout
     {
         $this->createdBy = $createdBy;
     }
-    
+
     /**
-     * Method to get the creator of that record
+     * Method to get the creator of that record.
      *
      * @return ZCRMUser user who created the layout
      */
@@ -243,9 +244,9 @@ class ZCRMLayout
     {
         return $this->createdBy;
     }
-    
+
     /**
-     * method to set the profiles that can access the layout
+     * method to set the profiles that can access the layout.
      *
      * @param array $profiles array of instances of ZCRMProfile class
      */
@@ -253,9 +254,9 @@ class ZCRMLayout
     {
         $this->accessibleProfiles = $profiles;
     }
-    
+
     /**
-     * method to get the profiles that can access the layout
+     * method to get the profiles that can access the layout.
      *
      * @return array array of instances of ZCRMProfile class
      */
@@ -263,9 +264,9 @@ class ZCRMLayout
     {
         return $this->accessibleProfiles;
     }
-    
+
     /**
-     * method to set the operational status of the record
+     * method to set the operational status of the record.
      *
      * @param int $status 1 to make the layout active otherwise -1
      */
@@ -273,9 +274,9 @@ class ZCRMLayout
     {
         $this->status = $status;
     }
-    
+
     /**
-     * method to get the operational status of the record
+     * method to get the operational status of the record.
      *
      * @return int 1 if the layout is active -1 otherwise
      */
@@ -283,9 +284,9 @@ class ZCRMLayout
     {
         return $this->status;
     }
-    
+
     /**
-     * method to set the sections of the layout
+     * method to set the sections of the layout.
      *
      * @param array $sections array of ZCRMSection instances
      */
@@ -293,9 +294,9 @@ class ZCRMLayout
     {
         $this->sections = $sections;
     }
-    
+
     /**
-     * method to get the sections of the instances
+     * method to get the sections of the instances.
      *
      * @return array array of ZCRMSection class instances
      */
@@ -303,9 +304,9 @@ class ZCRMLayout
     {
         return $this->sections;
     }
-    
+
     /**
-     * method to get the convert mappings of the layout
+     * method to get the convert mappings of the layout.
      *
      * @return array array of ZCRMLeadConvertMapping instances
      */
@@ -313,11 +314,11 @@ class ZCRMLayout
     {
         return $this->convertMapping;
     }
-    
+
     /**
-     * method to set the convert mappings of the layout
+     * method to set the convert mappings of the layout.
      *
-     * @param string $module api name of the module
+     * @param string                 $module     api name of the module
      * @param ZCRMLeadConvertMapping $convertMap instance of the ZCRMLeadConvertMapping class
      */
     public function addConvertMapping($module, $convertMap)

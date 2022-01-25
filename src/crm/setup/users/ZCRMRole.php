@@ -1,48 +1,48 @@
 <?php
+
 namespace zcrmsdk\crm\setup\users;
 
 class ZCRMRole
 {
-    
     /**
-     * role name
+     * role name.
      *
      * @var string
      */
     private $name = null;
-    
+
     /**
-     * role id
+     * role id.
      *
      * @var string
      */
     private $id = null;
-    
+
     /**
-     * reporting to user
+     * reporting to user.
      *
      * @var ZCRMUser
      */
     private $reportingTo = null;
-    
+
     /**
-     * label name
+     * label name.
      *
      * @var string
      */
     private $label = null;
-    
+
     /**
-     * admin role
+     * admin role.
      *
-     * @var boolean
+     * @var bool
      */
     private $isAdmin = null;
-    
+
     /**
-     * constructor to assign the role id and role name
+     * constructor to assign the role id and role name.
      *
-     * @param string $roleId the role id
+     * @param string $roleId   the role id
      * @param string $roleName the role name
      */
     private function __construct($roleId, $roleName)
@@ -50,41 +50,42 @@ class ZCRMRole
         $this->id = $roleId;
         $this->name = $roleName;
     }
-    
+
     /**
-     * method to get the instance of the role
+     * method to get the instance of the role.
      *
-     * @param string $roleId role id
+     * @param string $roleId   role id
      * @param string $roleName role name
+     *
      * @return ZCRMRole instance of the ZCRMRole class
      */
     public static function getInstance($roleId, $roleName)
     {
         return new ZCRMRole($roleId, $roleName);
     }
-    
+
     /**
-     * metho to get the Name of the Role
+     * metho to get the Name of the Role.
      *
-     * @return String Role name
+     * @return string Role name
      */
     public function getName()
     {
         return $this->name;
     }
-    
+
     /**
-     * method to set the Role name
+     * method to set the Role name.
      *
-     * @param String $name the Role name
+     * @param string $name the Role name
      */
     public function setName($name)
     {
         $this->name = $name;
     }
-    
+
     /**
-     * method to get the Id of the Role
+     * method to get the Id of the Role.
      *
      * @return string Id of the Role
      */
@@ -92,9 +93,9 @@ class ZCRMRole
     {
         return $this->id;
     }
-    
+
     /**
-     * method to Set the Id of the Role
+     * method to Set the Id of the Role.
      *
      * @param string $id Id of the Role
      */
@@ -102,9 +103,9 @@ class ZCRMRole
     {
         $this->id = $id;
     }
-    
+
     /**
-     * method to get the Reporting to role
+     * method to get the Reporting to role.
      *
      * @return ZCRMUser instance of ZCRMUser class
      */
@@ -112,9 +113,9 @@ class ZCRMRole
     {
         return $this->reportingTo;
     }
-    
+
     /**
-     * methdo to Set the Reporting to role
+     * methdo to Set the Reporting to role.
      *
      * @param ZCRMUser $reportingTo instance of ZCRMUser class
      */
@@ -122,41 +123,41 @@ class ZCRMRole
     {
         $this->reportingTo = $reportingTo;
     }
-    
+
     /**
-     * method to get the Role label
+     * method to get the Role label.
      *
-     * @return String the Role label
+     * @return string the Role label
      */
     public function getDisplayLabel()
     {
         return $this->label;
     }
-    
+
     /**
-     * method to Set the Role label
+     * method to Set the Role label.
      *
-     * @param String $label the Role label
+     * @param string $label the Role label
      */
     public function setDisplayLabel($label)
     {
         $this->label = $label;
     }
-    
+
     /**
-     * method to check whether the role is Admin role or not
+     * method to check whether the role is Admin role or not.
      *
-     * @return boolean true if the admin role otherwise false
+     * @return bool true if the admin role otherwise false
      */
     public function isAdminRole()
     {
         return $this->isAdmin;
     }
-    
+
     /**
-     * method to Set the role as Admin role
+     * method to Set the role as Admin role.
      *
-     * @param boolean $isAdmin true to set as admin role otherwise false
+     * @param bool $isAdmin true to set as admin role otherwise false
      */
     public function setAdminRole($isAdmin)
     {

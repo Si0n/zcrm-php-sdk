@@ -1,39 +1,39 @@
 <?php
+
 namespace zcrmsdk\crm\crud;
 
 class ZCRMProfileCategory
 {
-    
     /**
-     * the name of the profile
+     * the name of the profile.
      *
      * @var string
      */
     private $name;
-    
+
     /**
-     * module name
+     * module name.
      *
      * @var string
      */
     private $module;
-    
+
     /**
-     * display name of the profile
+     * display name of the profile.
      *
      * @var string
      */
     private $displayLabel;
-    
+
     /**
-     * permission id of the permission enabled
+     * permission id of the permission enabled.
      *
      * @var array
      */
-    private $permissionIds = array();
-    
+    private $permissionIds = [];
+
     /**
-     * constructor to assign name to the profile
+     * constructor to assign name to the profile.
      *
      * @param string $name name to assign
      */
@@ -41,20 +41,21 @@ class ZCRMProfileCategory
     {
         $this->name = $name;
     }
-    
+
     /**
-     * method to get the instance of the profile
+     * method to get the instance of the profile.
      *
      * @param string $name name of the profile
+     *
      * @return ZCRMProfileCategory instance of the ZCRMProfileCategory class
      */
     public static function getInstance($name)
     {
         return new ZCRMProfileCategory($name);
     }
-    
+
     /**
-     * method to get the name of the profile
+     * method to get the name of the profile.
      *
      * @return string the name of the profile
      */
@@ -62,9 +63,9 @@ class ZCRMProfileCategory
     {
         return $this->name;
     }
-    
+
     /**
-     * method to set the name of the profile
+     * method to set the name of the profile.
      *
      * @param string $name the name of the profile
      */
@@ -72,9 +73,9 @@ class ZCRMProfileCategory
     {
         $this->name = $name;
     }
-    
+
     /**
-     * method to get the module name to which the profile belongs
+     * method to get the module name to which the profile belongs.
      *
      * @return string module name to which the profile belongs
      */
@@ -82,9 +83,9 @@ class ZCRMProfileCategory
     {
         return $this->module;
     }
-    
+
     /**
-     * method to set the module name to which the profile belongs
+     * method to set the module name to which the profile belongs.
      *
      * @param string $module module name to which the profile belongs
      */
@@ -92,9 +93,9 @@ class ZCRMProfileCategory
     {
         $this->module = $module;
     }
-    
+
     /**
-     * method to get the display name of the profile
+     * method to get the display name of the profile.
      *
      * @return string display name of the profile
      */
@@ -102,9 +103,9 @@ class ZCRMProfileCategory
     {
         return $this->displayLabel;
     }
-    
+
     /**
-     * method to set the display name of the profile
+     * method to set the display name of the profile.
      *
      * @param string $displayLabel display name of the profile
      */
@@ -112,9 +113,9 @@ class ZCRMProfileCategory
     {
         $this->displayLabel = $displayLabel;
     }
-    
+
     /**
-     * method to get the permission Ids of the permission applied to the profile
+     * method to get the permission Ids of the permission applied to the profile.
      *
      * @return array array of the the permission Ids of the permission applied to the profile
      */
@@ -122,9 +123,9 @@ class ZCRMProfileCategory
     {
         return $this->permissionIds;
     }
-    
+
     /**
-     * method to set the permission Ids of the permission applied to the profile
+     * method to set the permission Ids of the permission applied to the profile.
      *
      * @param array $permissionIds array of the the permission Ids of the permission applied to the profile
      */

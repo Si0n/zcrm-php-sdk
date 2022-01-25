@@ -1,42 +1,43 @@
 <?php
+
 namespace zcrmsdk\crm\crud;
 
 class ZCRMPickListValue
 {
-    
     /**
-     * display value
+     * display value.
      *
      * @var string
      */
     private $displayValue = null;
-    
+
     /**
-     * sequence number of the llist
+     * sequence number of the llist.
      *
      * @var int
      */
     private $sequenceNumber = null;
-    
+
     /**
-     * actual value of the pick list
+     * actual value of the pick list.
      *
      * @var string
      */
     private $actualValue = null;
-    
+
     /**
-     * mappings
+     * mappings.
      *
      * @var array
      */
     private $maps = null;
-    
+
     private function __construct()
-    {}
-    
+    {
+    }
+
     /**
-     * method to get the instance of te=he pick list
+     * method to get the instance of te=he pick list.
      *
      * @return ZCRMPickListValue instance of the ZCRMPickListValue class
      */
@@ -44,9 +45,9 @@ class ZCRMPickListValue
     {
         return new ZCRMPickListValue();
     }
-    
+
     /**
-     * method to set the display value of the pick list
+     * method to set the display value of the pick list.
      *
      * @param string $displayValue the display value of the pick list
      */
@@ -54,9 +55,9 @@ class ZCRMPickListValue
     {
         $this->displayValue = $displayValue;
     }
-    
+
     /**
-     * method to get the display value of the pick list
+     * method to get the display value of the pick list.
      *
      * @return string the display value of the pick list
      */
@@ -64,9 +65,9 @@ class ZCRMPickListValue
     {
         return $this->displayValue;
     }
-    
+
     /**
-     * method to set the sequence number of the pick list
+     * method to set the sequence number of the pick list.
      *
      * @param int $seqNumber the sequence number of the pick list
      */
@@ -74,9 +75,9 @@ class ZCRMPickListValue
     {
         $this->sequenceNumber = $seqNumber;
     }
-    
+
     /**
-     * method to get the sequence number of the pick list
+     * method to get the sequence number of the pick list.
      *
      * @return int the sequence number of the pick list
      */
@@ -84,9 +85,9 @@ class ZCRMPickListValue
     {
         return $this->sequenceNumber;
     }
-    
+
     /**
-     * method to get the actual value of the pick list
+     * method to get the actual value of the pick list.
      *
      * @param string $actualValue the actual value of the pick list
      */
@@ -94,9 +95,9 @@ class ZCRMPickListValue
     {
         $this->actualValue = $actualValue;
     }
-    
+
     /**
-     * method to set the actual value of the pick list
+     * method to set the actual value of the pick list.
      *
      * @return string the actual value of the pick list
      */
@@ -104,9 +105,9 @@ class ZCRMPickListValue
     {
         return $this->actualValue;
     }
-    
+
     /**
-     * method to set the maps for pick ist value
+     * method to set the maps for pick ist value.
      *
      * @param array $maps array of mappings
      */
@@ -114,9 +115,9 @@ class ZCRMPickListValue
     {
         $this->maps = $maps;
     }
-    
+
     /**
-     * method to get maps for pick list value
+     * method to get maps for pick list value.
      *
      * @return array array of mappings
      */

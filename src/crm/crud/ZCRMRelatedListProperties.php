@@ -1,35 +1,36 @@
 <?php
+
 namespace zcrmsdk\crm\crud;
 
 class ZCRMRelatedListProperties
 {
-    
     /**
-     * sorting according to field
+     * sorting according to field.
      *
      * @var string
      */
     private $sortBy = null;
-    
+
     /**
-     * sorting order
+     * sorting order.
      *
      * @var string
      */
     private $sortOrder = null;
-    
+
     /**
-     * field api names
+     * field api names.
      *
      * @var array
      */
-    private $fields = array();
-    
+    private $fields = [];
+
     private function __construct()
-    {}
-    
+    {
+    }
+
     /**
-     * method to get the instance of the related list properties
+     * method to get the instance of the related list properties.
      *
      * @return ZCRMRelatedListProperties instance of the ZCRMRelatedListProperties class
      */
@@ -37,9 +38,9 @@ class ZCRMRelatedListProperties
     {
         return new ZCRMRelatedListProperties();
     }
-    
+
     /**
-     * method to get the field api name based on which the properties are being sorted
+     * method to get the field api name based on which the properties are being sorted.
      *
      * @return string the field api name based on which the properties are being sorted
      */
@@ -47,9 +48,9 @@ class ZCRMRelatedListProperties
     {
         return $this->sortBy;
     }
-    
+
     /**
-     * method to set the field api name based on which the properties should be sorted
+     * method to set the field api name based on which the properties should be sorted.
      *
      * @param string $sortBy field api name
      */
@@ -57,9 +58,9 @@ class ZCRMRelatedListProperties
     {
         $this->sortBy = $sortBy;
     }
-    
+
     /**
-     * method to get the sort order
+     * method to get the sort order.
      *
      * @return string ascending "asc", descending "desc"
      */
@@ -67,9 +68,9 @@ class ZCRMRelatedListProperties
     {
         return $this->sortOrder;
     }
-    
+
     /**
-     * method to set the sort order
+     * method to set the sort order.
      *
      * @param string $sortOrder ascending "asc", descending "desc"
      */
@@ -77,9 +78,9 @@ class ZCRMRelatedListProperties
     {
         $this->sortOrder = $sortOrder;
     }
-    
+
     /**
-     * method to get the fields api names
+     * method to get the fields api names.
      *
      * @return array array of the field api names
      */
@@ -87,9 +88,9 @@ class ZCRMRelatedListProperties
     {
         return $this->fields;
     }
-    
+
     /**
-     * method to set the fields api names
+     * method to set the fields api names.
      *
      * @param array $fields array of the field api names
      */

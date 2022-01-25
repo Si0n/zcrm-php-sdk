@@ -1,4 +1,5 @@
 <?php
+
 namespace zcrmsdk\crm\api\response;
 
 use zcrmsdk\crm\exception\APIExceptionHandler;
@@ -7,35 +8,34 @@ use zcrmsdk\crm\utility\APIConstants;
 
 class APIResponse extends CommonAPIResponse
 {
-    
     /**
-     * data of the api response
+     * data of the api response.
      *
      * @var object
      */
     private $data = null;
-    
+
     /**
-     * response status of the api
+     * response status of the api.
      *
      * @var string
      */
     private $status = null;
-    
+
     /**
-     * constructor to set the http response , http code and apiname
+     * constructor to set the http response , http code and apiname.
      *
-     * @param string $httpResponse the http response
-     * @param int $httpStatusCode status code of the response
-     * @param string $apiName module api name
+     * @param string $httpResponse   the http response
+     * @param int    $httpStatusCode status code of the response
+     * @param string $apiName        module api name
      */
     public function __construct($httpResponse, $httpStatusCode, $apiName = null)
     {
         parent::__construct($httpResponse, $httpStatusCode, $apiName);
     }
-    
+
     /**
-     * method to set the data of the class object
+     * method to set the data of the class object.
      *
      * @param object $data data to be set for the object
      */
@@ -43,9 +43,9 @@ class APIResponse extends CommonAPIResponse
     {
         $this->data = $data;
     }
-    
+
     /**
-     * method to get the data of the class object
+     * method to get the data of the class object.
      *
      * @return object data of the object
      */
@@ -53,40 +53,39 @@ class APIResponse extends CommonAPIResponse
     {
         return $this->data;
     }
-    
+
     /**
-     * method to Get the response status
+     * method to Get the response status.
      *
-     * @return String the response status
+     * @return string the response status
      */
     public function getStatus()
     {
         return $this->status;
     }
-    
+
     /**
-     * method to Set the response status
+     * method to Set the response status.
      *
-     * @param String $status the response status
+     * @param string $status the response status
      */
     public function setStatus($status)
     {
-        
         $this->status = $status;
     }
-    
+
     /**
-     *
      * {@inheritdoc}
+     *
      * @see CommonAPIResponse::handleForFaultyResponses()
      */
     public function handleForFaultyResponses()
     {
         $statusCode = self::getHttpStatusCode();
         if (in_array($statusCode, APIExceptionHandler::getFaultyResponseCodes())) {
-            if ($statusCode == APIConstants::RESPONSECODE_NO_CONTENT) {
-                $exception = new ZCRMException(APIConstants::INVALID_DATA . "-" . APIConstants::INVALID_ID_MSG, $statusCode);
-                $exception->setExceptionCode("No Content");
+            if (APIConstants::RESPONSECODE_NO_CONTENT == $statusCode) {
+                $exception = new ZCRMException(APIConstants::INVALID_DATA.'-'.APIConstants::INVALID_ID_MSG, $statusCode);
+                $exception->setExceptionCode('No Content');
                 throw $exception;
             } else {
                 $responseJSON = $this->getResponseJSON();
@@ -97,16 +96,16 @@ class APIResponse extends CommonAPIResponse
             }
         }
     }
-    
+
     /**
-     *
      * {@inheritdoc}
+     *
      * @see CommonAPIResponse::processResponseData()
      */
     public function processResponseData()
     {
         $responseJSON = $this->getResponseJSON();
-        if ($responseJSON == null) {
+        if (null == $responseJSON) {
             return;
         }
         if (array_key_exists(APIConstants::DATA, $responseJSON)) {
@@ -114,24 +113,23 @@ class APIResponse extends CommonAPIResponse
         }
         if (array_key_exists(APIConstants::TAGS, $responseJSON)) {
             $responseJSON = $responseJSON[APIConstants::TAGS][0];
-        } else if (array_key_exists(APIConstants::USERS, $responseJSON)) {
+        } elseif (array_key_exists(APIConstants::USERS, $responseJSON)) {
             $responseJSON = $responseJSON[APIConstants::USERS][0];
-        } else if (array_key_exists(APIConstants::MODULES, $responseJSON)) {
+        } elseif (array_key_exists(APIConstants::MODULES, $responseJSON)) {
             $responseJSON = $responseJSON[APIConstants::MODULES];
-        } else if (array_key_exists(APIConstants::CUSTOM_VIEWS, $responseJSON)) {
+        } elseif (array_key_exists(APIConstants::CUSTOM_VIEWS, $responseJSON)) {
             $responseJSON = $responseJSON[APIConstants::CUSTOM_VIEWS];
-        }else if (array_key_exists(APIConstants::TAXES, $responseJSON)) {
+        } elseif (array_key_exists(APIConstants::TAXES, $responseJSON)) {
             $responseJSON = $responseJSON[APIConstants::TAXES][0];
-        }
-        else if (array_key_exists("variables", $responseJSON)) {
+        } elseif (array_key_exists('variables', $responseJSON)) {
             $responseJSON = $responseJSON['variables'][0];
         }
-        if (isset($responseJSON[APIConstants::STATUS]) && $responseJSON[APIConstants::STATUS] == APIConstants::STATUS_ERROR) {
+        if (isset($responseJSON[APIConstants::STATUS]) && APIConstants::STATUS_ERROR == $responseJSON[APIConstants::STATUS]) {
             $exception = new ZCRMException($responseJSON[APIConstants::MESSAGE], self::getHttpStatusCode());
             $exception->setExceptionCode($responseJSON[APIConstants::CODE]);
             $exception->setExceptionDetails($responseJSON[APIConstants::DETAILS]);
             throw $exception;
-        } elseif (isset($responseJSON[APIConstants::STATUS]) && $responseJSON[APIConstants::STATUS] == APIConstants::STATUS_SUCCESS) {
+        } elseif (isset($responseJSON[APIConstants::STATUS]) && APIConstants::STATUS_SUCCESS == $responseJSON[APIConstants::STATUS]) {
             self::setCode($responseJSON[APIConstants::CODE]);
             self::setStatus($responseJSON[APIConstants::STATUS]);
             self::setMessage($responseJSON[APIConstants::MESSAGE]);

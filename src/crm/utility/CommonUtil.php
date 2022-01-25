@@ -1,4 +1,5 @@
 <?php
+
 namespace zcrmsdk\crm\utility;
 
 class CommonUtil
@@ -7,9 +8,9 @@ class CommonUtil
     {
         return new \ArrayObject();
     }
-    
+
     public static function removeNullValuesAlone($value)
     {
-        return $value !== null;
+        return null !== $value;
     }
 }

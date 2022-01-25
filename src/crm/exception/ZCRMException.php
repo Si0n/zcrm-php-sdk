@@ -1,65 +1,65 @@
 <?php
+
 namespace zcrmsdk\crm\exception;
 
 class ZCRMException extends \Exception
 {
-    
     protected $message = 'Unknown exception';
-    
+
     // Exception message
     private $string;
-    
+
     // Unknown
     protected $code = 0;
-    
+
     // User-defined exception code
     protected $file;
-    
+
     // Source filename of exception
     protected $line;
-    
+
     // Source line of exception
     private $trace;
-    
-    private $exceptionCode = "Unknown";
-    
-    private $exceptionDetails = array();
-    
+
+    private $exceptionCode = 'Unknown';
+
+    private $exceptionDetails = [];
+
     public function __construct($message = null, $code = 0)
     {
-        if (! $message) {
-            throw new $this('Unknown ' . get_class($this));
+        if (!$message) {
+            throw new $this('Unknown '.get_class($this));
         }
         parent::__construct($message, $code);
     }
-    
+
     public function __toString()
     {
-        return get_class($this) . " Caused by:'{$this->message}' in {$this->file}({$this->line})\n" . "{$this->getTraceAsString()}";
+        return get_class($this)." Caused by:'{$this->message}' in {$this->file}({$this->line})\n"."{$this->getTraceAsString()}";
     }
-    
+
     /**
-     * exceptionCode
+     * exceptionCode.
      *
-     * @return String
+     * @return string
      */
     public function getExceptionCode()
     {
         return $this->exceptionCode;
     }
-    
+
     /**
-     * exceptionCode
+     * exceptionCode.
      *
-     * @param String $exceptionCode
+     * @param string $exceptionCode
      */
     public function setExceptionCode($exceptionCode)
     {
         $this->exceptionCode = $exceptionCode;
     }
-    
+
     /**
-     * To get the Exception details if any
+     * To get the Exception details if any.
      *
      * @return array with exception details
      */
@@ -67,9 +67,9 @@ class ZCRMException extends \Exception
     {
         return $this->exceptionDetails;
     }
-    
+
     /**
-     * To set the Exception details if any
+     * To set the Exception details if any.
      *
      * @param array with exception details
      */

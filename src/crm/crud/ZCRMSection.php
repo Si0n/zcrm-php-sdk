@@ -1,46 +1,46 @@
 <?php
+
 namespace zcrmsdk\crm\crud;
 
 class ZCRMSection
 {
-    
     /**
-     * section name
+     * section name.
      *
      * @var string
      */
     private $name = null;
-    
+
     /**
-     * section display name
+     * section display name.
      *
      * @var string
      */
     private $displayName = null;
-    
+
     /**
-     * columns in section
+     * columns in section.
      *
      * @var int
      */
     private $columnCount = null;
-    
+
     /**
-     * sequence number of the section
+     * sequence number of the section.
      *
      * @var int
      */
     private $sequenceNumber = null;
-    
+
     /**
-     * array of fields
+     * array of fields.
      *
      * @var array
      */
     private $fields = null;
-    
+
     /**
-     * constructor to assign the name to the section
+     * constructor to assign the name to the section.
      *
      * @param string $name section name
      */
@@ -48,20 +48,21 @@ class ZCRMSection
     {
         $this->name = $name;
     }
-    
+
     /**
-     * method to get the instance of the section
+     * method to get the instance of the section.
      *
      * @param string $name section name
+     *
      * @return ZCRMSection instance of the ZCRMSection class
      */
     public static function getInstance($name)
     {
         return new ZCRMSection($name);
     }
-    
+
     /**
-     * method to set the section name
+     * method to set the section name.
      *
      * @param string $name section name
      */
@@ -69,9 +70,9 @@ class ZCRMSection
     {
         $this->name = $name;
     }
-    
+
     /**
-     * method to get the section name
+     * method to get the section name.
      *
      * @return string section name
      */
@@ -79,9 +80,9 @@ class ZCRMSection
     {
         return $this->name;
     }
-    
+
     /**
-     * method to set the section display name
+     * method to set the section display name.
      *
      * @param string $displayName section display name
      */
@@ -89,9 +90,9 @@ class ZCRMSection
     {
         $this->displayName = $displayName;
     }
-    
+
     /**
-     * method to get the section display name
+     * method to get the section display name.
      *
      * @return string section display name
      */
@@ -99,9 +100,9 @@ class ZCRMSection
     {
         return $this->displayName;
     }
-    
+
     /**
-     * method to set the column count of the section
+     * method to set the column count of the section.
      *
      * @param int $count section column count
      */
@@ -109,9 +110,9 @@ class ZCRMSection
     {
         $this->columnCount = $count;
     }
-    
+
     /**
-     * method to get the column count of the section
+     * method to get the column count of the section.
      *
      * @return int section column count
      */
@@ -119,9 +120,9 @@ class ZCRMSection
     {
         return $this->columnCount;
     }
-    
+
     /**
-     * method to set the sequence number of the section
+     * method to set the sequence number of the section.
      *
      * @param int $seqNumber section sequence number
      */
@@ -129,9 +130,9 @@ class ZCRMSection
     {
         $this->sequenceNumber = $seqNumber;
     }
-    
+
     /**
-     * method to get the sequence number of the section
+     * method to get the sequence number of the section.
      *
      * @return int section sequence number
      */
@@ -139,9 +140,9 @@ class ZCRMSection
     {
         return $this->sequenceNumber;
     }
-    
+
     /**
-     * method to set the fields of the section
+     * method to set the fields of the section.
      *
      * @param array $fields array of ZCRMField instances
      */
@@ -149,9 +150,9 @@ class ZCRMSection
     {
         $this->fields = $fields;
     }
-    
+
     /**
-     * method to get the fields of the section
+     * method to get the fields of the section.
      *
      * @return array array of ZCRMField instances
      */

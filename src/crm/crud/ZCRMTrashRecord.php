@@ -1,79 +1,80 @@
 <?php
+
 namespace zcrmsdk\crm\crud;
 
 use zcrmsdk\crm\setup\users\ZCRMUser;
 
 class ZCRMTrashRecord
 {
-    
     /**
-     * trash record id
+     * trash record id.
      *
      * @var string
      */
     private $entityId = null;
-    
+
     /**
-     * trash record display name
+     * trash record display name.
      *
      * @var string
      */
     private $displayName;
-    
+
     /**
-     * trash record type
+     * trash record type.
      *
      * @var string
      */
     private $type;
-    
+
     /**
-     * trash record delete time
+     * trash record delete time.
      *
      * @var string
      */
     private $deletedTime;
-    
+
     /**
-     * creator of the trash record
+     * creator of the trash record.
      *
      * @var ZCRMUser
      */
     private $createdBy;
-    
+
     /**
-     * deletor of the record
+     * deletor of the record.
      *
      * @var ZCRMUser
      */
     private $deletedBy;
-    
+
     /**
-     * constructor to assign the type and id to the trash record
+     * constructor to assign the type and id to the trash record.
      *
      * @param string $type trash record type
-     * @param string $id trash record id
+     * @param string $id   trash record id
      */
     private function __construct($type, $id)
     {
         $this->type = $type;
         $this->entityId = $id;
     }
-    
+
     /**
-     * method to get the instance of the trash record
+     * method to get the instance of the trash record.
      *
      * @param string $type trash record type
-     * @param string $id trash record id (default is null)
+     * @param string $id   trash record id (default is null)
+     *
      * @return ZCRMTrashRecord instance of the ZCRMTrashRecord
      */
     public static function getInstance($type, $id = null)
     {
         return new ZCRMTrashRecord($type, $id);
     }
-    
+
     /**
-     * method to get the trash record id
+     * method to get the trash record id.
      *
      * @return string trash record id
      */
@@ -81,9 +82,9 @@ class ZCRMTrashRecord
     {
         return $this->entityId;
     }
-    
+
     /**
-     * method to set the trash record id
+     * method to set the trash record id.
      *
      * @param string $entityId trash record id
      */
@@ -91,49 +92,49 @@ class ZCRMTrashRecord
     {
         $this->entityId = $entityId;
     }
-    
+
     /**
-     * method to get the trash record display name
+     * method to get the trash record display name.
      *
-     * @return String trash record display name
+     * @return string trash record display name
      */
     public function getDisplayName()
     {
         return $this->displayName;
     }
-    
+
     /**
-     * method to set the trash record display name
+     * method to set the trash record display name.
      *
-     * @param String $displayName trash record display name
+     * @param string $displayName trash record display name
      */
     public function setDisplayName($displayName)
     {
         $this->displayName = $displayName;
     }
-    
+
     /**
-     * method to get the trash record type
+     * method to get the trash record type.
      *
-     * @return String trash record type
+     * @return string trash record type
      */
     public function getType()
     {
         return $this->type;
     }
-    
+
     /**
-     * method to set the trash record type
+     * method to set the trash record type.
      *
-     * @param String $type trash record type
+     * @param string $type trash record type
      */
     public function setType($type)
     {
         $this->type = $type;
     }
-    
+
     /**
-     * method to get the delete time of the trash record
+     * method to get the delete time of the trash record.
      *
      * @return string delete time of the trash record
      */
@@ -141,9 +142,9 @@ class ZCRMTrashRecord
     {
         return $this->deletedTime;
     }
-    
+
     /**
-     * method to set the delete time of the trash record
+     * method to set the delete time of the trash record.
      *
      * @param string $deletedTime delete time of the trash record
      */
@@ -151,9 +152,9 @@ class ZCRMTrashRecord
     {
         $this->deletedTime = $deletedTime;
     }
-    
+
     /**
-     * method to get the creator of the trashed record
+     * method to get the creator of the trashed record.
      *
      * @return ZCRMUser instance of the ZCRMUser calss
      */
@@ -161,9 +162,9 @@ class ZCRMTrashRecord
     {
         return $this->createdBy;
     }
-    
+
     /**
-     * method to set the creator of the trashed record
+     * method to set the creator of the trashed record.
      *
      * @param ZCRMUser $createdBy creator of the trashed record
      */
@@ -171,9 +172,9 @@ class ZCRMTrashRecord
     {
         $this->createdBy = $createdBy;
     }
-    
+
     /**
-     * method to get the deletor of the trashed record
+     * method to get the deletor of the trashed record.
      *
      * @return ZCRMUser deletor of the trashed record
      */
@@ -181,9 +182,9 @@ class ZCRMTrashRecord
     {
         return $this->deletedBy;
     }
-    
+
     /**
-     * method to set the deletor of the trashed record
+     * method to set the deletor of the trashed record.
      *
      * @param ZCRMUser $deletedBy deletor of the trashed record
      */

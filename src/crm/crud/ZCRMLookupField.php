@@ -1,39 +1,39 @@
 <?php
+
 namespace zcrmsdk\crm\crud;
 
 class ZCRMLookupField
 {
-    
     /**
-     * api name of the lookup field
+     * api name of the lookup field.
      *
      * @var string
      */
     private $apiName = null;
-    
+
     /**
-     * display name of the lookup field
+     * display name of the lookup field.
      *
      * @var string
      */
     private $displayLabel = null;
-    
+
     /**
-     * module api name
+     * module api name.
      *
      * @var string
      */
     private $module = null;
-    
+
     /**
-     * lookup field id
+     * lookup field id.
      *
      * @var string
      */
     private $id = null;
-    
+
     /**
-     * constructor to set the lookup field api name
+     * constructor to set the lookup field api name.
      *
      * @param string $apiName lookup field api name
      */
@@ -41,20 +41,21 @@ class ZCRMLookupField
     {
         $this->apiName = $apiName;
     }
-    
+
     /**
-     * method to get the lookup field instance
+     * method to get the lookup field instance.
      *
      * @param string $apiName api name of the lookup field
+     *
      * @return ZCRMLookupField instance of ZCRMLookupField Class
      */
     public static function getInstance($apiName)
     {
         return new ZCRMLookupField($apiName);
     }
-    
+
     /**
-     * method to set the module name of the lookup field
+     * method to set the module name of the lookup field.
      *
      * @param string $module module name
      */
@@ -62,9 +63,9 @@ class ZCRMLookupField
     {
         $this->module = $module;
     }
-    
+
     /**
-     * method to get the module name of the lookup field
+     * method to get the module name of the lookup field.
      *
      * @return string module name
      */
@@ -72,9 +73,9 @@ class ZCRMLookupField
     {
         return $this->module;
     }
-    
+
     /**
-     * method to set the display label of the lookup field
+     * method to set the display label of the lookup field.
      *
      * @param string $displayLabel display label of the lookup field
      */
@@ -82,9 +83,9 @@ class ZCRMLookupField
     {
         $this->displayLabel = $displayLabel;
     }
-    
+
     /**
-     * method to get the display label of the lookup field
+     * method to get the display label of the lookup field.
      *
      * @return string display label of the lookup field
      */
@@ -92,9 +93,9 @@ class ZCRMLookupField
     {
         return $this->displayLabel;
     }
-    
+
     /**
-     * method to set the lookup field id
+     * method to set the lookup field id.
      *
      * @param string $id lookup field id
      */
@@ -102,9 +103,9 @@ class ZCRMLookupField
     {
         $this->id = $id;
     }
-    
+
     /**
-     * method to set the lookup field id
+     * method to set the lookup field id.
      *
      * @return string lookup field id
      */

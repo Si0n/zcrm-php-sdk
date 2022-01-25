@@ -1,45 +1,44 @@
 <?php
+
 namespace zcrmsdk\crm\crud;
 
 /**
- *
  * @author sumanth-3058
- *
  */
 class ZCRMCustomViewCriteria
 {
-    
     /**
-     * comparison operation
+     * comparison operation.
      *
      * @var string
      */
     private $comparator = null;
-    
+
     /**
-     * api name of the field involved in comparison
+     * api name of the field involved in comparison.
      *
      * @var string
      */
     private $field = null;
-    
+
     /**
-     * value with which field value will be compared
+     * value with which field value will be compared.
      *
      * @var string
      */
     private $value = null;
-    private $group=null;
-    private $group_operator=null;
-    private $pattern=null;
-    private $index=null;
-    private $criteria=null;
-    
+    private $group = null;
+    private $group_operator = null;
+    private $pattern = null;
+    private $index = null;
+    private $criteria = null;
+
     private function __construct()
-    {}
-    
+    {
+    }
+
     /**
-     * Method to get instance of ZCRMCustomViewCriteria class
+     * Method to get instance of ZCRMCustomViewCriteria class.
      *
      * @return ZCRMCustomViewCriteria instance of ZCRMCustomViewCriteria class
      */
@@ -47,9 +46,9 @@ class ZCRMCustomViewCriteria
     {
         return new ZCRMCustomViewCriteria();
     }
-    
+
     /**
-     * Method to get the custom view criteria comparator
+     * Method to get the custom view criteria comparator.
      *
      * @return string the comparison operation
      */
@@ -57,9 +56,9 @@ class ZCRMCustomViewCriteria
     {
         return $this->comparator;
     }
-    
+
     /**
-     * Method to set the custom view criteria comparator
+     * Method to set the custom view criteria comparator.
      *
      * @param string $comparator the comparison operator
      */
@@ -67,9 +66,9 @@ class ZCRMCustomViewCriteria
     {
         $this->comparator = $comparator;
     }
-    
+
     /**
-     * Method to get the custom view criteria field name
+     * Method to get the custom view criteria field name.
      *
      * @return string field api name
      */
@@ -77,9 +76,9 @@ class ZCRMCustomViewCriteria
     {
         return $this->field;
     }
-    
+
     /**
-     * Method to set the custom view criteria field name
+     * Method to set the custom view criteria field name.
      *
      * @param string $field field api name
      */
@@ -87,9 +86,9 @@ class ZCRMCustomViewCriteria
     {
         $this->field = $field;
     }
-    
+
     /**
-     * Method to get the custom view criteria field value
+     * Method to get the custom view criteria field value.
      *
      * @return string field value
      */
@@ -97,9 +96,9 @@ class ZCRMCustomViewCriteria
     {
         return $this->value;
     }
-    
+
     /**
-     * Method to set the custom view criteria field value
+     * Method to set the custom view criteria field value.
      *
      * @param string $value field value
      */
@@ -107,46 +106,54 @@ class ZCRMCustomViewCriteria
     {
         $this->value = $value;
     }
+
     public function getGroup()
     {
         return $this->group;
     }
+
     public function getGroup_operator()
     {
         return $this->group_operator;
     }
+
     public function getPattern()
     {
         return $this->pattern;
     }
+
     public function getIndex()
     {
         return $this->index;
     }
+
     public function getCriteria()
     {
         return $this->criteria;
     }
+
     public function setGroup($group)
     {
         $this->group = $group;
     }
+
     public function setGroup_operator($group_operator)
     {
         $this->group_operator = $group_operator;
     }
+
     public function setPattern($pattern)
     {
         $this->pattern = $pattern;
     }
+
     public function setIndex($index)
     {
         $this->index = $index;
     }
+
     public function setCriteria($criteria)
     {
         $this->criteria = $criteria;
     }
-    
-    
 }
