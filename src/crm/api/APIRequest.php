@@ -20,7 +20,7 @@ class APIRequest
 {
     private null|string $url = null;
 
-    private array $requestParams = [];
+    private null|array $requestParams = [];
 
     private array $requestHeaders = [];
 
@@ -225,7 +225,7 @@ class APIRequest
     /**
      * Get the request parameters.
      */
-    public function getRequestParams(): array
+    public function getRequestParams(): null|array
     {
         return $this->requestParams;
     }
@@ -233,7 +233,7 @@ class APIRequest
     /**
      * Set the request parameters.
      */
-    public function setRequestParams(array $requestParams): void
+    public function setRequestParams(null|array $requestParams): void
     {
         $this->requestParams = $requestParams;
     }
