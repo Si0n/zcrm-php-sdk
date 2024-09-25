@@ -17,7 +17,7 @@ class ZohoHTTPConnector
 
     private null|int $requestParamCount = 0;
 
-    private array $requestBody = [];
+    private null|array $requestBody = null;
 
     private string $requestType = APIConstants::REQUEST_METHOD_GET;
 
@@ -53,14 +53,14 @@ class ZohoHTTPConnector
         curl_setopt($curl_pointer, CURLOPT_HTTPHEADER, $requestHeaders = self::getRequestHeadersAsArray());
         curl_setopt($curl_pointer, CURLOPT_CUSTOMREQUEST, APIConstants::REQUEST_METHOD_GET);
 
-        $requestPostBody = $this->isBulkRequest() ? json_encode(self::getRequestBody()) : self::getRequestBody();
+        $requestPostBody = [];
         if (APIConstants::REQUEST_METHOD_POST === $this->requestType) {
             curl_setopt($curl_pointer, CURLOPT_CUSTOMREQUEST, APIConstants::REQUEST_METHOD_POST);
             curl_setopt($curl_pointer, CURLOPT_POST, true);
-            curl_setopt($curl_pointer, CURLOPT_POSTFIELDS, $requestPostBody);
+            curl_setopt($curl_pointer, CURLOPT_POSTFIELDS, $requestPostBody = $this->isBulkRequest() ? json_encode(self::getRequestBody()) : self::getRequestBody());
         } elseif (APIConstants::REQUEST_METHOD_PUT === $this->requestType) {
             curl_setopt($curl_pointer, CURLOPT_CUSTOMREQUEST, APIConstants::REQUEST_METHOD_PUT);
-            curl_setopt($curl_pointer, CURLOPT_POSTFIELDS, $requestPostBody);
+            curl_setopt($curl_pointer, CURLOPT_POSTFIELDS, $requestPostBody = $this->isBulkRequest() ? json_encode(self::getRequestBody()) : self::getRequestBody());
         } elseif (APIConstants::REQUEST_METHOD_DELETE === $this->requestType) {
             curl_setopt($curl_pointer, CURLOPT_CUSTOMREQUEST, APIConstants::REQUEST_METHOD_DELETE);
         }
@@ -170,12 +170,12 @@ class ZohoHTTPConnector
         return $this->requestParams;
     }
 
-    public function setRequestBody(array $reqBody): void
+    public function setRequestBody(null|array $reqBody): void
     {
         $this->requestBody = $reqBody;
     }
 
-    public function getRequestBody(): array
+    public function getRequestBody(): null|array
     {
         return $this->requestBody;
     }
