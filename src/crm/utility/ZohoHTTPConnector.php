@@ -25,7 +25,7 @@ class ZohoHTTPConnector
 
     private null|string $apiKey = null;
 
-    private bool $isBulkRequest = false;
+    private null|bool $isBulkRequest = false;
 
     private function __construct()
     {
@@ -212,7 +212,7 @@ class ZohoHTTPConnector
     /**
      * Set the API Key used in the input json data(like 'modules', 'data','layouts',..etc).
      */
-    public function setApiKey(string $apiKey): void
+    public function setApiKey(null|string $apiKey): void
     {
         $this->apiKey = $apiKey;
     }
@@ -220,7 +220,7 @@ class ZohoHTTPConnector
     /**
      * isBulkRequest.
      */
-    public function isBulkRequest(): bool
+    public function isBulkRequest(): null|bool
     {
         return $this->isBulkRequest;
     }
@@ -231,7 +231,7 @@ class ZohoHTTPConnector
      * @param
      *            $isBulkRequest
      */
-    public function setBulkRequest(bool $isBulkRequest): void
+    public function setBulkRequest(null|bool $isBulkRequest): void
     {
         $this->isBulkRequest = $isBulkRequest;
     }
