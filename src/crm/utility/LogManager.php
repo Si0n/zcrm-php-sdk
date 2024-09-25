@@ -37,7 +37,7 @@ class LogManager
     {
         if (null === self::$logger) {
             self::$logger = match (true) {
-                ZCRMConfigUtil::getConfigValue(APIConstants::APPLICATION_LOGGER_INSTANCE) => ZCRMConfigUtil::getConfigValue(APIConstants::APPLICATION_LOGGER_INSTANCE),
+                ZCRMConfigUtil::getConfigValue(APIConstants::APPLICATION_LOGGER_INSTANCE) instanceof LoggerInterface => ZCRMConfigUtil::getConfigValue(APIConstants::APPLICATION_LOGGER_INSTANCE),
                 default => new DefaultLogger(),
             };
         }
