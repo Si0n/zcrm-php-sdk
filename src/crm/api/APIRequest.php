@@ -24,7 +24,7 @@ class APIRequest
 
     private array $requestHeaders = [];
 
-    private array $requestBody = [];
+    private null|array $requestBody = null;
 
     private null|string $requestMethod = null;
 
@@ -257,7 +257,7 @@ class APIRequest
     /**
      * Get the request body.
      */
-    public function getRequestBody(): array
+    public function getRequestBody():null| array
     {
         return $this->requestBody;
     }
@@ -265,7 +265,7 @@ class APIRequest
     /**
      * Set the request body.
      */
-    public function setRequestBody(array $requestBody): void
+    public function setRequestBody(null|array $requestBody): void
     {
         $this->requestBody = $requestBody;
     }
