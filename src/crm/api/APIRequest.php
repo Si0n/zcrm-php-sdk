@@ -22,7 +22,7 @@ class APIRequest
 
     private null|array $requestParams = [];
 
-    private array $requestHeaders = [];
+    private null|array $requestHeaders = [];
 
     private null|array $requestBody = null;
 
@@ -241,7 +241,7 @@ class APIRequest
     /**
      * Get the request headers.
      */
-    public function getRequestHeaders(): array
+    public function getRequestHeaders(): null|array
     {
         return $this->requestHeaders;
     }
@@ -249,7 +249,7 @@ class APIRequest
     /**
      * Set the request headers.
      */
-    public function setRequestHeaders(array $requestHeaders): void
+    public function setRequestHeaders(null|array $requestHeaders): void
     {
         $this->requestHeaders = $requestHeaders;
     }
