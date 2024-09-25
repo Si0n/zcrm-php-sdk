@@ -11,17 +11,17 @@ class ZohoHTTPConnector
 {
     private null|string $url = null;
 
-    private array $requestParams = [];
+    private null|array $requestParams = [];
 
-    private array $requestHeaders = [];
+    private null|array $requestHeaders = [];
 
     private null|int $requestParamCount = 0;
 
     private null|array $requestBody = null;
 
-    private string $requestType = APIConstants::REQUEST_METHOD_GET;
+    private null|string $requestType = APIConstants::REQUEST_METHOD_GET;
 
-    private string $userAgent = 'ZohoCRM PHP SDK';
+    private null|string $userAgent = 'ZohoCRM PHP SDK';
 
     private null|string $apiKey = null;
 
@@ -150,7 +150,7 @@ class ZohoHTTPConnector
         return str_replace(PHP_EOL, '', $params_as_string);
     }
 
-    public function setRequestHeadersMap(array $headers): void
+    public function setRequestHeadersMap(null|array $headers): void
     {
         $this->requestHeaders = $headers;
     }
@@ -160,7 +160,7 @@ class ZohoHTTPConnector
         return $this->requestHeaders;
     }
 
-    public function setRequestParamsMap(array $params): void
+    public function setRequestParamsMap(null|array $params): void
     {
         $this->requestParams = $params;
     }
@@ -180,7 +180,7 @@ class ZohoHTTPConnector
         return $this->requestBody;
     }
 
-    public function setRequestType(string $reqType): void
+    public function setRequestType(null|string $reqType): void
     {
         $this->requestType = $reqType;
     }
