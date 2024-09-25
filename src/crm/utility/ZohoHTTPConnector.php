@@ -155,7 +155,7 @@ class ZohoHTTPConnector
         $this->requestHeaders = $headers;
     }
 
-    public function getRequestHeadersMap(): array
+    public function getRequestHeadersMap(): null|array
     {
         return $this->requestHeaders;
     }
@@ -165,7 +165,7 @@ class ZohoHTTPConnector
         $this->requestParams = $params;
     }
 
-    public function getRequestParamsMap(): array
+    public function getRequestParamsMap(): null|array
     {
         return $this->requestParams;
     }
@@ -185,7 +185,7 @@ class ZohoHTTPConnector
         $this->requestType = $reqType;
     }
 
-    public function getRequestType(): string
+    public function getRequestType(): null|string
     {
         return $this->requestType;
     }
