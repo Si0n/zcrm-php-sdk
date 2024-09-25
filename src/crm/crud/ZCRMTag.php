@@ -14,56 +14,56 @@ class ZCRMTag
      *
      * @var string
      */
-    private $id = null;
+    private $id;
 
     /**
      * tag name.
      *
      * @var string
      */
-    private $name = null;
+    private $name;
 
     /**
      * creator of the tag.
      *
      * @var ZCRMUser
      */
-    private $createdBy = null;
+    private $createdBy;
 
     /**
      * creation time of the tag.
      *
      * @var string
      */
-    private $createdTime = null;
+    private $createdTime;
 
     /**
      * modifier of the tag.
      *
      * @var ZCRMUser
      */
-    private $modifiedBy = null;
+    private $modifiedBy;
 
     /**
      * modification time of the tag.
      *
      * @var string
      */
-    private $modifiedTime = null;
+    private $modifiedTime;
 
     /**
      * number of record tagged.
      *
      * @var int
      */
-    private $count = null;
+    private $count;
 
     /**
      * api name of the module to which the tag belongs.
      *
      * @var string
      */
-    private $moduleAPIName = null;
+    private $moduleAPIName;
 
     /**
      * constructor to assign tag id and module api name to the tag.
@@ -242,8 +242,6 @@ class ZCRMTag
 
     /**
      * method to set the module api name of the module to which tag belongs.
-     *
-     * @param string $moduleApiName module api name of the module to which tag belongs
      */
     public function setModuleAPIName($moduleAPIName)
     {
@@ -253,9 +251,9 @@ class ZCRMTag
     /**
      * method to delete the tag.
      *
-     * @throws ZCRMException if tag is invalid
-     *
      * @return APIResponse instance of the APIResponse class containing the api response
+     *
+     * @throws ZCRMException if tag is invalid
      */
     public function delete()
     {
@@ -271,9 +269,9 @@ class ZCRMTag
      *
      * @param ZCRMTag $mergetag tag to be merged with
      *
-     * @throws ZCRMException if tags are invalid
-     *
      * @return APIResponse instance of the APIResponse class containing the api response
+     *
+     * @throws ZCRMException if tags are invalid
      */
     public function merge($mergetag)
     {
@@ -290,9 +288,9 @@ class ZCRMTag
     /**
      * method to update the tag.
      *
-     * @throws ZCRMException if the tag id , tag name or the ,odule api name is invalid
-     *
      * @return APIResponse instance of the APIResponse class containing the api response
+     *
+     * @throws ZCRMException if the tag id , tag name or the ,odule api name is invalid
      */
     public function update()
     {

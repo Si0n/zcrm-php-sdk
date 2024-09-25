@@ -14,77 +14,77 @@ class ZCRMInventoryLineItem
      *
      * @var string
      */
-    private $id = null;
+    private $id;
 
     /**
      * product record.
      *
      * @var ZCRMRecord
      */
-    private $product = null;
+    private $product;
 
     /**
      * price of the product.
      *
      * @var float
      */
-    private $listPrice = null;
+    private $listPrice;
 
     /**
      * quantity of the product.
      *
      * @var int
      */
-    private $quantity = null;
+    private $quantity;
 
     /**
      * description of the product.
      *
      * @var string
      */
-    private $description = null;
+    private $description;
 
     /**
      * total price of the product.
      *
      * @var float
      */
-    private $total = null;
+    private $total;
 
     /**
      * discount on the product.
      *
      * @var float
      */
-    private $discount = null;
+    private $discount;
 
     /**
      * percentage of discount.
      *
      * @var int
      */
-    private $discountPercentage = null;
+    private $discountPercentage;
 
     /**
      * total price after the discount.
      *
      * @var float
      */
-    private $totalAfterDiscount = null;
+    private $totalAfterDiscount;
 
     /**
      * tax on the product.
      *
      * @var float
      */
-    private $taxAmount = null;
+    private $taxAmount;
 
     /**
      * net total of the product.
      *
      * @var float
      */
-    private $netTotal = null;
+    private $netTotal;
 
     /**
      *array of line taxes.

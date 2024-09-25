@@ -12,56 +12,56 @@ class CommonAPIResponse
      *
      * @var int
      */
-    private $httpStatusCode = null;
+    private null|int $httpStatusCode;
 
     /**
      * response Json.
      *
      * @var object
      */
-    private $responseJSON = null;
+    private $responseJSON;
 
     /**
      * response headers.
      *
      * @var array
      */
-    private $responseHeaders = null;
+    private array $responseHeaders = [];
 
     /**
      * response code.
      *
      * @var string
      */
-    private $code = null;
+    private null|string $code = null;
 
     /**
      * response message.
      *
      * @var string
      */
-    private $message = null;
+    private $message;
 
     /**
      * response details.
      *
      * @var array
      */
-    private $details = null;
+    private array $details = [];
 
     /**
      * the entire response.
      *
      * @var string
      */
-    private $response = null;
+    private null|string $response = null;
 
-    private $apiName = null;
+    private null|string $apiName = null;
 
-    public function __construct($response, $httpStatusCode, $apiName = null)
+    public function __construct(null|string $httpResponse, null|int $httpStatusCode, null|string $apiName = null)
     {
         $this->apiName = $apiName;
-        $this->response = $response;
+        $this->response = $httpResponse;
         $this->httpStatusCode = $httpStatusCode;
         $this->setResponseJSON();
         $this->processResponse();
@@ -104,7 +104,7 @@ class CommonAPIResponse
             return;
         }
         list($headers, $content) = explode("\r\n\r\n", $this->response, 2);
-        $headerArray = (explode("\r\n", $headers, 50));
+        $headerArray = explode("\r\n", $headers, 50);
         $headerMap = [];
         foreach ($headerArray as $key) {
             if (false != strpos($key, ':')) {

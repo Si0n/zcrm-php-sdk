@@ -15,227 +15,185 @@ class ZCRMModule
 {
     /**
      * convertable module.
-     *
-     * @var bool
      */
-    private $convertable = null;
+    private null|bool $convertable = null;
 
     /**
      * creatable module.
-     *
-     * @var bool
      */
-    private $creatable = null;
+    private null|bool $creatable = null;
 
     /**
      * editable module.
-     *
-     * @var bool
      */
-    private $editable = null;
+    private null|bool $editable = null;
 
     /**
      * deletable module.
-     *
-     * @var bool
      */
-    private $deletable = null;
+    private null|bool $deletable = null;
 
     /**
      * weblink of the webtab.
-     *
-     * @var string
      */
-    private $webLink = null;
+    private null|string $webLink = null;
 
     /**
      * singular label name of the module.
-     *
-     * @var string
      */
-    private $singularLabel = null;
+    private null|string $singularLabel = null;
 
     /**
      * plural label name of the module.
-     *
-     * @var string
      */
-    private $pluralLabel = null;
+    private null|string $pluralLabel = null;
 
     /**
      * the user who modified the module.
-     *
-     * @var ZCRMUser
      */
-    private $modifiedBy = null;
+    private null|ZCRMUser $modifiedBy = null;
 
     /**
      * modification time of the moduel.
-     *
-     * @var string
      */
-    private $modifiedTime = null;
+    private null|string $modifiedTime = null;
 
     /**
      * viewable module.
-     *
-     * @var bool
      */
-    private $viewable = null;
+    private null|bool $viewable = null;
 
     /**
      * api supported module.
-     *
-     * @var bool
      */
-    private $apiSupported = null;
+    private null|bool $apiSupported = null;
 
     /**
      * custom module.
-     *
-     * @var bool
      */
-    private $customModule = null;
+    private null|bool $customModule = null;
 
     /**
      * scoring supported module.
-     *
-     * @var bool
      */
-    private $scoringSupported = null;
+    private null|bool $scoringSupported = null;
 
     /**
      * module id.
-     *
-     * @var string
      */
-    private $id = null;
+    private null|string $id = null;
 
     /**
      * module display name.
-     *
-     * @var string
      */
-    private $moduleName = null;
+    private null|string $moduleName = null;
 
     /**
      * business card field limit.
-     *
-     * @var int
      */
-    private $businessCardFieldLimit = null;
+    private null|int $businessCardFieldLimit = null;
 
     /**
      * module api name.
-     *
-     * @var string
      */
-    private $apiName = null;
+    private null|string $apiName = null;
 
     /**
      * api names of the fields supported.
-     *
-     * @var array
      */
-    private $businessCardFields = [];
+    private array $businessCardFields = [];
 
     /**
      * profiles for the module.
      *
      * @var array ZCRMProfile instances array
      */
-    private $profiles = [];
+    private array $profiles = [];
 
     /**
      * display field name of the module.
-     *
-     * @var string
      */
-    private $displayFieldName = null;
+    private null|string $displayFieldName = null;
 
     /**
      * id of the display field of the module.
-     *
-     * @var string
      */
-    private $displayFieldId = null;
+    private null|string $displayFieldId = null;
 
     /**
      * related list of the module.
      *
-     * @var ZCRMModuleRelatedList
+     * @var ZCRMModuleRelatedList[]
      */
-    private $relatedList = null;
+    private array $relatedList = [];
 
     /**
      * layout of the module.
      *
-     * @var ZCRMLayout
+     * @var ZCRMLayout[]
      */
-    private $layouts = null;
+    private array $layouts = [];
 
     /**
      * field api names.
-     *
-     * @var array
      */
-    private $fields = null;
+    private array $fields = [];
 
     /**
      * related list properties of the module.
      *
      * @var ZCRMRelatedListProperties
      */
-    private $relatedListProperties = null;
+    private $relatedListProperties;
 
     /**
      * poroperties of the module.
      *
      * @var array
      */
-    private $properties = null;
+    private $properties;
 
     /**
      * records per page.
      *
      * @var int
      */
-    private $perPage = null;
+    private $perPage;
 
     /**
      * search layout fields.
      *
      * @var array
      */
-    private $searchLayoutFields = null;
+    private $searchLayoutFields;
 
     /**
      * default territory name.
      *
      * @var string
      */
-    private $defaultTerritoryName = null;
+    private $defaultTerritoryName;
 
     /**
      * default territory id.
      *
      * @var string
      */
-    private $defaultTerritoryId = null;
+    private $defaultTerritoryId;
 
     /**
      * default custom view id.
      *
      * @var string
      */
-    private $defaultCustomViewId = null;
+    private $defaultCustomViewId;
 
     /**
      * custom view of the module.
      *
      * @var ZCRMCustomView
      */
-    private $customView = null;
+    private $customView;
 
     /**
      * global search supported.
@@ -688,7 +646,7 @@ class ZCRMModule
      *
      * @return string id of the the display field
      */
-    public function getDisplayFieldId()
+    public function getDisplayFieldId(): string
     {
         return $this->displayFieldId;
     }
@@ -696,9 +654,9 @@ class ZCRMModule
     /**
      * method to get the related list of the module.
      *
-     * @return ZCRMModuleRelatedList instance of ZCRMModuleRelatedList
+     * @return ZCRMModuleRelatedList[] instance of ZCRMModuleRelatedList
      */
-    public function getRelatedLists()
+    public function getRelatedLists(): array
     {
         return $this->relatedList;
     }
@@ -706,9 +664,9 @@ class ZCRMModule
     /**
      * method to set the related list of the module.
      *
-     * @param ZCRMModuleRelatedList $relatedList instance of ZCRMModuleRelatedList
+     * @param ZCRMModuleRelatedList[] $relatedList instance of ZCRMModuleRelatedList
      */
-    public function setRelatedLists($relatedList)
+    public function setRelatedLists(array $relatedList): void
     {
         $this->relatedList = $relatedList;
     }
@@ -716,9 +674,9 @@ class ZCRMModule
     /**
      * method to set the module layout.
      *
-     * @param ZCRMLayout $layouts instance of ZCRMLayout
+     * @param ZCRMLayout[] $layouts instance of ZCRMLayout
      */
-    public function setLayouts($layouts)
+    public function setLayouts(array $layouts): void
     {
         $this->layouts = $layouts;
     }
@@ -1082,7 +1040,7 @@ class ZCRMModule
     /**
      * method to get records of the custom view.
      *
-     ** @param Array  $param_map key-value pair containing parameter names and the value
+     ** @param array  $param_map key-value pair containing parameter names and the value
      * @param array $header_map key-value pair containing header names and the value
      *
      * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
@@ -1163,7 +1121,6 @@ class ZCRMModule
      *
      * @param array  $records array of instances of ZCRMRecord class
      * @param string $trigger array of triggers
-     * @param string $lar_id  lead assignment rule id
      *
      * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
      */
@@ -1254,12 +1211,9 @@ class ZCRMModule
     /**
      * method to get the tags of the module.
      *
-     * @param array $param_map  key-value pairs containing parameters
-     * @param array $header_map key-value pairs containing headers
+     * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
      *
      * @throws ZCRMException ifthe module api name is invalid
-     *
-     * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
      */
     public function getTags()
     {
@@ -1275,9 +1229,9 @@ class ZCRMModule
      *
      * @param string $tagid tag id of the tag
      *
-     * @throws ZCRMException if the tag id and the module api name is invalid
-     *
      * @return APIResponse instance of the APIResponse class which holds the API response
+     *
+     * @throws ZCRMException if the tag id and the module api name is invalid
      */
     public function getTagCount($tagid)
     {
@@ -1296,9 +1250,9 @@ class ZCRMModule
      *
      * @param array $tags array of ZCRMTag instances
      *
-     * @throws ZCRMException if the tag object array or the module api name is invalid
-     *
      * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
+     *
+     * @throws ZCRMException if the tag object array or the module api name is invalid
      */
     public function createTags($tags)
     {
@@ -1317,9 +1271,9 @@ class ZCRMModule
      *
      * @param array $tags array of ZCRMTag instances
      *
-     * @throws ZCRMException if the tag object array or the module api name is invalid
-     *
      * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
+     *
+     * @throws ZCRMException if the tag object array or the module api name is invalid
      */
     public function updateTags($tags)
     {
@@ -1339,9 +1293,9 @@ class ZCRMModule
      * @param array $recordIds array of record ids of the records in the module
      * @param array $tagNames  array of tag names
      *
-     * @throws ZCRMException if the module api name or tag name list or record ID list is invalid
-     *
      * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
+     *
+     * @throws ZCRMException if the module api name or tag name list or record ID list is invalid
      */
     public function addTagsToRecords($recordIds, $tagNames)
     {
@@ -1364,9 +1318,9 @@ class ZCRMModule
      * @param array $recordIds array of record ids of the records in the module
      * @param array $tagNames  array of tag names
      *
-     * @throws ZCRMException if the module api name or tag name list or record ID list is invalid
-     *
      * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
+     *
+     * @throws ZCRMException if the module api name or tag name list or record ID list is invalid
      */
     public function removeTagsFromRecords($recordIds, $tagNames)
     {

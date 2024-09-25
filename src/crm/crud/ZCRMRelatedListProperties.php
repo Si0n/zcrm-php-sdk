@@ -9,14 +9,14 @@ class ZCRMRelatedListProperties
      *
      * @var string
      */
-    private $sortBy = null;
+    private $sortBy;
 
     /**
      * sorting order.
      *
      * @var string
      */
-    private $sortOrder = null;
+    private $sortOrder;
 
     /**
      * field api names.

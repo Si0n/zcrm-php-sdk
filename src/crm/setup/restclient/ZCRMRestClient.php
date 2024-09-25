@@ -11,37 +11,42 @@ use zcrmsdk\crm\bulkcrud\ZCRMBulkWrite;
 use zcrmsdk\crm\crud\ZCRMCustomView;
 use zcrmsdk\crm\crud\ZCRMModule;
 use zcrmsdk\crm\crud\ZCRMRecord;
+use zcrmsdk\crm\exception\ZCRMException;
 use zcrmsdk\crm\setup\org\ZCRMOrganization;
 use zcrmsdk\crm\utility\ZCRMConfigUtil;
+use zcrmsdk\oauth\exception\ZohoOAuthException;
 
 class ZCRMRestClient
 {
+    private static null|string $CurrentUserEmailID = null;
+
     private function __construct()
     {
     }
-    private static $CurrentUserEmailID;
 
     /**
      * method to get the instance of the rest client.
      *
-     * @return ZCRMRestClient insance of the ZCRMRestClient class
+     * @return ZCRMRestClient instance of the ZCRMRestClient class
      */
-    public static function getInstance()
+    public static function getInstance(): ZCRMRestClient
     {
         return new ZCRMRestClient();
     }
 
-    public static function setCurrentUserEmailId($UserEmailId)
+    public static function setCurrentUserEmailId(null|string $UserEmailId): void
     {
         self::$CurrentUserEmailID = $UserEmailId;
     }
 
     /**
-     * method to initialize the configurationsto the rest client.
+     * method to initialize the rest client.
      *
-     * @param array $configuration array of configurations
+     * @param array $configuration configuration array containing the configuration details
+     *
+     * @throws ZohoOAuthException
      */
-    public static function initialize($configuration)
+    public static function initialize(array $configuration): void
     {
         ZCRMConfigUtil::initialize($configuration);
     }
@@ -50,8 +55,10 @@ class ZCRMRestClient
      * method to get all the modules of the restclient.
      *
      * @return BulkAPIResponse instance of the BulkAPIResponse class containing the bulk api response
+     *
+     * @throws ZCRMException
      */
-    public function getAllModules()
+    public function getAllModules(): BulkAPIResponse
     {
         return MetaDataAPIHandler::getInstance()->getAllModules();
     }
@@ -62,8 +69,10 @@ class ZCRMRestClient
      * @param string $moduleName api name of the module
      *
      * @return APIResponse instance of the APIResponse class containing the api response
+     *
+     * @throws ZCRMException
      */
-    public function getModule($moduleName)
+    public function getModule(null|string $moduleName): APIResponse
     {
         return MetaDataAPIHandler::getInstance()->getModule($moduleName);
     }
@@ -73,7 +82,7 @@ class ZCRMRestClient
      *
      * @return ZCRMOrganization instance of the ZCRMOrganization class
      */
-    public function getOrganizationInstance()
+    public function getOrganizationInstance(): ZCRMOrganization
     {
         return ZCRMOrganization::getInstance();
     }
@@ -83,7 +92,7 @@ class ZCRMRestClient
      *
      * @return ZCRMCustomView instance of the ZCRMCustomView class
      */
-    public function getCustomViewInstance($moduleAPIName, $id)
+    public function getCustomViewInstance($moduleAPIName, $id): ZCRMCustomView
     {
         return ZCRMCustomView::getInstance($moduleAPIName, $id);
     }
@@ -95,7 +104,7 @@ class ZCRMRestClient
      *
      * @return ZCRMModule instance of the ZCRMModule class
      */
-    public function getModuleInstance($moduleAPIName)
+    public function getModuleInstance(string $moduleAPIName): ZCRMModule
     {
         return ZCRMModule::getInstance($moduleAPIName);
     }
@@ -108,7 +117,7 @@ class ZCRMRestClient
      *
      * @return ZCRMRecord instance of the ZCRMRecord class
      */
-    public function getRecordInstance($moduleAPIName, $entityId)
+    public function getRecordInstance(null|string $moduleAPIName, null|string $entityId): ZCRMRecord
     {
         return ZCRMRecord::getInstance($moduleAPIName, $entityId);
     }
@@ -117,8 +126,10 @@ class ZCRMRestClient
      * method to get the current user of the rest client.
      *
      * @return APIResponse instance of the APIResponse class containing the api response
+     *
+     * @throws ZCRMException
      */
-    public function getCurrentUser()
+    public function getCurrentUser(): APIResponse|BulkAPIResponse
     {
         return OrganizationAPIHandler::getInstance()->getCurrentUser();
     }
@@ -128,7 +139,7 @@ class ZCRMRestClient
      *
      * @return string currrent user email id
      */
-    public static function getCurrentUserEmailID()
+    public static function getCurrentUserEmailID(): ?string
     {
         return self::$CurrentUserEmailID;
     }
@@ -137,8 +148,10 @@ class ZCRMRestClient
      * method to get the organization details of the rest client.
      *
      * @return APIResponse instance of the APIResponse class containing the api response
+     *
+     * @throws ZCRMException
      */
-    public static function getOrganizationDetails()
+    public static function getOrganizationDetails(): APIResponse
     {
         return OrganizationAPIHandler::getInstance()->getOrganizationDetails();
     }
@@ -146,12 +159,11 @@ class ZCRMRestClient
     /**
      * Method to get the bulk read instance.
      *
-     * @param string $moduleName
      * @param string $jobId
      *
      * @return ZCRMBulkRead - class instance
      */
-    public function getBulkReadInstance($moduleName = null, $jobId = null)
+    public function getBulkReadInstance(null|string $moduleName = null, null|string $jobId = null): ZCRMBulkRead
     {
         return ZCRMBulkRead::getInstance($moduleName, $jobId);
     }
@@ -165,7 +177,7 @@ class ZCRMRestClient
      *
      * @return ZCRMBulkWrite - class instance
      */
-    public function getBulkWriteInstance($operation = null, $jobId = null, $moduleAPIName = null)
+    public function getBulkWriteInstance(null|string $operation = null, null|string $jobId = null, null|string $moduleAPIName = null): ZCRMBulkWrite
     {
         return ZCRMBulkWrite::getInstance($operation, $jobId, $moduleAPIName);
     }

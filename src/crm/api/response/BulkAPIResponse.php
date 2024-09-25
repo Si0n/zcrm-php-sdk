@@ -13,28 +13,28 @@ class BulkAPIResponse extends CommonAPIResponse
      *
      * @var array
      */
-    private $bulkData = null;
+    private $bulkData;
 
     /**
      * response status of the api.
      *
      * @var string
      */
-    private $status = null;
+    private $status;
 
     /**
      * the response information.
      *
      * @var ResponseInfo
      */
-    private $info = null;
+    private $info;
 
     /**
      * bulk entities response.
      *
      * @var array array of EntityResponse instances
      */
-    private $bulkEntitiesResponse = null;
+    private $bulkEntitiesResponse;
 
     /**
      * constructor to set the http response and http status code.
@@ -49,8 +49,6 @@ class BulkAPIResponse extends CommonAPIResponse
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see CommonAPIResponse::handleForFaultyResponses()
      */
     public function handleForFaultyResponses()
@@ -76,11 +74,9 @@ class BulkAPIResponse extends CommonAPIResponse
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see CommonAPIResponse::processResponseData()
      */
-    public function processResponseData()//status of the response
+    public function processResponseData()// status of the response
     {
         $this->bulkEntitiesResponse = [];
         $bulkResponseJSON = $this->getResponseJSON();
@@ -170,8 +166,6 @@ class BulkAPIResponse extends CommonAPIResponse
 
     /**
      * method to set the response information.
-     *
-     * @param ResponseInfo $info instance of the ResponseInfo class
      */
     public function setInfo()
     {

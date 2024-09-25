@@ -12,26 +12,26 @@ class ZCRMCustomViewCriteria
      *
      * @var string
      */
-    private $comparator = null;
+    private $comparator;
 
     /**
      * api name of the field involved in comparison.
      *
      * @var string
      */
-    private $field = null;
+    private $field;
 
     /**
      * value with which field value will be compared.
      *
      * @var string
      */
-    private $value = null;
-    private $group = null;
-    private $group_operator = null;
-    private $pattern = null;
-    private $index = null;
-    private $criteria = null;
+    private $value;
+    private $group;
+    private $group_operator;
+    private $pattern;
+    private $index;
+    private $criteria;
 
     private function __construct()
     {

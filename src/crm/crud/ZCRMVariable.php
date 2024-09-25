@@ -6,13 +6,13 @@ use zcrmsdk\crm\api\handler\VariableAPIHandler;
 
 class ZCRMVariable
 {
-    private $id = null;
-    private $name = null;
-    private $api_name = null;
-    private $type = null;
-    private $value = null;
+    private $id;
+    private $name;
+    private $api_name;
+    private $type;
+    private $value;
     private $variable_group = [];
-    private $description = null;
+    private $description;
 
     public function getId()
     {

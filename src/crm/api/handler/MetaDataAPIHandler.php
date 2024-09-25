@@ -3,6 +3,8 @@
 namespace zcrmsdk\crm\api\handler;
 
 use zcrmsdk\crm\api\APIRequest;
+use zcrmsdk\crm\api\response\APIResponse;
+use zcrmsdk\crm\api\response\BulkAPIResponse;
 use zcrmsdk\crm\crud\ZCRMCustomView;
 use zcrmsdk\crm\crud\ZCRMCustomViewCategory;
 use zcrmsdk\crm\crud\ZCRMCustomViewCriteria;
@@ -21,12 +23,15 @@ class MetaDataAPIHandler extends APIHandler
     {
     }
 
-    public static function getInstance()
+    public static function getInstance(): MetaDataAPIHandler
     {
         return new MetaDataAPIHandler();
     }
 
-    public function getAllModules()
+    /**
+     * @throws ZCRMException
+     */
+    public function getAllModules(): BulkAPIResponse
     {
         try {
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
@@ -38,7 +43,7 @@ class MetaDataAPIHandler extends APIHandler
             $responseData = [];
             foreach ($modulesArray as $eachmodule) {
                 $module = self::getZCRMModule($eachmodule);
-                array_push($responseData, $module);
+                $responseData[] = $module;
             }
             $responseInstance->setData($responseData);
 
@@ -49,11 +54,14 @@ class MetaDataAPIHandler extends APIHandler
         }
     }
 
-    public function getModule($moduleName)
+    /**
+     * @throws ZCRMException
+     */
+    public function getModule($moduleName): APIResponse
     {
         try {
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
-            $this->urlPath = 'settings/modules/'.$moduleName;
+            $this->urlPath = 'settings/modules/' . $moduleName;
             $this->addHeader('Content-Type', 'application/json');
             $responseInstance = APIRequest::getInstance($this)->getAPIResponse();
             $moduleArray = $responseInstance->getResponseJSON()['modules'];
@@ -66,7 +74,7 @@ class MetaDataAPIHandler extends APIHandler
         }
     }
 
-    public function getZCRMModule($moduleDetails)
+    public function getZCRMModule(array $moduleDetails): ZCRMModule
     {
         $crmModuleInstance = ZCRMModule::getInstance($moduleDetails[APIConstants::API_NAME]);
         $crmModuleInstance->setViewable($moduleDetails['viewable']);
@@ -93,7 +101,7 @@ class MetaDataAPIHandler extends APIHandler
 
         $zcrmUserInstance = null;
         if (null != $moduleDetails['modified_by']) {
-            $zcrmUserInstance = ZCRMUser::getInstance(($moduleDetails['modified_by']['id']), $moduleDetails['modified_by']['name']);
+            $zcrmUserInstance = ZCRMUser::getInstance($moduleDetails['modified_by']['id'], $moduleDetails['modified_by']['name']);
         }
         $crmModuleInstance->setModifiedBy($zcrmUserInstance);
         $crmModuleInstance->setCustomModule('custom' === $moduleDetails['generated_type']);
@@ -105,7 +113,7 @@ class MetaDataAPIHandler extends APIHandler
         $profileArray = $moduleDetails['profiles'];
         $profileInstanceArray = [];
         foreach ($profileArray as $eachProfile) {
-            array_push($profileInstanceArray, ZCRMProfile::getInstance($eachProfile['id'], $eachProfile['name']));
+            $profileInstanceArray[] = ZCRMProfile::getInstance($eachProfile['id'], $eachProfile['name']);
         }
         $crmModuleInstance->setAllProfiles($profileInstanceArray);
 
@@ -118,7 +126,7 @@ class MetaDataAPIHandler extends APIHandler
             $relatedListInstanceArray = [];
             foreach ($relatedListArray as $relatedListObj) {
                 $moduleRelatedListIns = ZCRMModuleRelatedList::getInstance($relatedListObj['api_name']);
-                array_push($relatedListInstanceArray, $moduleRelatedListIns->setRelatedListProperties($relatedListObj));
+                $relatedListInstanceArray[] = $moduleRelatedListIns->setRelatedListProperties($relatedListObj);
             }
         }
         $crmModuleInstance->setRelatedLists($relatedListInstanceArray);
@@ -157,7 +165,7 @@ class MetaDataAPIHandler extends APIHandler
         return $crmModuleInstance;
     }
 
-    public function getRelatedListProperties($relatedListProperties)
+    public function getRelatedListProperties($relatedListProperties): ZCRMRelatedListProperties
     {
         $relatedListPropInstance = ZCRMRelatedListProperties::getInstance();
         $relatedListPropInstance->setSortBy(array_key_exists('sort_by', $relatedListProperties) ? $relatedListProperties['sort_by'] : null);
@@ -167,23 +175,23 @@ class MetaDataAPIHandler extends APIHandler
         return $relatedListPropInstance;
     }
 
-    public function constructCriteria($criteria, &$index)
+    public function constructCriteria(array $criteria, &$index): ZCRMCustomViewCriteria
     {
         $criteria_instance = ZCRMCustomViewCriteria::getInstance();
-        $criteria_instance->setField(isset($criteria['field']) ? $criteria['field'] : null);
-        $criteria_instance->setComparator(isset($criteria['comparator']) ? $criteria['comparator'] : null);
+        $criteria_instance->setField($criteria['field'] ?? null);
+        $criteria_instance->setComparator($criteria['comparator'] ?? null);
         if (isset($criteria['value'])) {
             $criteria_instance->setValue($criteria['value']);
             $criteria_instance->setIndex($index);
             $criteria_instance->setPattern((string) $index);
-            $index++;
-            $criteria_instance->setCriteria('('.$criteria['field'].':'.$criteria['comparator'].':'.(json_encode($criteria['value'])).')');
+            ++$index;
+            $criteria_instance->setCriteria('(' . $criteria['field'] . ':' . $criteria['comparator'] . ':' . json_encode($criteria['value']) . ')');
         }
         $group_criteria = [];
         if (isset($criteria['group'])) {
-            for ($x = 0; $x < count($criteria['group']); $x++) {
+            for ($x = 0; $x < count($criteria['group']); ++$x) {
                 $ins = self::constructCriteria($criteria['group'][$x], $index);
-                array_push($group_criteria, $ins);
+                $group_criteria[] = $ins;
             }
         }
         if (null != $group_criteria) {
@@ -197,7 +205,7 @@ class MetaDataAPIHandler extends APIHandler
             $count = sizeof($group_criteria);
             $i = 0;
             foreach ($group_criteria as $criteriaObj) {
-                $i++;
+                ++$i;
                 $criteriavalue .= $criteriaObj->getCriteria();
                 $pattern .= $criteriaObj->getPattern();
                 if ($i < $count) {
@@ -205,8 +213,8 @@ class MetaDataAPIHandler extends APIHandler
                     $pattern .= $criteria_instance->getGroup_operator();
                 }
             }
-            $criteria_instance->setCriteria($criteriavalue.')');
-            $criteria_instance->setPattern($pattern.')');
+            $criteria_instance->setCriteria($criteriavalue . ')');
+            $criteria_instance->setPattern($pattern . ')');
 
             // $criteria_instance->setGroup_operator($criteria['group_operator']);
             // $criteria_instance->setCriteria("(".$group_criteria[0]->getCriteria().$criteria_instance->getGroup_operator().$group_criteria[1]->getCriteria().")");
@@ -221,18 +229,18 @@ class MetaDataAPIHandler extends APIHandler
      * Input:: custom view details as array
      * Returns ZCRMCustomView instance.
      */
-    public function getZCRMCustomView($moduleApiName, $customViewDetails, $categoriesArr = null)
+    public function getZCRMCustomView(null|string $moduleApiName, array $customViewDetails, $categoriesArr = null): ZCRMCustomView
     {
         $customViewInstance = ZCRMCustomView::getInstance($moduleApiName, $customViewDetails['id']);
         $customViewInstance->setDisplayValue($customViewDetails['display_value']);
         $customViewInstance->setDefault((bool) $customViewDetails['default']);
         $customViewInstance->setName($customViewDetails['name']);
         $customViewInstance->setSystemName($customViewDetails['system_name']);
-        $customViewInstance->setSortBy(isset($customViewDetails['sort_by']) ? $customViewDetails['sort_by'] : null);
-        $customViewInstance->setCategory(isset($customViewDetails['category']) ? $customViewDetails['category'] : null);
-        $customViewInstance->setFields(isset($customViewDetails['fields']) ? $customViewDetails['fields'] : null);
-        $customViewInstance->setFavorite(isset($customViewDetails['favorite']) ? $customViewDetails['favorite'] : null);
-        $customViewInstance->setSortOrder(isset($customViewDetails['sort_order']) ? $customViewDetails['sort_order'] : null);
+        $customViewInstance->setSortBy($customViewDetails['sort_by'] ?? null);
+        $customViewInstance->setCategory($customViewDetails['category'] ?? null);
+        $customViewInstance->setFields($customViewDetails['fields'] ?? null);
+        $customViewInstance->setFavorite($customViewDetails['favorite'] ?? null);
+        $customViewInstance->setSortOrder($customViewDetails['sort_order'] ?? null);
         if (isset($customViewDetails['criteria']) && null != $customViewDetails['criteria']) {
             $index = 1;
             $criteriaInstance = self::constructCriteria($customViewDetails['criteria'], $index);
@@ -246,7 +254,7 @@ class MetaDataAPIHandler extends APIHandler
                 $customViewCategoryIns = ZCRMCustomViewCategory::getInstance();
                 $customViewCategoryIns->setDisplayValue($value);
                 $customViewCategoryIns->setActualValue($key);
-                array_push($categoryInstanceArray, $customViewCategoryIns);
+                $categoryInstanceArray[] = $customViewCategoryIns;
             }
             $customViewInstance->setCategoriesList($categoryInstanceArray);
         }

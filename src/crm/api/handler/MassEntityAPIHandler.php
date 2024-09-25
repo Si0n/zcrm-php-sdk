@@ -12,7 +12,7 @@ use zcrmsdk\crm\utility\APIConstants;
 
 class MassEntityAPIHandler extends APIHandler
 {
-    private $module = null;
+    private $module;
 
     public function __construct($moduleInstance)
     {
@@ -60,7 +60,7 @@ class MassEntityAPIHandler extends APIHandler
             $createdRecords = [];
             $responses = $bulkAPIResponse->getEntityResponses();
             $size = sizeof($responses);
-            for ($i = 0; $i < $size; $i++) {
+            for ($i = 0; $i < $size; ++$i) {
                 $entityResIns = $responses[$i];
                 if (APIConstants::STATUS_SUCCESS === $entityResIns->getStatus()) {
                     $responseData = $entityResIns->getResponseJSON();
@@ -87,7 +87,7 @@ class MassEntityAPIHandler extends APIHandler
             throw new ZCRMException(APIConstants::API_MAX_RECORDS_MSG, APIConstants::RESPONSECODE_BAD_REQUEST);
         }
         try {
-            $this->urlPath = $this->module->getAPIName().'/upsert';
+            $this->urlPath = $this->module->getAPIName() . '/upsert';
             $this->requestMethod = APIConstants::REQUEST_METHOD_POST;
             $this->addHeader('Content-Type', 'application/json');
             if (null != $duplicate_check_fields) {
@@ -119,7 +119,7 @@ class MassEntityAPIHandler extends APIHandler
             $upsertRecords = [];
             $responses = $bulkAPIResponse->getEntityResponses();
             $size = sizeof($responses);
-            for ($i = 0; $i < $size; $i++) {
+            for ($i = 0; $i < $size; ++$i) {
                 $entityResIns = $responses[$i];
                 if (APIConstants::STATUS_SUCCESS === $entityResIns->getStatus()) {
                     $responseData = $entityResIns->getResponseJSON();
@@ -173,7 +173,7 @@ class MassEntityAPIHandler extends APIHandler
             $upsertRecords = [];
             $responses = $bulkAPIResponse->getEntityResponses();
             $size = sizeof($responses);
-            for ($i = 0; $i < $size; $i++) {
+            for ($i = 0; $i < $size; ++$i) {
                 $entityResIns = $responses[$i];
                 if (APIConstants::STATUS_SUCCESS === $entityResIns->getStatus()) {
                     $responseData = $entityResIns->getResponseJSON();
@@ -241,7 +241,7 @@ class MassEntityAPIHandler extends APIHandler
     private function getDeletedRecords($param_map, $header_map, $type)
     {
         try {
-            $this->urlPath = $this->module->getAPIName().'/deleted';
+            $this->urlPath = $this->module->getAPIName() . '/deleted';
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
             foreach ($param_map as $key => $value) {
                 if (null != $value) {
@@ -330,7 +330,7 @@ class MassEntityAPIHandler extends APIHandler
     public function searchRecords($param_map, $type, $search_value)
     {
         try {
-            $this->urlPath = $this->module->getAPIName().'/search';
+            $this->urlPath = $this->module->getAPIName() . '/search';
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
             $exclusion_array = ['word', 'phone', 'email', 'criteria'];
             foreach ($exclusion_array as $exclusion) {
@@ -381,7 +381,7 @@ class MassEntityAPIHandler extends APIHandler
             $updatedRecords = [];
             $responses = $bulkAPIResponse->getEntityResponses();
             $size = sizeof($responses);
-            for ($i = 0; $i < $size; $i++) {
+            for ($i = 0; $i < $size; ++$i) {
                 $entityResIns = $responses[$i];
                 if (APIConstants::STATUS_SUCCESS === $entityResIns->getStatus()) {
                     $responseData = $entityResIns->getResponseJSON();
@@ -409,7 +409,7 @@ class MassEntityAPIHandler extends APIHandler
         $massUpdateArray = [];
         foreach ($idList as $id) {
             $updateJson = [];
-            $updateJson['id'] = ''.$id;
+            $updateJson['id'] = '' . $id;
             $updateJson[$apiName] = $value;
             array_push($massUpdateArray, $updateJson);
         }

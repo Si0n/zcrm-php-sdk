@@ -11,7 +11,7 @@ class ZCRMTrashRecord
      *
      * @var string
      */
-    private $entityId = null;
+    private $entityId;
 
     /**
      * trash record display name.

@@ -3,18 +3,17 @@
 namespace zcrmsdk\crm\exception;
 
 use zcrmsdk\crm\utility\APIConstants;
-use zcrmsdk\crm\utility\Logger;
+use zcrmsdk\crm\utility\LogManager;
 
 class APIExceptionHandler
 {
-    public static function logException(ZCRMException $e)
+    public static function logException(ZCRMException $e): void
     {
-        $msg = get_class($e)." Caused by:'{$e->getMessage()}' in {$e->getFile()}({$e->getLine()})\nTrace::".$e->getTraceAsString();
-        $message = $e->getMessage().';;Trace::'.$e->getTraceAsString();
-        Logger::err($msg);
+        $msg = get_class($e) . " Caused by:'{$e->getMessage()}' in {$e->getFile()}({$e->getLine()})\nTrace::" . $e->getTraceAsString();
+        LogManager::err($msg);
     }
 
-    public static function getFaultyResponseCodes()
+    public static function getFaultyResponseCodes(): array
     {
         return [
             APIConstants::RESPONSECODE_NO_CONTENT,

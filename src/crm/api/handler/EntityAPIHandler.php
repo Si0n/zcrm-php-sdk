@@ -17,7 +17,7 @@ use zcrmsdk\crm\utility\APIConstants;
 
 class EntityAPIHandler extends APIHandler
 {
-    protected $record = null;
+    protected $record;
 
     private function __construct($zcrmrecord)
     {
@@ -33,7 +33,7 @@ class EntityAPIHandler extends APIHandler
     {
         try {
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
-            $this->urlPath = $this->record->getModuleApiName().'/'.$this->record->getEntityId();
+            $this->urlPath = $this->record->getModuleApiName() . '/' . $this->record->getEntityId();
             foreach ($param_map as $key => $value) {
                 if (null !== $value) {
                     $this->addParam($key, $value);
@@ -107,7 +107,7 @@ class EntityAPIHandler extends APIHandler
                 throw new ZCRMException('Entity ID MUST not be null for update operation.', APIConstants::RESPONSECODE_BAD_REQUEST);
             }
             $this->requestMethod = APIConstants::REQUEST_METHOD_PUT;
-            $this->urlPath = $this->record->getModuleApiName().'/'.$this->record->getEntityId();
+            $this->urlPath = $this->record->getModuleApiName() . '/' . $this->record->getEntityId();
             $this->addHeader('Content-Type', 'application/json');
             $requestBodyObj = [];
             $dataArray = [];
@@ -148,7 +148,7 @@ class EntityAPIHandler extends APIHandler
                 throw new ZCRMException('Entity ID MUST not be null for delete operation.', APIConstants::RESPONSECODE_BAD_REQUEST);
             }
             $this->requestMethod = APIConstants::REQUEST_METHOD_DELETE;
-            $this->urlPath = $this->record->getModuleApiName().'/'.$this->record->getEntityId();
+            $this->urlPath = $this->record->getModuleApiName() . '/' . $this->record->getEntityId();
             $this->addHeader('Content-Type', 'application/json');
 
             $responseInstance = APIRequest::getInstance($this)->getAPIResponse();
@@ -164,7 +164,7 @@ class EntityAPIHandler extends APIHandler
     {
         try {
             $this->requestMethod = APIConstants::REQUEST_METHOD_POST;
-            $this->urlPath = $this->record->getModuleApiName().'/'.$this->record->getEntityId().'/actions/convert';
+            $this->urlPath = $this->record->getModuleApiName() . '/' . $this->record->getEntityId() . '/actions/convert';
             $this->addHeader('Content-Type', 'application/json');
             $dataObject = [];
             if (null != $details) {
@@ -232,13 +232,13 @@ class EntityAPIHandler extends APIHandler
             if (function_exists('curl_file_create')) { // php 5.6+
                 $cFile = curl_file_create($filePath);
             } else {
-                $cFile = '@'.realpath($filePath);
+                $cFile = '@' . realpath($filePath);
             }
             $post = [
                 'file' => $cFile,
             ];
             $this->requestMethod = APIConstants::REQUEST_METHOD_POST;
-            $this->urlPath = $this->record->getModuleApiName().'/'.$this->record->getEntityId().'/photo';
+            $this->urlPath = $this->record->getModuleApiName() . '/' . $this->record->getEntityId() . '/photo';
             $this->requestBody = $post;
             $responseInstance = APIRequest::getInstance($this)->getAPIResponse();
 
@@ -253,7 +253,7 @@ class EntityAPIHandler extends APIHandler
     {
         try {
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
-            $this->urlPath = $this->record->getModuleApiName().'/'.$this->record->getEntityId().'/photo';
+            $this->urlPath = $this->record->getModuleApiName() . '/' . $this->record->getEntityId() . '/photo';
 
             return APIRequest::getInstance($this)->downloadFile();
         } catch (ZCRMException $exception) {
@@ -266,7 +266,7 @@ class EntityAPIHandler extends APIHandler
     {
         try {
             $this->requestMethod = APIConstants::REQUEST_METHOD_DELETE;
-            $this->urlPath = $this->record->getModuleApiName().'/'.$this->record->getEntityId().'/photo';
+            $this->urlPath = $this->record->getModuleApiName() . '/' . $this->record->getEntityId() . '/photo';
 
             return APIRequest::getInstance($this)->getAPIResponse();
         } catch (ZCRMException $exception) {
@@ -280,16 +280,16 @@ class EntityAPIHandler extends APIHandler
         $recordJSON = [];
         $apiNameVsValues = $this->record->getData();
         if (null != $this->record->getOwner()) {
-            $recordJSON['Owner'] = ''.$this->record->getOwner()->getId();
+            $recordJSON['Owner'] = '' . $this->record->getOwner()->getId();
         }
         if (null != $this->record->getLayout()) {
-            $recordJSON['Layout'] = ''.$this->record->getLayout()->getId();
+            $recordJSON['Layout'] = '' . $this->record->getLayout()->getId();
         }
         foreach ($apiNameVsValues as $key => $value) {
             if ($value instanceof ZCRMRecord) {
-                $value = ''.$value->getEntityId();
+                $value = '' . $value->getEntityId();
             } elseif ($value instanceof ZCRMUser) {
-                $value = ''.$value->getId();
+                $value = '' . $value->getId();
             }
             $recordJSON[$key] = $value;
         }
@@ -374,12 +374,12 @@ class EntityAPIHandler extends APIHandler
     public function getZCRMParticipantAsJSON(ZCRMEventParticipant $participantIns)
     {
         $participantJSON = [];
-        $participantJSON['participant'] = ''.$participantIns->getId();
-        $participantJSON['type'] = ''.$participantIns->getType();
-        $participantJSON['name'] = ''.$participantIns->getName();
-        $participantJSON['Email'] = ''.$participantIns->getEmail();
+        $participantJSON['participant'] = '' . $participantIns->getId();
+        $participantJSON['type'] = '' . $participantIns->getType();
+        $participantJSON['name'] = '' . $participantIns->getName();
+        $participantJSON['Email'] = '' . $participantIns->getEmail();
         $participantJSON['invited'] = (bool) $participantIns->isInvited();
-        $participantJSON['status'] = ''.$participantIns->getStatus();
+        $participantJSON['status'] = '' . $participantIns->getStatus();
 
         return $participantJSON;
     }
@@ -393,10 +393,10 @@ class EntityAPIHandler extends APIHandler
                 throw new ZCRMException("Mandatory Field 'quantity' is missing.", APIConstants::RESPONSECODE_BAD_REQUEST);
             }
             if (null != $lineItem->getId()) {
-                $lineItemData['id'] = ''.$lineItem->getId();
+                $lineItemData['id'] = '' . $lineItem->getId();
             }
             if (null != $lineItem->getProduct()) {
-                $lineItemData['product'] = ''.$lineItem->getProduct()->getEntityId();
+                $lineItemData['product'] = '' . $lineItem->getProduct()->getEntityId();
             }
             if (null != $lineItem->getDescription()) {
                 $lineItemData['product_description'] = $lineItem->getDescription();
@@ -412,7 +412,7 @@ class EntityAPIHandler extends APIHandler
             if (null == $lineItem->getDiscountPercentage()) {
                 $lineItemData['Discount'] = $lineItem->getDiscount();
             } else {
-                $lineItemData['Discount'] = $lineItem->getDiscountPercentage().'%';
+                $lineItemData['Discount'] = $lineItem->getDiscountPercentage() . '%';
             }
             $lineTaxes = $lineItem->getLineTax();
             $lineTaxArray = [];
@@ -449,11 +449,11 @@ class EntityAPIHandler extends APIHandler
                 $modifiedBy = ZCRMUser::getInstance($value['id'], $value['name']);
                 $this->record->setModifiedBy($modifiedBy);
             } elseif ('Created_Time' == $key) {
-                $this->record->setCreatedTime(''.$value);
+                $this->record->setCreatedTime('' . $value);
             } elseif ('Modified_Time' == $key) {
-                $this->record->setModifiedTime(''.$value);
+                $this->record->setModifiedTime('' . $value);
             } elseif ('Last_Activity_Time' == $key) {
-                $this->record->setLastActivityTime(''.$value);
+                $this->record->setLastActivityTime('' . $value);
             } elseif ('Owner' == $key) {
                 $owner = ZCRMUser::getInstance($value['id'], $value['name']);
                 $this->record->setOwner($owner);

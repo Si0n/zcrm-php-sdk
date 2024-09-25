@@ -10,7 +10,7 @@ use zcrmsdk\crm\utility\APIConstants;
 
 class VariableGroupAPIHandler extends APIHandler
 {
-    private $variable_groups = null;
+    private $variable_groups;
 
     public static function getInstance()
     {
@@ -62,7 +62,7 @@ class VariableGroupAPIHandler extends APIHandler
     public function getVariableGroup()
     {
         try {
-            $this->urlPath = 'settings/variable_groups/'.$this->variable_groups->getId();
+            $this->urlPath = 'settings/variable_groups/' . $this->variable_groups->getId();
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
             $this->addHeader('Content-Type', 'application/json');
             $this->apiKey = 'variable_groups';

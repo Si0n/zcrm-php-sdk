@@ -11,63 +11,63 @@ class ZCRMNote
      *
      * @var string
      */
-    private $id = null;
+    private $id;
 
     /**
      * note title.
      *
      * @var string
      */
-    private $title = null;
+    private $title;
 
     /**
      * note content.
      *
      * @var string
      */
-    private $content = null;
+    private $content;
 
     /**
      * parent record of the note.
      *
      * @var ZCRMRecord
      */
-    private $parentRecord = null;
+    private $parentRecord;
 
     /**
      * owner of the note.
      *
      * @var ZCRMUser
      */
-    private $owner = null;
+    private $owner;
 
     /**
      * creator of the note.
      *
      * @var ZCRMUser
      */
-    private $createdBy = null;
+    private $createdBy;
 
     /**
      * creation time of the note.
      *
      * @var string
      */
-    private $createdTime = null;
+    private $createdTime;
 
     /**
      * modifier of the note.
      *
      * @var ZCRMUser
      */
-    private $modifiedBy = null;
+    private $modifiedBy;
 
     /**
      * modification time of the note.
      *
      * @var string
      */
-    private $modifiedTime = null;
+    private $modifiedTime;
 
     /**
      * the attachments of the note.
@@ -81,35 +81,35 @@ class ZCRMNote
      *
      * @var string
      */
-    private $size = null;
+    private $size;
 
     /**
      * note has voice note.
      *
      * @var bool
      */
-    private $voiceNote = null;
+    private $voiceNote;
 
     /**
      * parent module of the note.
      *
      * @var ZCRMModule
      */
-    private $parentModule = null;
+    private $parentModule;
 
     /**
      * parent record name of the note.
      *
      * @var string
      */
-    private $parentName = null;
+    private $parentName;
 
     /**
      * id of the parent record.
      *
      * @var string
      */
-    private $parentId = null;
+    private $parentId;
 
     /**
      * constructor to assign the parent record and note id to the note.

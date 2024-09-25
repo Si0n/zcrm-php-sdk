@@ -11,7 +11,7 @@ use zcrmsdk\crm\utility\APIConstants;
 
 class VariableAPIHandler extends APIHandler
 {
-    private $variables = null;
+    private $variables;
 
     public static function getInstance()
     {
@@ -72,7 +72,7 @@ class VariableAPIHandler extends APIHandler
     public function getVariable($group)
     {
         try {
-            $this->urlPath = 'settings/variables/'.$this->variables->getId();
+            $this->urlPath = 'settings/variables/' . $this->variables->getId();
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
             $this->addHeader('Content-Type', 'application/json');
             if (null != $group) {
@@ -151,16 +151,16 @@ class VariableAPIHandler extends APIHandler
             $variablesJson['id'] = $entityInstance->getId();
         }
         if (null != $entityInstance->getName()) {
-            $variablesJson['name'] = ''.$entityInstance->getName();
+            $variablesJson['name'] = '' . $entityInstance->getName();
         }
         if (null != $entityInstance->getApiName()) {
-            $variablesJson['api_name'] = ''.$entityInstance->getApiName();
+            $variablesJson['api_name'] = '' . $entityInstance->getApiName();
         }
         if (null != $entityInstance->getType()) {
-            $variablesJson['type'] = ''.$entityInstance->getType();
+            $variablesJson['type'] = '' . $entityInstance->getType();
         }
         if (null != $entityInstance->getValue()) {
-            $variablesJson['value'] = ''.$entityInstance->getValue();
+            $variablesJson['value'] = '' . $entityInstance->getValue();
         }
         if (null != $entityInstance->getVariableGroup()) {
             $variableGroupJson = [];
@@ -169,12 +169,12 @@ class VariableAPIHandler extends APIHandler
                 $variableGroupJson['id'] = $variableGroup->getId();
             }
             if (null != $variableGroup->getApiName()) {
-                $variableGroupJson['api_name'] = ''.$variableGroup->getApiName();
+                $variableGroupJson['api_name'] = '' . $variableGroup->getApiName();
             }
             $variablesJson['variable_group'] = $variableGroupJson;
         }
         if (null != $entityInstance->getDescription()) {
-            $variablesJson['description'] = ''.$entityInstance->getDescription();
+            $variablesJson['description'] = '' . $entityInstance->getDescription();
         }
 
         return $variablesJson;
@@ -207,7 +207,7 @@ class VariableAPIHandler extends APIHandler
     public function updateVariable()
     {
         try {
-            $this->urlPath = 'settings/variables/'.$this->variables->getId();
+            $this->urlPath = 'settings/variables/' . $this->variables->getId();
             $this->requestMethod = APIConstants::REQUEST_METHOD_PUT;
             $this->addHeader('Content-Type', 'application/json');
             $this->apiKey = 'variables';
@@ -230,7 +230,7 @@ class VariableAPIHandler extends APIHandler
     public function deleteVariable()
     {
         try {
-            $this->urlPath = 'settings/variables/'.$this->variables->getId();
+            $this->urlPath = 'settings/variables/' . $this->variables->getId();
             $this->requestMethod = APIConstants::REQUEST_METHOD_DELETE;
             $this->addHeader('Content-Type', 'application/json');
             $this->apiKey = 'variables';

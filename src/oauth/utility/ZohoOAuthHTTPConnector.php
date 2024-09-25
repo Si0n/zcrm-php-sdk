@@ -32,7 +32,7 @@ class ZohoOAuthHTTPConnector
     public function get()
     {
         $curl_pointer = curl_init();
-        $url = self::getUrl().'?'.http_build_query($this->requestParams);
+        $url = self::getUrl() . '?' . http_build_query($this->requestParams);
         curl_setopt($curl_pointer, CURLOPT_URL, $url);
         curl_setopt($curl_pointer, CURLOPT_HEADER, 1);
         curl_setopt($curl_pointer, CURLOPT_RETURNTRANSFER, true);
@@ -83,8 +83,8 @@ class ZohoOAuthHTTPConnector
         $params_as_string = '';
         foreach ($urlParams as $key => $valueArray) {
             foreach ($valueArray as $value) {
-                $params_as_string = $params_as_string.$key.'='.$value.'&';
-                $this->requestParamCount++;
+                $params_as_string = $params_as_string . $key . '=' . $value . '&';
+                ++$this->requestParamCount;
             }
         }
         $params_as_string = rtrim($params_as_string, '&');
@@ -98,7 +98,7 @@ class ZohoOAuthHTTPConnector
         $headersArray = [];
         $headersMap = self::getRequestHeadersMap();
         foreach ($headersMap as $key => $value) {
-            $headersArray[] = $key.':'.$value;
+            $headersArray[] = $key . ':' . $value;
         }
 
         return $headersArray;

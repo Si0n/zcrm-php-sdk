@@ -7,6 +7,7 @@ use zcrmsdk\crm\api\handler\VariableAPIHandler;
 use zcrmsdk\crm\api\handler\VariableGroupAPIHandler;
 use zcrmsdk\crm\api\response\APIResponse;
 use zcrmsdk\crm\api\response\BulkAPIResponse;
+use zcrmsdk\crm\exception\ZCRMException;
 use zcrmsdk\crm\setup\users\ZCRMUser;
 
 /**
@@ -821,7 +822,7 @@ class ZCRMOrganization
      *
      * @param string $paid_type the account paid type
      */
-    public function setPaidType($paid_type)
+    public function setPaidType($paid_type): void
     {
         $this->paid_type = $paid_type;
     }
@@ -833,7 +834,7 @@ class ZCRMOrganization
      *
      * @return APIResponse instance of the APIResponse class containing the api response
      */
-    public function getUser($userId)
+    public function getUser(string $userId): APIResponse
     {
         return OrganizationAPIHandler::getInstance()->getUser($userId);
     }
@@ -846,7 +847,7 @@ class ZCRMOrganization
      *
      * @return BulkAPIResponse instance of the BulkAPIResponse class containing the bulk api response
      */
-    public function getAllUsers($param_map = [], $header_map = [])
+    public function getAllUsers(array $param_map = [], array $header_map = [])
     {
         return OrganizationAPIHandler::getInstance()->getAllUsers($param_map, $header_map);
     }
@@ -859,7 +860,7 @@ class ZCRMOrganization
      *
      * @return BulkAPIResponse instance of the BulkAPIResponse class containing the bulk api response
      */
-    public function getAllActiveUsers($param_map = [], $header_map = [])
+    public function getAllActiveUsers(array $param_map = [], array $header_map = [])
     {
         return OrganizationAPIHandler::getInstance()->getAllActiveUsers($param_map, $header_map);
     }
@@ -872,7 +873,7 @@ class ZCRMOrganization
      *
      * @return BulkAPIResponse instance of the BulkAPIResponse class containing the bulk api response
      */
-    public function getAllDeactiveUsers($param_map = [], $header_map = [])
+    public function getAllDeactiveUsers(array $param_map = [], array $header_map = [])
     {
         return OrganizationAPIHandler::getInstance()->getAllDeactiveUsers($param_map, $header_map);
     }
@@ -885,7 +886,7 @@ class ZCRMOrganization
      *
      * @return BulkAPIResponse instance of the BulkAPIResponse class containing the bulk api response
      */
-    public function getAllConfirmedUsers($param_map = [], $header_map = [])
+    public function getAllConfirmedUsers(array $param_map = [], array $header_map = [])
     {
         return OrganizationAPIHandler::getInstance()->getAllConfirmedUsers($param_map, $header_map);
     }
@@ -898,7 +899,7 @@ class ZCRMOrganization
      *
      * @return BulkAPIResponse instance of the BulkAPIResponse class containing the bulk api response
      */
-    public function getAllNotConfirmedUsers($param_map = [], $header_map = [])
+    public function getAllNotConfirmedUsers(array $param_map = [], array $header_map = [])
     {
         return OrganizationAPIHandler::getInstance()->getAllNotConfirmedUsers($param_map, $header_map);
     }
@@ -911,7 +912,7 @@ class ZCRMOrganization
      *
      * @return BulkAPIResponse instance of the BulkAPIResponse class containing the bulk api response
      */
-    public function getAllDeletedUsers($param_map = [], $header_map = [])
+    public function getAllDeletedUsers(array $param_map = [], array $header_map = []): BulkAPIResponse
     {
         return OrganizationAPIHandler::getInstance()->getAllDeletedUsers($param_map, $header_map);
     }
@@ -924,7 +925,7 @@ class ZCRMOrganization
      *
      * @return BulkAPIResponse instance of the BulkAPIResponse class containing the bulk api response
      */
-    public function getAllActiveConfirmedUsers($param_map = [], $header_map = [])
+    public function getAllActiveConfirmedUsers(array $param_map = [], array $header_map = [])
     {
         return OrganizationAPIHandler::getInstance()->getAllActiveConfirmedUsers($param_map, $header_map);
     }
@@ -937,7 +938,7 @@ class ZCRMOrganization
      *
      * @return BulkAPIResponse instance of the BulkAPIResponse class containing the bulk api response
      */
-    public function getAllAdminUsers($param_map = [], $header_map = [])
+    public function getAllAdminUsers(array $param_map = [], array $header_map = []): BulkAPIResponse
     {
         return OrganizationAPIHandler::getInstance()->getAllAdminUsers($param_map, $header_map);
     }
@@ -950,17 +951,12 @@ class ZCRMOrganization
      *
      * @return BulkAPIResponse instance of the BulkAPIResponse class containing the bulk api response
      */
-    public function getAllActiveConfirmedAdmins($param_map = [], $header_map = [])
+    public function getAllActiveConfirmedAdmins(array $param_map = [], array $header_map = []): BulkAPIResponse
     {
         return OrganizationAPIHandler::getInstance()->getAllActiveConfirmedAdmins($param_map, $header_map);
     }
 
-    /**
-     * method to get the current users of the organization.
-     *
-     * @return APIResponse instance of the APIResponse class containing the api response
-     */
-    public function getCurrentUser()
+    public function getCurrentUser(): APIResponse|BulkAPIResponse
     {
         return OrganizationAPIHandler::getInstance()->getCurrentUser();
     }
@@ -969,8 +965,9 @@ class ZCRMOrganization
      * method to get the profiles of the organization.
      *
      * @return BulkAPIResponse instance of the BulkAPIResponse class containing the bulk api response
+     * @throws ZCRMException
      */
-    public function getAllProfiles()
+    public function getAllProfiles(): BulkAPIResponse
     {
         return OrganizationAPIHandler::getInstance()->getAllProfiles();
     }
@@ -981,8 +978,9 @@ class ZCRMOrganization
      * @param string $profileId the profile id of the organization
      *
      * @return APIResponse instance of the APIResponse class containing the api response
+     * @throws ZCRMException
      */
-    public function getProfile($profileId)
+    public function getProfile(string $profileId): APIResponse
     {
         return OrganizationAPIHandler::getInstance()->getProfile($profileId);
     }
@@ -991,8 +989,9 @@ class ZCRMOrganization
      * method to get the roles of the organization.
      *
      * @return BulkAPIResponse instance of the BulkAPIResponse class containing the bulk api response
+     * @throws ZCRMException
      */
-    public function getAllRoles()
+    public function getAllRoles(): BulkAPIResponse
     {
         return OrganizationAPIHandler::getInstance()->getAllRoles();
     }
@@ -1003,8 +1002,9 @@ class ZCRMOrganization
      * @param string $roleId the role id of the organization
      *
      * @return APIResponse instance of the APIResponse class containing the api response
+     * @throws ZCRMException
      */
-    public function getRole($roleId)
+    public function getRole(string $roleId): APIResponse
     {
         return OrganizationAPIHandler::getInstance()->getRole($roleId);
     }
@@ -1016,7 +1016,7 @@ class ZCRMOrganization
      *
      * @return APIResponse instance of the APIResponse class containing the api response
      */
-    public function createUser($userInstance)
+    public function createUser(ZCRMUser $userInstance): APIResponse
     {
         return OrganizationAPIHandler::getInstance()->createUser($userInstance);
     }
@@ -1156,7 +1156,7 @@ class ZCRMOrganization
         return $instance->updateVariables($variable);
     }
 
-    public function getNotes($param_map = [], $header_map = [])
+    public function getNotes(array $param_map = [], array $header_map = [])
     {
         return OrganizationAPIHandler::getInstance()->getNotes($param_map, $header_map);
     }

@@ -6,24 +6,20 @@ class ZCRMProfileSection
 {
     /**
      * name of the profile section.
-     *
-     * @var string
      */
-    private $name;
+    private string $name;
 
     /**
      * categories of profile.
-     *
-     * @var array
      */
-    private $categories = [];
+    private array $categories = [];
 
     /**
      * constructor to assign the name to the profile section.
      *
      * @param string $name name of the section
      */
-    private function __construct($name)
+    private function __construct(string $name)
     {
         $this->name = $name;
     }
@@ -35,7 +31,7 @@ class ZCRMProfileSection
      *
      * @return ZCRMProfileSection instance of the ZCRMProfileSection
      */
-    public static function getInstance($name)
+    public static function getInstance(string $name): ZCRMProfileSection
     {
         return new ZCRMProfileSection($name);
     }
@@ -45,7 +41,7 @@ class ZCRMProfileSection
      *
      * @return string the name of the profile section
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -55,7 +51,7 @@ class ZCRMProfileSection
      *
      * @param array $name the name of the profile section
      */
-    public function setName($name)
+    public function setName(null|string $name): void
     {
         $this->name = $name;
     }
@@ -63,9 +59,9 @@ class ZCRMProfileSection
     /**
      * method to get the categories to the profile section.
      *
-     * @return array array of ZCRMProfileCategory class instances
+     * @return array<ZCRMProfileCategory>
      */
-    public function getCategories()
+    public function getCategories(): array
     {
         return $this->categories;
     }
@@ -75,8 +71,8 @@ class ZCRMProfileSection
      *
      * @param array $categoryIns ZCRMProfileCategory class instance
      */
-    public function addCategory($categoryIns)
+    public function addCategory(null|ZCRMProfileCategory $categoryIns): void
     {
-        array_push($this->categories, $categoryIns);
+        $this->categories[] = $categoryIns;
     }
 }

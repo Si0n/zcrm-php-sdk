@@ -23,14 +23,14 @@ class ZCRMRecord
      *
      * @var string
      */
-    private $entityId = null;
+    private $entityId;
 
     /**
      * api name of the module.
      *
      * @var string
      */
-    private $moduleApiName = null;
+    private $moduleApiName;
 
     /**
      * the inventory item list.
@@ -44,42 +44,42 @@ class ZCRMRecord
      *
      * @var string
      */
-    private $lookupLabel = null;
+    private $lookupLabel;
 
     /**
      * the owner of the record.
      *
      * @var ZCRMUser
      */
-    private $owner = null;
+    private $owner;
 
     /**
      * the user who created the record.
      *
      * @var ZCRMUser
      */
-    private $createdBy = null;
+    private $createdBy;
 
     /**
      * the user who modified the record.
      *
      * @var ZCRMUser
      */
-    private $modifiedBy = null;
+    private $modifiedBy;
 
     /**
      * creation time of the record.
      *
      * @var string
      */
-    private $createdTime = null;
+    private $createdTime;
 
     /**
      * modification time of the record.
      *
      * @var string
      */
-    private $modifiedTime = null;
+    private $modifiedTime;
 
     /**
      * the record data.
@@ -114,7 +114,7 @@ class ZCRMRecord
      *
      * @var string
      */
-    private $layout = null;
+    private $layout;
 
     /**
      * the list of tax.
@@ -128,7 +128,7 @@ class ZCRMRecord
      *
      * @var string
      */
-    private $lastActivityTime = null;
+    private $lastActivityTime;
 
     /**
      * list of all the tags.
@@ -149,14 +149,14 @@ class ZCRMRecord
      *
      * @var string
      */
-    private $status = null;
+    private $status;
 
     /**
      * bulk write error message of the record.
      *
      * @var string
      */
-    private $error = null;
+    private $error;
 
     /**
      * csv record row number.
@@ -339,8 +339,6 @@ class ZCRMRecord
 
     /**
      * Method to add Line item to existing record.
-     *
-     * @param ZCRMInventoryLineItem $lineitem the line item object
      */
     public function addLineItemtoExistingRecord($lineItem)
     {
@@ -367,6 +365,7 @@ class ZCRMRecord
      * Method to update Line item from the existing record.
      *
      * @param string $lineItemId the line item id
+     *
      * @oaram
      */
     public function deleteLineItemFromTheExistingRecord($lineItemId)
@@ -603,9 +602,9 @@ class ZCRMRecord
      ** @param string $trigger array of triggers
      * @param string $lar_id lead assignment rule id
      *
-     * @throws ZCRMException if Entity ID of the record is not NULL
-     *
      * @return APIResponse instance of the APIResponse class which holds the API response
+     *
+     * @throws ZCRMException if Entity ID of the record is not NULL
      */
     public function create($trigger = null, $lar_id = null, $process = null)
     {
@@ -622,11 +621,10 @@ class ZCRMRecord
      * Method to update the records.
      *
      ** @param string $trigger array of triggers
-     * @param string $lar_id lead assignment rule id
-     *
-     * @throws ZCRMException if Entity ID of the record is NULL
      *
      * @return APIResponse instance of the APIResponse class which holds the API response
+     *
+     * @throws ZCRMException if Entity ID of the record is NULL
      */
     public function update($trigger = null, $process = null)
     {
@@ -642,9 +640,9 @@ class ZCRMRecord
     /**
      * Method to delete the record.
      *
-     * @throws ZCRMException if Entity ID of the record is NULL
-     *
      * @return APIResponse instance of the APIResponse class which holds the API response
+     *
+     * @throws ZCRMException if Entity ID of the record is NULL
      */
     public function delete()
     {
@@ -661,7 +659,6 @@ class ZCRMRecord
      * Method to convert the record.
      *
      * @param ZCRMRecord $potentialRecord the potential record
-     * @param string     $assignToUser    owner of the converted record
      *
      * @return APIResponse instance of the APIResponse class which holds the API response
      */
@@ -702,9 +699,9 @@ class ZCRMRecord
      *
      * @param ZCRMNote $zcrmNoteIns note instance
      *
-     * @throws ZCRMException if the note id of the note is null
-     *
      * @return APIResponse instance of the APIResponse class which holds the API response
+     *
+     * @throws ZCRMException if the note id of the note is null
      */
     public function addNote($zcrmNoteIns)
     {
@@ -727,9 +724,9 @@ class ZCRMRecord
      *
      * @param ZCRMNote $zcrmNoteIns Notes instance
      *
-     * @throws ZCRMException if note instance is not valid
-     *
      * @return APIResponse instance of the APIResponse class which holds the API response
+     *
+     * @throws ZCRMException if note instance is not valid
      */
     public function updateNote($zcrmNoteIns)
     {
@@ -747,9 +744,9 @@ class ZCRMRecord
      *
      * @param ZCRMNote $zcrmNoteIns note instance
      *
-     * @throws ZCRMException if note id is not valid
-     *
      * @return APIResponse instance of the APIResponse class which holds the API response
+     *
+     * @throws ZCRMException if note id is not valid
      */
     public function deleteNote($zcrmNoteIns)
     {
@@ -883,9 +880,9 @@ class ZCRMRecord
      *
      * @param string $tagNames tagnames to add(multiple tag names as comma separated values)
      *
-     * @throws ZCRMException if the record or module or tag doesn't exist
-     *
      * @return APIResponse APIResponse instance of the APIResponse class which holds the API response
+     *
+     * @throws ZCRMException if the record or module or tag doesn't exist
      */
     public function addTags($tagNames)
     {
@@ -907,9 +904,9 @@ class ZCRMRecord
      *
      * @param string $tagNames tag names to remove(multiple tag names as comma separated values)
      *
-     * @throws ZCRMException if the record or module or tag doesn't exist
-     *
      * @return APIResponse instance of the APIResponse class which holds the API response
+     *
+     * @throws ZCRMException if the record or module or tag doesn't exist
      */
     public function removeTags($tagNames)
     {

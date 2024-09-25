@@ -9,28 +9,28 @@ class ZCRMPickListValue
      *
      * @var string
      */
-    private $displayValue = null;
+    private $displayValue;
 
     /**
      * sequence number of the llist.
      *
      * @var int
      */
-    private $sequenceNumber = null;
+    private $sequenceNumber;
 
     /**
      * actual value of the pick list.
      *
      * @var string
      */
-    private $actualValue = null;
+    private $actualValue;
 
     /**
      * mappings.
      *
      * @var array
      */
-    private $maps = null;
+    private $maps;
 
     private function __construct()
     {

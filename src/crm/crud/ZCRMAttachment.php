@@ -12,98 +12,98 @@ class ZCRMAttachment
      *
      * @var string
      */
-    private $id = null;
+    private $id;
 
     /**
      * file name of the attachment.
      *
      * @var string
      */
-    private $fileName = null;
+    private $fileName;
 
     /**
      * file type of the attachment.
      *
      * @var string
      */
-    private $fileType = null;
+    private $fileType;
 
     /**
      * size of the attachment.
      *
      * @var string
      */
-    private $size = null;
+    private $size;
 
     /**
      * owner of the attachment.
      *
      * @var ZCRMUser
      */
-    private $owner = null;
+    private $owner;
 
     /**
      * the user who created the attachment.
      *
      * @var ZCRMUser
      */
-    private $createdBy = null;
+    private $createdBy;
 
     /**
      * creation time of the attachment.
      *
      * @var string
      */
-    private $createdTime = null;
+    private $createdTime;
 
     /**
      * the user who modified the attachment.
      *
      * @var ZCRMUser
      */
-    private $modifiedBy = null;
+    private $modifiedBy;
 
     /**
      * modification time of the attachment.
      *
      * @var string
      */
-    private $modifiedTime = null;
+    private $modifiedTime;
 
     /**
      * the record that consists this attachment.
      *
      * @var ZCRMRecord
      */
-    private $parentRecord = null;
+    private $parentRecord;
 
     /**
      * the module that consists this attachment.
      *
      * @var ZCRMModule
      */
-    private $parentModule = null;
+    private $parentModule;
 
     /**
      * the type of attachment.
      *
      * @var string
      */
-    private $attachmentType = null;
+    private $attachmentType;
 
     /**
      * the record name that consists this attachment.
      *
      * @var string
      */
-    private $parentName = null;
+    private $parentName;
 
     /**
      * the record id that consists this attachment.
      *
      * @var string
      */
-    private $parentId = null;
+    private $parentId;
 
     /**
      * constructor to set the parent record and the attachment id.

@@ -15,10 +15,10 @@ use zcrmsdk\crm\utility\CommonUtil;
 
 class RelatedListAPIHandler extends APIHandler
 {
-    private $parentRecord = null;
+    private $parentRecord;
 
     // ZCRMRecord
-    private $relatedList = null;
+    private $relatedList;
 
     // ZCRMModuleRelation
     private $junctionRecord;
@@ -42,7 +42,7 @@ class RelatedListAPIHandler extends APIHandler
     public function getRecords($param_map, $header_map)
     {
         try {
-            $this->urlPath = $this->parentRecord->getModuleApiName().'/'.$this->parentRecord->getEntityId().'/'.$this->relatedList->getApiName();
+            $this->urlPath = $this->parentRecord->getModuleApiName() . '/' . $this->parentRecord->getEntityId() . '/' . $this->relatedList->getApiName();
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
             foreach ($param_map as $key => $value) {
                 if (null != $value) {
@@ -78,7 +78,7 @@ class RelatedListAPIHandler extends APIHandler
     public function getNotes($param_map, $header_map)
     {
         try {
-            $this->urlPath = $this->parentRecord->getModuleApiName().'/'.$this->parentRecord->getEntityId().'/'.$this->relatedList->getApiName();
+            $this->urlPath = $this->parentRecord->getModuleApiName() . '/' . $this->parentRecord->getEntityId() . '/' . $this->relatedList->getApiName();
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
             foreach ($param_map as $key => $value) {
                 if (null != $value) {
@@ -111,7 +111,7 @@ class RelatedListAPIHandler extends APIHandler
     public function getAttachments($param_map)
     {
         try {
-            $this->urlPath = $this->parentRecord->getModuleApiName().'/'.$this->parentRecord->getEntityId().'/'.$this->relatedList->getApiName();
+            $this->urlPath = $this->parentRecord->getModuleApiName() . '/' . $this->parentRecord->getEntityId() . '/' . $this->relatedList->getApiName();
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
             foreach ($param_map as $key => $value) {
                 if (null != $value) {
@@ -152,7 +152,7 @@ class RelatedListAPIHandler extends APIHandler
             }
             $requestBodyObj = [];
             $requestBodyObj['data'] = $dataArray;
-            $this->urlPath = $this->parentRecord->getModuleApiName().'/'.$this->parentRecord->getEntityId().'/'.$this->relatedList->getApiName();
+            $this->urlPath = $this->parentRecord->getModuleApiName() . '/' . $this->parentRecord->getEntityId() . '/' . $this->relatedList->getApiName();
             $this->requestMethod = APIConstants::REQUEST_METHOD_POST;
             $this->addHeader('Content-Type', 'application/json');
             $this->requestBody = $requestBodyObj;
@@ -168,7 +168,7 @@ class RelatedListAPIHandler extends APIHandler
     public function addNote($zcrmNote)
     {
         try {
-            $this->urlPath = $this->parentRecord->getModuleApiName().'/'.$this->parentRecord->getEntityId().'/'.$this->relatedList->getApiName();
+            $this->urlPath = $this->parentRecord->getModuleApiName() . '/' . $this->parentRecord->getEntityId() . '/' . $this->relatedList->getApiName();
             $this->requestMethod = APIConstants::REQUEST_METHOD_POST;
             $this->addHeader('Content-Type', 'application/json');
             $inputJSON = [
@@ -196,7 +196,7 @@ class RelatedListAPIHandler extends APIHandler
     public function updateNote($zcrmNote)
     {
         try {
-            $this->urlPath = $this->parentRecord->getModuleApiName().'/'.$this->parentRecord->getEntityId().'/'.$this->relatedList->getApiName().'/'.$zcrmNote->getId();
+            $this->urlPath = $this->parentRecord->getModuleApiName() . '/' . $this->parentRecord->getEntityId() . '/' . $this->relatedList->getApiName() . '/' . $zcrmNote->getId();
             $this->requestMethod = APIConstants::REQUEST_METHOD_PUT;
             $this->addHeader('Content-Type', 'application/json');
             $inputJSON = [
@@ -223,7 +223,7 @@ class RelatedListAPIHandler extends APIHandler
     public function deleteNote($zcrmNote)
     {
         try {
-            $this->urlPath = $this->parentRecord->getModuleApiName().'/'.$this->parentRecord->getEntityId().'/'.$this->relatedList->getApiName().'/'.$zcrmNote->getId();
+            $this->urlPath = $this->parentRecord->getModuleApiName() . '/' . $this->parentRecord->getEntityId() . '/' . $this->relatedList->getApiName() . '/' . $zcrmNote->getId();
             $this->requestMethod = APIConstants::REQUEST_METHOD_DELETE;
             $this->addHeader('Content-Type', 'application/json');
 
@@ -240,7 +240,7 @@ class RelatedListAPIHandler extends APIHandler
     {
         try {
             $this->requestMethod = APIConstants::REQUEST_METHOD_POST;
-            $this->urlPath = $this->parentRecord->getModuleApiName().'/'.$this->parentRecord->getEntityId().'/'.$this->relatedList->getApiName();
+            $this->urlPath = $this->parentRecord->getModuleApiName() . '/' . $this->parentRecord->getEntityId() . '/' . $this->relatedList->getApiName();
 
             $responseInstance = APIRequest::getInstance($this)->uploadFile($filePath);
             $responseJson = $responseInstance->getResponseJSON();
@@ -258,7 +258,7 @@ class RelatedListAPIHandler extends APIHandler
     {
         try {
             $this->requestMethod = APIConstants::REQUEST_METHOD_POST;
-            $this->urlPath = $this->parentRecord->getModuleApiName().'/'.$this->parentRecord->getEntityId().'/'.$this->relatedList->getApiName();
+            $this->urlPath = $this->parentRecord->getModuleApiName() . '/' . $this->parentRecord->getEntityId() . '/' . $this->relatedList->getApiName();
 
             $responseInstance = APIRequest::getInstance($this)->uploadLinkAsAttachment($attachmentUrl);
             $responseJson = $responseInstance->getResponseJSON();
@@ -277,7 +277,7 @@ class RelatedListAPIHandler extends APIHandler
     {
         try {
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
-            $this->urlPath = $this->parentRecord->getModuleApiName().'/'.$this->parentRecord->getEntityId().'/'.$this->relatedList->getApiName().'/'.$attachmentId;
+            $this->urlPath = $this->parentRecord->getModuleApiName() . '/' . $this->parentRecord->getEntityId() . '/' . $this->relatedList->getApiName() . '/' . $attachmentId;
 
             return APIRequest::getInstance($this)->downloadFile();
         } catch (ZCRMException $exception) {
@@ -290,7 +290,7 @@ class RelatedListAPIHandler extends APIHandler
     {
         try {
             $this->requestMethod = APIConstants::REQUEST_METHOD_DELETE;
-            $this->urlPath = $this->parentRecord->getModuleApiName().'/'.$this->parentRecord->getEntityId().'/'.$this->relatedList->getApiName().'/'.$attachmentId;
+            $this->urlPath = $this->parentRecord->getModuleApiName() . '/' . $this->parentRecord->getEntityId() . '/' . $this->relatedList->getApiName() . '/' . $attachmentId;
 
             return APIRequest::getInstance($this)->getAPIResponse();
         } catch (ZCRMException $exception) {
@@ -303,7 +303,7 @@ class RelatedListAPIHandler extends APIHandler
     {
         try {
             $this->requestMethod = APIConstants::REQUEST_METHOD_PUT;
-            $this->urlPath = $this->parentRecord->getModuleApiName().'/'.$this->parentRecord->getEntityId().'/'.$this->junctionRecord->getApiName().'/'.$this->junctionRecord->getId();
+            $this->urlPath = $this->parentRecord->getModuleApiName() . '/' . $this->parentRecord->getEntityId() . '/' . $this->junctionRecord->getApiName() . '/' . $this->junctionRecord->getId();
 
             $dataArray = $this->junctionRecord->getRelatedDetails();
             if (0 == sizeof($dataArray)) {
@@ -327,7 +327,7 @@ class RelatedListAPIHandler extends APIHandler
     {
         try {
             $this->requestMethod = APIConstants::REQUEST_METHOD_DELETE;
-            $this->urlPath = $this->parentRecord->getModuleApiName().'/'.$this->parentRecord->getEntityId().'/'.$this->junctionRecord->getApiName().'/'.$this->junctionRecord->getId();
+            $this->urlPath = $this->parentRecord->getModuleApiName() . '/' . $this->parentRecord->getEntityId() . '/' . $this->junctionRecord->getApiName() . '/' . $this->junctionRecord->getId();
 
             return APIRequest::getInstance($this)->getAPIResponse();
         } catch (ZCRMException $exception) {

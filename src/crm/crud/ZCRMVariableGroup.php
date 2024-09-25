@@ -6,11 +6,11 @@ use zcrmsdk\crm\api\handler\VariableGroupAPIHandler;
 
 class ZCRMVariableGroup
 {
-    private $id = null;
-    private $name = null;
-    private $api_name = null;
-    private $display_label = null;
-    private $description = null;
+    private $id;
+    private $name;
+    private $api_name;
+    private $display_label;
+    private $description;
 
     public function getId()
     {

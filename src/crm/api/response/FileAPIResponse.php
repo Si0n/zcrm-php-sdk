@@ -10,59 +10,45 @@ class FileAPIResponse
 {
     /**
      * response.
-     *
-     * @var string
      */
-    private $response = null;
+    private null|string $response = null;
 
     /**
      * Json response.
      *
      * @var array array of json object
      */
-    private $responseJSON = null;
+    private array $responseJSON = [];
 
     /**
      * http status code.
-     *
-     * @var string
      */
-    private $httpStatusCode = null;
+    private null|string $httpStatusCode = null;
 
     /**
      * response headers.
-     *
-     * @var array
      */
-    private $responseHeaders = null;
+    private array $responseHeaders = [];
 
     /**
      * code.
-     *
-     * @var string
      */
-    private $code = null;
+    private null|string $code = null;
 
     /**
      * message.
-     *
-     * @var string
      */
-    private $message = null;
+    private null|string $message = null;
 
     /**
      * details.
-     *
-     * @var array
      */
-    private $details = null;
+    private array $details = [];
 
     /**
      * response status.
-     *
-     * @var string
      */
-    private $status = null;
+    private null|string $status = null;
 
     /**
      * method to set the content of the file.
@@ -70,11 +56,11 @@ class FileAPIResponse
      * @param string $httpResponse   http response
      * @param int    $httpStatusCode status code
      *
-     * @throws ZCRMException exception is thrown if the response is faulty
-     *
      * @return FileAPIResponse instance of the FileAPIResponse class containing the file api response
+     *
+     * @throws ZCRMException exception is thrown if the response is faulty
      */
-    public function setFileContent($httpResponse, $httpStatusCode)
+    public function setFileContent(string $httpResponse, int $httpStatusCode): self
     {
         $this->httpStatusCode = $httpStatusCode;
         if (APIConstants::RESPONSECODE_NO_CONTENT == $httpStatusCode) {
@@ -85,10 +71,10 @@ class FileAPIResponse
             throw $exception;
         }
         list($headers, $content) = explode("\r\n\r\n", $httpResponse, 2);
-        $headerArray = (explode("\r\n", $headers, 50));
+        $headerArray = explode("\r\n", $headers, 50);
         $headerMap = [];
         foreach ($headerArray as $key) {
-            if (false != strpos($key, ':')) {
+            if (strpos($key, ':')) {
                 $splitArray = explode(':', $key);
                 $headerMap[$splitArray[0]] = $splitArray[1];
             }
@@ -115,14 +101,14 @@ class FileAPIResponse
      *
      * @return string the name of the file
      */
-    public function getFileName()
+    public function getFileName(): string
     {
         $contentDisp = self::getResponseHeaders()['Content-Disposition'];
         if (null == $contentDisp) {
             $contentDisp = self::getResponseHeaders()['Content-disposition'];
         }
         $fileName = substr($contentDisp, strrpos($contentDisp, "'") + 1, strlen($contentDisp));
-        if (false !== strpos($fileName, '=')) {
+        if (str_contains($fileName, '=')) {
             $fileName = substr($fileName, strrpos($fileName, '=') + 1, strlen($fileName));
             $fileName = str_replace(['\'', '"'], '', $fileName);
         }
@@ -135,7 +121,7 @@ class FileAPIResponse
      *
      * @return string content of the file
      */
-    public function getFileContent()
+    public function getFileContent(): ?string
     {
         return $this->response;
     }
@@ -145,7 +131,7 @@ class FileAPIResponse
      *
      * @return string the response
      */
-    public function getResponse()
+    public function getResponse(): ?string
     {
         return $this->response;
     }
@@ -155,7 +141,7 @@ class FileAPIResponse
      *
      * @param string $response the reponse to be set
      */
-    public function setResponse($response)
+    public function setResponse(null|string $response): void
     {
         $this->response = $response;
     }
@@ -165,7 +151,7 @@ class FileAPIResponse
      *
      * @return array array of the Json response objects
      */
-    public function getResponseJSON()
+    public function getResponseJSON(): array
     {
         return $this->responseJSON;
     }
@@ -175,7 +161,7 @@ class FileAPIResponse
      *
      * @param array $responseJSON array of the Json response objects
      */
-    public function setResponseJSON($responseJSON)
+    public function setResponseJSON(array $responseJSON): void
     {
         $this->responseJSON = $responseJSON;
     }
@@ -185,7 +171,7 @@ class FileAPIResponse
      *
      * @return string the http Status Code
      */
-    public function getHttpStatusCode()
+    public function getHttpStatusCode(): null|string
     {
         return $this->httpStatusCode;
     }
@@ -195,7 +181,7 @@ class FileAPIResponse
      *
      * @param string $httpStatusCode the http Status Code
      */
-    public function setHttpStatusCode($httpStatusCode)
+    public function setHttpStatusCode(null|string $httpStatusCode): void
     {
         $this->httpStatusCode = $httpStatusCode;
     }
@@ -205,7 +191,7 @@ class FileAPIResponse
      *
      * @return array array containing the response headers
      */
-    public function getResponseHeaders()
+    public function getResponseHeaders(): array
     {
         return $this->responseHeaders;
     }
@@ -215,7 +201,7 @@ class FileAPIResponse
      *
      * @param array $responseHeaders array containing the response headers
      */
-    public function setResponseHeaders($responseHeaders)
+    public function setResponseHeaders(array $responseHeaders): void
     {
         $this->responseHeaders = $responseHeaders;
     }
@@ -225,7 +211,7 @@ class FileAPIResponse
      *
      * @return string the code
      */
-    public function getCode()
+    public function getCode(): ?string
     {
         return $this->code;
     }
@@ -235,7 +221,7 @@ class FileAPIResponse
      *
      * @param string $code the code to be set
      */
-    public function setCode($code)
+    public function setCode(null|string $code): void
     {
         $this->code = $code;
     }
@@ -245,7 +231,7 @@ class FileAPIResponse
      *
      * @return string the message
      */
-    public function getMessage()
+    public function getMessage(): ?string
     {
         return $this->message;
     }
@@ -255,7 +241,7 @@ class FileAPIResponse
      *
      * @param string $message the message
      */
-    public function setMessage($message)
+    public function setMessage(null|string $message): void
     {
         $this->message = $message;
     }
@@ -265,7 +251,7 @@ class FileAPIResponse
      *
      * @return array array containing the details
      */
-    public function getDetails()
+    public function getDetails(): array
     {
         return $this->details;
     }
@@ -275,7 +261,7 @@ class FileAPIResponse
      *
      * @param array $details array containing the details
      */
-    public function setDetails($details)
+    public function setDetails(array $details): void
     {
         $this->details = $details;
     }
@@ -285,7 +271,7 @@ class FileAPIResponse
      *
      * @return string the status
      */
-    public function getStatus()
+    public function getStatus(): ?string
     {
         return $this->status;
     }

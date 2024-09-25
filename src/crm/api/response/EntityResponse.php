@@ -11,35 +11,35 @@ class EntityResponse
      *
      * @var string
      */
-    private $status = null;
+    private $status;
 
     /**
      * the response message.
      *
      * @var string
      */
-    private $message = null;
+    private $message;
 
     /**
      * the response code like SUCCESS,INVALID_DATA,..etc.
      *
      * @var string
      */
-    private $code = null;
+    private $code;
 
     /**
      * response json object.
      *
      * @var object
      */
-    private $responseJSON = null;
+    private $responseJSON;
 
     /**
      * data of the response.
      *
      * @var array
      */
-    private $data = null;
+    private $data;
 
     /**
      * upsert details like action,duplicate field.
@@ -53,7 +53,7 @@ class EntityResponse
      *
      * @var array
      */
-    private $details = null;
+    private $details;
 
     /**
      * constructor to set the entity response.

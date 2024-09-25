@@ -13,26 +13,15 @@ class APIResponse extends CommonAPIResponse
      *
      * @var object
      */
-    private $data = null;
+    private $data;
 
     /**
      * response status of the api.
      *
      * @var string
      */
-    private $status = null;
+    private null|string $status = null;
 
-    /**
-     * constructor to set the http response , http code and apiname.
-     *
-     * @param string $httpResponse   the http response
-     * @param int    $httpStatusCode status code of the response
-     * @param string $apiName        module api name
-     */
-    public function __construct($httpResponse, $httpStatusCode, $apiName = null)
-    {
-        parent::__construct($httpResponse, $httpStatusCode, $apiName);
-    }
 
     /**
      * method to set the data of the class object.
@@ -59,7 +48,7 @@ class APIResponse extends CommonAPIResponse
      *
      * @return string the response status
      */
-    public function getStatus()
+    public function getStatus(): null|string
     {
         return $this->status;
     }
@@ -69,40 +58,41 @@ class APIResponse extends CommonAPIResponse
      *
      * @param string $status the response status
      */
-    public function setStatus($status)
+    public function setStatus(null|string $status): void
     {
         $this->status = $status;
     }
 
     /**
-     * {@inheritdoc}
+     * @throws ZCRMException
      *
      * @see CommonAPIResponse::handleForFaultyResponses()
      */
-    public function handleForFaultyResponses()
+    public function handleForFaultyResponses(): void
     {
         $statusCode = self::getHttpStatusCode();
         if (in_array($statusCode, APIExceptionHandler::getFaultyResponseCodes())) {
             if (APIConstants::RESPONSECODE_NO_CONTENT == $statusCode) {
-                $exception = new ZCRMException(APIConstants::INVALID_DATA.'-'.APIConstants::INVALID_ID_MSG, $statusCode);
+                $exception = new ZCRMException(APIConstants::INVALID_DATA . '-' . APIConstants::INVALID_ID_MSG, $statusCode);
                 $exception->setExceptionCode('No Content');
-                throw $exception;
-            } else {
-                $responseJSON = $this->getResponseJSON();
-                $exception = new ZCRMException($responseJSON[APIConstants::MESSAGE], $statusCode);
-                $exception->setExceptionCode($responseJSON[APIConstants::CODE]);
-                $exception->setExceptionDetails($responseJSON[APIConstants::DETAILS]);
+
                 throw $exception;
             }
+            $responseJSON = $this->getResponseJSON();
+            $exception = new ZCRMException($responseJSON[APIConstants::MESSAGE], $statusCode);
+            $exception->setExceptionCode($responseJSON[APIConstants::CODE]);
+            $exception->setExceptionDetails($responseJSON[APIConstants::DETAILS]);
+
+            throw $exception;
         }
     }
 
     /**
-     * {@inheritdoc}
+     * @throws ZCRMException
      *
      * @see CommonAPIResponse::processResponseData()
      */
-    public function processResponseData()
+    public function processResponseData(): void
     {
         $responseJSON = $this->getResponseJSON();
         if (null == $responseJSON) {
@@ -125,15 +115,17 @@ class APIResponse extends CommonAPIResponse
             $responseJSON = $responseJSON['variables'][0];
         }
         if (isset($responseJSON[APIConstants::STATUS]) && APIConstants::STATUS_ERROR == $responseJSON[APIConstants::STATUS]) {
-            $exception = new ZCRMException($responseJSON[APIConstants::MESSAGE], self::getHttpStatusCode());
+            $exception = new ZCRMException($responseJSON[APIConstants::MESSAGE], $this->getHttpStatusCode());
             $exception->setExceptionCode($responseJSON[APIConstants::CODE]);
             $exception->setExceptionDetails($responseJSON[APIConstants::DETAILS]);
+
             throw $exception;
-        } elseif (isset($responseJSON[APIConstants::STATUS]) && APIConstants::STATUS_SUCCESS == $responseJSON[APIConstants::STATUS]) {
-            self::setCode($responseJSON[APIConstants::CODE]);
-            self::setStatus($responseJSON[APIConstants::STATUS]);
-            self::setMessage($responseJSON[APIConstants::MESSAGE]);
-            self::setDetails($responseJSON[APIConstants::DETAILS]);
+        }
+        if (isset($responseJSON[APIConstants::STATUS]) && APIConstants::STATUS_SUCCESS == $responseJSON[APIConstants::STATUS]) {
+            $this->setCode($responseJSON[APIConstants::CODE]);
+            $this->setStatus($responseJSON[APIConstants::STATUS]);
+            $this->setMessage($responseJSON[APIConstants::MESSAGE]);
+            $this->setDetails($responseJSON[APIConstants::DETAILS]);
         }
     }
 }

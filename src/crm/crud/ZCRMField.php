@@ -9,126 +9,126 @@ class ZCRMField
      *
      * @var string
      */
-    private $apiName = null;
+    private $apiName;
 
     /**
      * used to check if the field is custom field.
      *
      * @var bool
      */
-    private $customField = null;
+    private $customField;
 
     /**
      * instance of the ZCRMLookupField.
      *
      * @var ZCRMLookupField
      */
-    private $lookupFields = null;
+    private $lookupFields;
 
     /**
      * convert mapping.
      *
      * @var array
      */
-    private $convertMapping = null;
+    private $convertMapping;
 
     /**
      * visibility of the field.
      *
      * @var bool
      */
-    private $visible = null;
+    private $visible;
 
     /**
      * display name of the field.
      *
      * @var string
      */
-    private $fieldLabel = null;
+    private $fieldLabel;
 
     /**
      * length of the field value.
      *
      * @var int
      */
-    private $length = null;
+    private $length;
 
     /**
      * the creation source of the field.
      *
      * @var string
      */
-    private $createdSource = null;
+    private $createdSource;
 
     /**
      * default value of the field.
      *
      * @var string
      */
-    private $defaultValue = null;
+    private $defaultValue;
 
     /**
      * mandatory field.
      *
      * @var bool
      */
-    private $Mandatory = null;
+    private $Mandatory;
 
     /**
      * sequence number of the field.
      *
      * @var int
      */
-    private $sequenceNumber = null;
+    private $sequenceNumber;
 
     /**
      * field read only.
      *
      * @var bool
      */
-    private $readOnly = null;
+    private $readOnly;
 
     /**
      * unique field.
      *
      * @var bool
      */
-    private $uniqueField = null;
+    private $uniqueField;
 
     /**
      * case sensitivity.
      *
      * @var bool
      */
-    private $caseSensitive = null;
+    private $caseSensitive;
 
     /**
      * data type of the field.
      *
      * @var string
      */
-    private $dataType = null;
+    private $dataType;
 
     /**
      * formula field.
      *
      * @var bool
      */
-    private $formulaField = null;
+    private $formulaField;
 
     /**
      * currency field.
      *
      * @var bool
      */
-    private $currencyField = null;
+    private $currencyField;
 
     /**
      * id of the field.
      *
      * @var string
      */
-    private $id = null;
+    private $id;
 
     /**
      * array of instances of ZCRMPickListValue class.
@@ -142,84 +142,84 @@ class ZCRMField
      *
      * @var string
      */
-    private $autoNumber = null;
+    private $autoNumber;
 
     /**
      * business supported.
      *
      * @var bool
      */
-    private $businessCardSupported = null;
+    private $businessCardSupported;
 
     /**
      * array of permissions list like CREATE,EDIT,VIEW,QUICK_CREATE etc.
      *
      * @var array
      */
-    private $fieldLayoutPermissions = null;
+    private $fieldLayoutPermissions;
 
     /**
      * decimal places for the value.
      *
      * @var int
      */
-    private $decimalPlace = null;
+    private $decimalPlace;
 
     /**
      * precision.
      *
      * @var int
      */
-    private $precision = null;
+    private $precision;
 
     /**
      * rounding off options.
      *
      * @var string
      */
-    private $roundingOption = null;
+    private $roundingOption;
 
     /**
      * return type of the formula.
      *
      * @var string
      */
-    private $formulaReturnType = null;
+    private $formulaReturnType;
 
     /**
      * formula expression.
      *
      * @var string
      */
-    private $formulaExpression = null;
+    private $formulaExpression;
 
     /**
      * prefix.
      *
      * @var string
      */
-    private $prefix = null;
+    private $prefix;
 
     /**
      * suffix.
      *
      * @var string
      */
-    private $suffix = null;
+    private $suffix;
 
     /**
      * starting number.
      *
      * @var int
      */
-    private $startNumber = null;
+    private $startNumber;
 
     /**
      * json datatype of the field.
      *
      * @var string
      */
-    private $jsonType = null;
+    private $jsonType;
 
     /**
      * constructor to set the api name of the field.

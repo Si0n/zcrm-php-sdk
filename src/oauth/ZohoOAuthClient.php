@@ -2,7 +2,7 @@
 
 namespace zcrmsdk\oauth;
 
-use zcrmsdk\crm\utility\Logger;
+use zcrmsdk\crm\utility\LogManager;
 use zcrmsdk\oauth\exception\ZohoOAuthException;
 use zcrmsdk\oauth\utility\ZohoOAuthConstants;
 use zcrmsdk\oauth\utility\ZohoOAuthHTTPConnector;
@@ -37,13 +37,13 @@ class ZohoOAuthClient
         try {
             $tokens = $persistence->getOAuthTokens($userEmailId);
         } catch (ZohoOAuthException $ex) {
-            Logger::severe('Exception while retrieving tokens from persistence - '.$ex);
+            LogManager::severe('Exception while retrieving tokens from persistence - ' . $ex);
             throw $ex;
         }
         try {
             return $tokens->getAccessToken();
         } catch (ZohoOAuthException $ex) {
-            Logger::info('Access Token has expired. Hence refreshing.');
+            LogManager::info('Access Token has expired. Hence refreshing.');
             $tokens = self::refreshAccessToken($tokens->getRefreshToken(), $userEmailId);
 
             return $tokens->getAccessToken();
@@ -68,7 +68,7 @@ class ZohoOAuthClient
 
                 return $tokens;
             } else {
-                throw new ZohoOAuthException('Exception while fetching access token from grant token - '.$resp);
+                throw new ZohoOAuthException('Exception while fetching access token from grant token - ' . $resp);
             }
         } catch (ZohoOAuthException $ex) {
             throw new ZohoOAuthException($ex);
@@ -99,7 +99,7 @@ class ZohoOAuthClient
 
                 return $tokens;
             } else {
-                throw new ZohoOAuthException('Exception while fetching access token from refresh token - '.$response);
+                throw new ZohoOAuthException('Exception while fetching access token from refresh token - ' . $response);
             }
         } catch (ZohoOAuthException $ex) {
             throw new ZohoOAuthException($ex);
@@ -122,7 +122,7 @@ class ZohoOAuthClient
         $oAuthTokens = new ZohoOAuthTokens();
         $expiresIn = $responseObj[ZohoOAuthConstants::EXPIRES_IN];
         if (!array_key_exists(ZohoOAuthConstants::EXPIRES_IN_SEC, $responseObj)) {
-            $expiresIn = $expiresIn * 1000;
+            $expiresIn *= 1000;
         }
         $oAuthTokens->setExpiryTime($oAuthTokens->getCurrentTimeInMillis() + $expiresIn);
         $accessToken = $responseObj[ZohoOAuthConstants::ACCESS_TOKEN];
@@ -137,8 +137,6 @@ class ZohoOAuthClient
 
     /**
      * zohoOAuthParams.
-     *
-     * @return
      */
     public function getZohoOAuthParams()
     {
@@ -147,8 +145,6 @@ class ZohoOAuthClient
 
     /**
      * zohoOAuthParams.
-     *
-     * @param $zohoOAuthParams
      */
     public function setZohoOAuthParams($zohoOAuthParams)
     {
@@ -159,11 +155,11 @@ class ZohoOAuthClient
     {
         $connector = new ZohoOAuthHTTPConnector();
         $connector->setUrl(ZohoOAuth::getUserInfoURL());
-        $connector->addHeadder(ZohoOAuthConstants::AUTHORIZATION, ZohoOAuthConstants::OAUTH_HEADER_PREFIX.$accessToken);
+        $connector->addHeadder(ZohoOAuthConstants::AUTHORIZATION, ZohoOAuthConstants::OAUTH_HEADER_PREFIX . $accessToken);
         $apiResponse = $connector->get();
         $jsonResponse = self::processResponse($apiResponse);
         if (!array_key_exists('Email', $jsonResponse)) {
-            throw new ZohoOAuthException('Exception while fetching UserID from access token, Make sure AAAserver.profile.Read scope is included while generating the Grant token '.$jsonResponse);
+            throw new ZohoOAuthException('Exception while fetching UserID from access token, Make sure AAAserver.profile.Read scope is included while generating the Grant token ' . $jsonResponse);
         }
 
         return $jsonResponse['Email'];

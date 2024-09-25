@@ -13,21 +13,21 @@ class ZCRMTax
      *
      * @var string
      */
-    private $taxName = null;
+    private $taxName;
 
     /**
      * percentage of the tax.
      *
      * @var float
      */
-    private $percentage = null;
+    private $percentage;
 
     /**
      * tax value.
      *
      * @var float
      */
-    private $value = null;
+    private $value;
 
     /**
      * constructor to assign tax name.

@@ -9,35 +9,35 @@ class ZCRMSection
      *
      * @var string
      */
-    private $name = null;
+    private $name;
 
     /**
      * section display name.
      *
      * @var string
      */
-    private $displayName = null;
+    private $displayName;
 
     /**
      * columns in section.
      *
      * @var int
      */
-    private $columnCount = null;
+    private $columnCount;
 
     /**
      * sequence number of the section.
      *
      * @var int
      */
-    private $sequenceNumber = null;
+    private $sequenceNumber;
 
     /**
      * array of fields.
      *
      * @var array
      */
-    private $fields = null;
+    private $fields;
 
     /**
      * constructor to assign the name to the section.

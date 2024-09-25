@@ -9,42 +9,42 @@ class ZCRMEventParticipant
      *
      * @var string
      */
-    private $email = null;
+    private $email;
 
     /**
      * the name of the event participant.
      *
      * @var string
      */
-    private $name = null;
+    private $name;
 
     /**
      * the participant id.
      *
      * @var string
      */
-    private $id = null;
+    private $id;
 
     /**
      * type of the participant.
      *
      * @var string
      */
-    private $type = null;
+    private $type;
 
     /**
      * used to check if participant is invited.
      *
      * @var bool
      */
-    private $isInvited = null;
+    private $isInvited;
 
     /**
      * status of the participant.
      *
      * @var string
      */
-    private $status = null;
+    private $status;
 
     /**
      * constructor to set the participant type and id.

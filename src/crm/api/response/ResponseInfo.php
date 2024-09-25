@@ -12,35 +12,35 @@ class ResponseInfo
      *
      * @var bool
      */
-    private $moreRecords = null;
+    private $moreRecords;
 
     /**
      * record count.
      *
      * @var int
      */
-    private $recordCount = null;
+    private $recordCount;
 
     /**
      * page number.
      *
      * @var int
      */
-    private $pageNo = null;
+    private $pageNo;
 
     /**
      * records per page.
      *
      * @var int
      */
-    private $perPage = null;
+    private $perPage;
 
     /**
      * number of tags allowed.
      *
      * @var int
      */
-    private $tagAllowedCount = null;
+    private $tagAllowedCount;
 
     /**
      * constructor to set response information.

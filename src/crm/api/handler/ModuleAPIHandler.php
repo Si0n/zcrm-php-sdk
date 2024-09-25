@@ -3,6 +3,7 @@
 namespace zcrmsdk\crm\api\handler;
 
 use zcrmsdk\crm\api\APIRequest;
+use zcrmsdk\crm\api\response\APIResponse;
 use zcrmsdk\crm\crud\ZCRMCustomView;
 use zcrmsdk\crm\crud\ZCRMField;
 use zcrmsdk\crm\crud\ZCRMLayout;
@@ -21,7 +22,7 @@ use zcrmsdk\crm\utility\APIConstants;
 
 class ModuleAPIHandler extends APIHandler
 {
-    private $module = null;
+    private $module;
 
     private function __construct($module)
     {
@@ -45,7 +46,7 @@ class ModuleAPIHandler extends APIHandler
     public function getFieldDetails($fieldId)
     {
         try {
-            $this->urlPath = 'settings/fields/'.$fieldId;
+            $this->urlPath = 'settings/fields/' . $fieldId;
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
             $this->addHeader('Content-Type', 'application/json');
             $this->addParam('module', $this->module->getAPIName());
@@ -123,7 +124,7 @@ class ModuleAPIHandler extends APIHandler
     public function getLayoutDetails($layoutId)
     {
         try {
-            $this->urlPath = 'settings/layouts/'.$layoutId;
+            $this->urlPath = 'settings/layouts/' . $layoutId;
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
             $this->addHeader('Content-Type', 'application/json');
             $this->addParam('module', $this->module->getAPIName());
@@ -147,7 +148,7 @@ class ModuleAPIHandler extends APIHandler
     public function getCustomView($customViewId)
     {
         try {
-            $this->urlPath = 'settings/custom_views/'.$customViewId;
+            $this->urlPath = 'settings/custom_views/' . $customViewId;
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
             $this->addHeader('Content-Type', 'application/json');
             $this->addParam('module', $this->module->getAPIName());
@@ -205,7 +206,7 @@ class ModuleAPIHandler extends APIHandler
     {
         try {
             $inputJSON = self::constructJSONForModuleUpdate($this->module);
-            $this->urlPath = 'settings/modules/'.$this->module->getAPIName();
+            $this->urlPath = 'settings/modules/' . $this->module->getAPIName();
             $this->requestMethod = APIConstants::REQUEST_METHOD_PUT;
             $this->addHeader('Content-Type', 'application/json');
             $this->requestBody = $inputJSON;
@@ -228,7 +229,7 @@ class ModuleAPIHandler extends APIHandler
     {
         try {
             $inputJSON = self::constructJSONForCustomView($customViewInstance);
-            $this->urlPath = 'settings/custom_views/'.$customViewInstance->getId();
+            $this->urlPath = 'settings/custom_views/' . $customViewInstance->getId();
             $this->requestMethod = APIConstants::REQUEST_METHOD_PUT;
             $this->addHeader('Content-Type', 'application/json');
             $this->addParam('module', $this->module->getAPIName());
@@ -274,11 +275,13 @@ class ModuleAPIHandler extends APIHandler
     /**
      * Method to get the specified related list
      * Returns api response with related list instance.
+     *
+     * @throws ZCRMException
      */
-    public function getRelatedListDetails($relatedListId)
+    public function getRelatedListDetails(int|string $relatedListId): APIResponse
     {
         try {
-            $this->urlPath = 'settings/related_lists/'.$relatedListId;
+            $this->urlPath = 'settings/related_lists/' . $relatedListId;
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
             $this->addHeader('Content-Type', 'application/json');
             $this->addParam('module', $this->module->getAPIName());
@@ -297,11 +300,11 @@ class ModuleAPIHandler extends APIHandler
         }
     }
 
-    public function getLayouts($allLayoutDetails)
+    public function getLayouts(iterable $allLayoutDetails): array
     {
         $layoutArray = [];
         foreach ($allLayoutDetails as $eachLayout) {
-            array_push($layoutArray, self::getZCRMLayout($eachLayout));
+            $layoutArray[] = self::getZCRMLayout($eachLayout);
         }
 
         return $layoutArray;
@@ -318,27 +321,27 @@ class ModuleAPIHandler extends APIHandler
             $sectionInstance->setSequenceNumber($eachSection['sequence_number'] + 0);
             $sectionInstance->setFields(self::getSectionFields($eachSection['fields']));
 
-            array_push($sectionsArray, $sectionInstance);
+            $sectionsArray[] = $sectionInstance;
         }
 
         return $sectionsArray;
     }
 
-    public function getSectionFields($allFieldArray)
+    public function getSectionFields(iterable $allFieldArray): array
     {
         $fieldsArray = [];
         foreach ($allFieldArray as $eachField) {
-            array_push($fieldsArray, self::getZCRMField($eachField));
+            $fieldsArray[] = self::getZCRMField($eachField);
         }
 
         return $fieldsArray;
     }
 
-    public function getFields($allFieldArray)
+    public function getFields(iterable $allFieldArray): array
     {
         $fieldsArray = [];
         foreach ($allFieldArray as $eachField) {
-            array_push($fieldsArray, self::getZCRMField($eachField));
+            $fieldsArray[] = self::getZCRMField($eachField);
         }
 
         return $fieldsArray;
@@ -349,7 +352,7 @@ class ModuleAPIHandler extends APIHandler
      * Input:: section field details as array
      * Returns ZCRMField instance.
      */
-    public function getZCRMFieldForSection($fieldDetails)
+    public function getZCRMFieldForSection(array $fieldDetails): ZCRMField
     {
         $fieldInstance = ZCRMField::getInstance($fieldDetails['api_name']);
         $fieldInstance->setSequenceNumber($fieldDetails['sequence_number'] + 0);
@@ -359,7 +362,7 @@ class ModuleAPIHandler extends APIHandler
         $pickListArray = $fieldDetails['pick_list_values'];
         $pickListInstanceArray = [];
         foreach ($pickListArray as $pickList) {
-            array_push($pickListInstanceArray, self::getPickListValueInstance($pickList));
+            $pickListInstanceArray[] = self::getPickListValueInstance($pickList);
         }
         $fieldInstance->setPickListFieldValues($pickListInstanceArray);
 
@@ -371,13 +374,13 @@ class ModuleAPIHandler extends APIHandler
      * Input:: field details as array
      * Returns ZCRMField instance.
      */
-    public function getZCRMField($fieldDetails)
+    public function getZCRMField(array $fieldDetails): ZCRMField
     {
         $fieldInstance = ZCRMField::getInstance($fieldDetails['api_name']);
         $fieldInstance->setSequenceNumber(isset($fieldDetails['sequence_number']) ? $fieldDetails['sequence_number'] + 0 : 0);
         $fieldInstance->setId($fieldDetails['id']);
-        $fieldInstance->setMandatory(isset($fieldDetails['required']) ? (bool) $fieldDetails['required'] : false);
-        $fieldInstance->setDefaultValue(isset($fieldDetails['default_value']) ? $fieldDetails['default_value'] : null);
+        $fieldInstance->setMandatory(isset($fieldDetails['required']) && $fieldDetails['required']);
+        $fieldInstance->setDefaultValue($fieldDetails['default_value'] ?? null);
         if (array_key_exists('custom_field', $fieldDetails)) {
             $fieldInstance->setCustomField((bool) $fieldDetails['custom_field']);
         }
@@ -410,16 +413,16 @@ class ModuleAPIHandler extends APIHandler
             $viewTypeArray = $fieldDetails['view_type'];
             $fieldLayoutPermissions = [];
             if ($viewTypeArray['view']) {
-                array_push($fieldLayoutPermissions, 'VIEW');
+                $fieldLayoutPermissions[] = 'VIEW';
             }
             if ($viewTypeArray['quick_create']) {
-                array_push($fieldLayoutPermissions, 'QUICK_CREATE');
+                $fieldLayoutPermissions[] = 'QUICK_CREATE';
             }
             if ($viewTypeArray['create']) {
-                array_push($fieldLayoutPermissions, 'CREATE');
+                $fieldLayoutPermissions[] = 'CREATE';
             }
             if ($viewTypeArray['edit']) {
-                array_push($fieldLayoutPermissions, 'EDIT');
+                $fieldLayoutPermissions[] = 'EDIT';
             }
             $fieldInstance->setFieldLayoutPermissions($fieldLayoutPermissions);
         }
@@ -428,7 +431,7 @@ class ModuleAPIHandler extends APIHandler
         if (sizeof($pickListArray) > 0) {
             $pickListInstanceArray = [];
             foreach ($pickListArray as $pickList) {
-                array_push($pickListInstanceArray, self::getPickListValueInstance($pickList));
+                $pickListInstanceArray[] = self::getPickListValueInstance($pickList);
             }
             $fieldInstance->setPickListFieldValues($pickListInstanceArray);
         }
@@ -438,7 +441,7 @@ class ModuleAPIHandler extends APIHandler
 
         if (array_key_exists('unique', $fieldDetails) && sizeof($fieldDetails['unique']) > 0) {
             $fieldInstance->setUniqueField(true);
-            $fieldInstance->setCaseSensitive((bool) ($fieldDetails['unique']['casesensitive']));
+            $fieldInstance->setCaseSensitive((bool) $fieldDetails['unique']['casesensitive']);
         }
         if (array_key_exists('decimal_place', $fieldDetails) && null != $fieldDetails['decimal_place']) {
             $fieldInstance->setDecimalPlace($fieldDetails['decimal_place'] + 0);
@@ -476,9 +479,9 @@ class ModuleAPIHandler extends APIHandler
      * Input:: lookup field details as array
      * Returns ZCRMLookupField instance.
      */
-    public function getLookupFieldInstance($lookupDetails)
+    public function getLookupFieldInstance(array $lookupDetails): ZCRMLookupField
     {
-        $lookupInstance = ZCRMLookupField::getInstance(isset($lookupDetails['api_name']) ? $lookupDetails['api_name'] : null);
+        $lookupInstance = ZCRMLookupField::getInstance($lookupDetails['api_name'] ?? null);
 
         if (isset($lookupDetails['display_label'])) {
             $lookupInstance->setDisplayLabel($lookupDetails['display_label']);
@@ -498,7 +501,7 @@ class ModuleAPIHandler extends APIHandler
      * Input:: picklist details as array
      * Returns ZCRMPickListValue instance.
      */
-    public function getPickListValueInstance($pickListDetails)
+    public function getPickListValueInstance(array $pickListDetails): ZCRMPickListValue
     {
         $pickListInstance = ZCRMPickListValue::getInstance();
         $pickListInstance->setDisplayValue($pickListDetails['display_value']);
@@ -518,7 +521,7 @@ class ModuleAPIHandler extends APIHandler
      * Input:: layout details as array
      * Returns ZCRMLayout instance.
      */
-    public function getZCRMLayout($layoutDetails)
+    public function getZCRMLayout(array $layoutDetails): ZCRMLayout
     {
         $layoutInstance = ZCRMLayout::getInstance($layoutDetails['id']);
         $layoutInstance->setCreatedTime($layoutDetails['created_time']);
@@ -526,11 +529,11 @@ class ModuleAPIHandler extends APIHandler
         $layoutInstance->setName($layoutDetails['name']);
         $layoutInstance->setVisible((bool) $layoutDetails['visible']);
         if (null != $layoutDetails['created_by']) {
-            $userInstance = ZCRMUser::getInstance((($layoutDetails['created_by']['id'])), $layoutDetails['created_by']['name']);
+            $userInstance = ZCRMUser::getInstance($layoutDetails['created_by']['id'], $layoutDetails['created_by']['name']);
             $layoutInstance->setCreatedBy($userInstance);
         }
         if (null != $layoutDetails['modified_by']) {
-            $userInstance = ZCRMUser::getInstance((($layoutDetails['modified_by']['id'])), $layoutDetails['modified_by']['name']);
+            $userInstance = ZCRMUser::getInstance($layoutDetails['modified_by']['id'], $layoutDetails['modified_by']['name']);
             $layoutInstance->setModifiedBy($userInstance);
         }
         $accessibleProfileArray = $layoutDetails['profiles'];
@@ -538,7 +541,7 @@ class ModuleAPIHandler extends APIHandler
         foreach ($accessibleProfileArray as $profile) {
             $profileInstance = ZCRMProfile::getInstance($profile['id'], $profile['name']);
             $profileInstance->setDefaultProfile((bool) $profile['default']);
-            array_push($accessibleProfileInstances, $profileInstance);
+            $accessibleProfileInstances[] = $profileInstance;
         }
         $layoutInstance->setAccessibleProfiles($accessibleProfileInstances);
 
@@ -573,7 +576,7 @@ class ModuleAPIHandler extends APIHandler
         return $layoutInstance;
     }
 
-    public function constructJSONForCustomView($customViewInstance)
+    public function constructJSONForCustomView($customViewInstance): bool|string
     {
         $customViewDetails = [];
         if (null !== $customViewInstance->getSortBy()) {
@@ -609,15 +612,15 @@ class ModuleAPIHandler extends APIHandler
          * }
          */
         $customViewJSON = [
-             'custom_views' => [
-                 $customViewDetails,
-             ],
-         ];
+            'custom_views' => [
+                $customViewDetails,
+            ],
+        ];
 
         return json_encode($customViewJSON);
     }
 
-    public function constructJSONForModuleUpdate($moduleInstance)
+    public function constructJSONForModuleUpdate($moduleInstance): bool|string
     {
         $moduleSettings = [];
         if (null != $moduleInstance->getPerPage()) {

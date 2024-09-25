@@ -9,28 +9,28 @@ class ZCRMPriceBookPricing
      *
      * @var string
      */
-    private $id = null;
+    private $id;
 
     /**
      * range upper limit.
      *
      * @var float
      */
-    private $toRange = null;
+    private $toRange;
 
     /**
      * range upper limit.
      *
      * @var float
      */
-    private $fromRange = null;
+    private $fromRange;
 
     /**
      * discount offered.
      *
      * @var float
      */
-    private $discount = null;
+    private $discount;
 
     /**
      * constructor to assign price book pricing id.

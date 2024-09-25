@@ -9,56 +9,56 @@ class ZCRMModuleRelatedList
      *
      * @var string
      */
-    private $apiName = null;
+    private $apiName;
 
     /**
      * module name.
      *
      * @var string
      */
-    private $module = null;
+    private $module;
 
     /**
      * display name of the related list.
      *
      * @var string
      */
-    private $displayLabel = null;
+    private $displayLabel;
 
     /**
      * visible related list.
      *
      * @var bool
      */
-    private $visible = null;
+    private $visible;
 
     /**
      * name of the related list.
      *
      * @var string
      */
-    private $name = null;
+    private $name;
 
     /**
      * id of the related list.
      *
      * @var string
      */
-    private $id = null;
+    private $id;
 
     /**
      * hyperlink of the related list.
      *
      * @var string
      */
-    private $href = null;
+    private $href;
 
     /**
      * type of the related list.
      *
      * @var string
      */
-    private $type = null;
+    private $type;
 
     /**
      * constructor to assign api name to the list.

@@ -6,17 +6,15 @@ class ZCRMCustomViewCategory
 {
     /**
      * display value of category.
-     *
-     * @var
      */
-    private $displayValue = null;
+    private $displayValue;
 
     /**
      * actual value of the criteria.
      *
      * @var string
      */
-    private $actualValue = null;
+    private $actualValue;
 
     private function __construct()
     {

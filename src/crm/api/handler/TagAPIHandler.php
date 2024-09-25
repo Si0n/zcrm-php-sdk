@@ -12,7 +12,7 @@ use zcrmsdk\crm\utility\APIConstants;
 
 class TagAPIHandler extends APIHandler
 {
-    protected $module = null;
+    protected $module;
 
     private function __construct($zcrmmodule)
     {
@@ -56,7 +56,7 @@ class TagAPIHandler extends APIHandler
     {
         try {
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
-            $this->urlPath = 'settings/tags/'.$tagId.'/actions/records_count';
+            $this->urlPath = 'settings/tags/' . $tagId . '/actions/records_count';
             $this->addParam('module', $this->module->getAPIName());
 
             // Fire Request
@@ -101,7 +101,7 @@ class TagAPIHandler extends APIHandler
             $createdTags = [];
             $responses = $bulkAPIResponse->getEntityResponses();
             $size = sizeof($responses);
-            for ($i = 0; $i < $size; $i++) {
+            for ($i = 0; $i < $size; ++$i) {
                 $entityResIns = $responses[$i];
                 if (APIConstants::STATUS_SUCCESS === $entityResIns->getStatus()) {
                     $responseData = $entityResIns->getResponseJSON();
@@ -146,7 +146,7 @@ class TagAPIHandler extends APIHandler
             $updatedTags = [];
             $responses = $bulkAPIResponse->getEntityResponses();
             $size = sizeof($responses);
-            for ($i = 0; $i < $size; $i++) {
+            for ($i = 0; $i < $size; ++$i) {
                 $entityResIns = $responses[$i];
                 if (APIConstants::STATUS_SUCCESS === $entityResIns->getStatus()) {
                     $responseData = $entityResIns->getResponseJSON();
@@ -171,7 +171,7 @@ class TagAPIHandler extends APIHandler
     {
         try {
             $this->requestMethod = APIConstants::REQUEST_METHOD_DELETE;
-            $this->urlPath = 'settings/tags/'.$tagId;
+            $this->urlPath = 'settings/tags/' . $tagId;
             $this->addHeader('Content-Type', 'application/json');
 
             // Fire Request
@@ -188,10 +188,10 @@ class TagAPIHandler extends APIHandler
     {
         try {
             $this->requestMethod = APIConstants::REQUEST_METHOD_POST;
-            $this->urlPath = 'settings/tags/'.$mergeId.'/actions/merge';
+            $this->urlPath = 'settings/tags/' . $mergeId . '/actions/merge';
             $this->addHeader('Content-Type', 'application/json');
             $tagJSON = [];
-            $tagJSON['conflict_id'] = ''.$tagId;
+            $tagJSON['conflict_id'] = '' . $tagId;
             array_filter($tagJSON);
             $this->requestBody = json_encode(array_filter([
                 'tags' => [
@@ -217,11 +217,11 @@ class TagAPIHandler extends APIHandler
     {
         try {
             $this->requestMethod = APIConstants::REQUEST_METHOD_PUT;
-            $this->urlPath = 'settings/tags/'.$tag->getId();
+            $this->urlPath = 'settings/tags/' . $tag->getId();
             $this->addParam('module', $tag->getModuleAPIName());
             $this->addHeader('Content-Type', 'application/json');
             $tagJSON = [];
-            $tagJSON['name'] = ''.$tag->getName();
+            $tagJSON['name'] = '' . $tag->getName();
             array_filter($tagJSON);
             $this->requestBody = json_encode(array_filter([
                 'tags' => [
@@ -251,7 +251,7 @@ class TagAPIHandler extends APIHandler
         }
         try {
             $this->requestMethod = APIConstants::REQUEST_METHOD_POST;
-            $this->urlPath = $record->getModuleApiName().'/'.$record->getEntityId().'/actions/add_tags';
+            $this->urlPath = $record->getModuleApiName() . '/' . $record->getEntityId() . '/actions/add_tags';
             $this->addParam('tag_names', implode(',', $tagNames));
 
             // Fire Request
@@ -278,7 +278,7 @@ class TagAPIHandler extends APIHandler
         }
         try {
             $this->requestMethod = APIConstants::REQUEST_METHOD_POST;
-            $this->urlPath = $record->getModuleApiName().'/'.$record->getEntityId().'/actions/remove_tags';
+            $this->urlPath = $record->getModuleApiName() . '/' . $record->getEntityId() . '/actions/remove_tags';
             $this->addParam('tag_names', implode(',', $tagNames));
 
             // Fire Request
@@ -307,7 +307,7 @@ class TagAPIHandler extends APIHandler
         }
         try {
             $this->requestMethod = APIConstants::REQUEST_METHOD_POST;
-            $this->urlPath = $this->module->getAPIName().'/actions/add_tags';
+            $this->urlPath = $this->module->getAPIName() . '/actions/add_tags';
             $this->addParam('ids', implode(',', $recordId));
             $this->addParam('tag_names', implode(',', $tagNames));
 
@@ -346,7 +346,7 @@ class TagAPIHandler extends APIHandler
         }
         try {
             $this->requestMethod = APIConstants::REQUEST_METHOD_POST;
-            $this->urlPath = $this->module->getAPIName().'/actions/remove_tags';
+            $this->urlPath = $this->module->getAPIName() . '/actions/remove_tags';
             $this->addParam('ids', implode(',', $recordId));
             $this->addParam('tag_names', implode(',', $tagNames));
 
@@ -389,9 +389,9 @@ class TagAPIHandler extends APIHandler
                 $modifiedBy = ZCRMUser::getInstance($value['id'], $value['name']);
                 $tagInstance->setModifiedBy($modifiedBy);
             } elseif ('created_time' == $key) {
-                $tagInstance->setCreatedTime(''.$value);
+                $tagInstance->setCreatedTime('' . $value);
             } elseif ('modified_time' == $key) {
-                $tagInstance->setModifiedTime(''.$value);
+                $tagInstance->setModifiedTime('' . $value);
             } elseif ('count' == $key) {
                 $tagInstance->setCount($value);
             }
@@ -402,10 +402,10 @@ class TagAPIHandler extends APIHandler
     {
         $recordJSON = [];
         if (null != $tag->getName()) {
-            $recordJSON['name'] = ''.$tag->getName();
+            $recordJSON['name'] = '' . $tag->getName();
         }
         if (null != $tag->getId()) {
-            $recordJSON['id'] = ''.$tag->getId();
+            $recordJSON['id'] = '' . $tag->getId();
         }
 
         return array_filter($recordJSON);

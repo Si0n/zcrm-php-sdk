@@ -9,28 +9,28 @@ class ZCRMLookupField
      *
      * @var string
      */
-    private $apiName = null;
+    private $apiName;
 
     /**
      * display name of the lookup field.
      *
      * @var string
      */
-    private $displayLabel = null;
+    private $displayLabel;
 
     /**
      * module api name.
      *
      * @var string
      */
-    private $module = null;
+    private $module;
 
     /**
      * lookup field id.
      *
      * @var string
      */
-    private $id = null;
+    private $id;
 
     /**
      * constructor to set the lookup field api name.

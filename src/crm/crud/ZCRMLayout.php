@@ -11,70 +11,70 @@ class ZCRMLayout
      *
      * @var string
      */
-    private $id = null;
+    private $id;
 
     /**
      * layout name.
      *
      * @var string
      */
-    private $name = null;
+    private $name;
 
     /**
      * creation time of layout.
      *
      * @var string iso 8601 format
      */
-    private $createdTime = null;
+    private $createdTime;
 
     /**
      * modification time of layout.
      *
      * @var string iso 8601 format
      */
-    private $modifiedTime = null;
+    private $modifiedTime;
 
     /**
      * visibility of the layout.
      *
      * @var bool
      */
-    private $visible = null;
+    private $visible;
 
     /**
      * user who modified the layout.
      *
      * @var ZCRMUser instance of ZCRMUser class
      */
-    private $modifiedBy = null;
+    private $modifiedBy;
 
     /**
      * accessible profiles.
      *
      * @var array array of ZCRMProfile class instances
      */
-    private $accessibleProfiles = null;
+    private $accessibleProfiles;
 
     /**
      * user who created the layout.
      *
      * @var ZCRMUser instance of ZCRMUser class
      */
-    private $createdBy = null;
+    private $createdBy;
 
     /**
      * sections of the layout.
      *
      * @var array array of ZCRMSection class instances
      */
-    private $sections = null;
+    private $sections;
 
     /**
      * status of the layout.
      *
      * @var int
      */
-    private $status = null;
+    private $status;
 
     /**
      * convert mapping.

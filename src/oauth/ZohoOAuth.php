@@ -2,7 +2,6 @@
 
 namespace zcrmsdk\oauth;
 
-use Exception;
 use zcrmsdk\oauth\exception\ZohoOAuthException;
 use zcrmsdk\oauth\persistence\ZohoOAuthPersistenceByFile;
 use zcrmsdk\oauth\persistence\ZohoOAuthPersistenceHandler;
@@ -11,9 +10,9 @@ use zcrmsdk\oauth\utility\ZohoOAuthParams;
 
 class ZohoOAuth
 {
-    private static $configProperties = [];
+    private static array $configProperties = [];
 
-    public static function initialize($configuration)
+    public static function initialize(array $configuration): void
     {
         self::setConfigValues($configuration);
         if (!array_key_exists(ZohoOAuthConstants::TOKEN_PERSISTENCE_PATH, self::$configProperties) || '' == self::$configProperties[ZohoOAuthConstants::TOKEN_PERSISTENCE_PATH]) {
@@ -41,7 +40,7 @@ class ZohoOAuth
         ZohoOAuthClient::getInstance($oAuthParams);
     }
 
-    private static function setConfigValues($configuration)
+    private static function setConfigValues(array $configuration): void
     {
         $config_keys = [
             ZohoOAuthConstants::CLIENT_ID,
@@ -77,10 +76,10 @@ class ZohoOAuth
 
     public static function getConfigValue($key)
     {
-        return isset(self::$configProperties[$key]) ? self::$configProperties[$key] : '';
+        return self::$configProperties[$key] ?? '';
     }
 
-    public static function getAllConfigs()
+    public static function getAllConfigs(): array
     {
         return self::$configProperties;
     }
@@ -90,29 +89,29 @@ class ZohoOAuth
         return self::getConfigValue(ZohoOAuthConstants::IAM_URL);
     }
 
-    public static function getGrantURL()
+    public static function getGrantURL(): string
     {
-        return self::getIAMUrl().'/oauth/v2/auth';
+        return self::getIAMUrl() . '/oauth/v2/auth';
     }
 
-    public static function getTokenURL()
+    public static function getTokenURL(): string
     {
-        return self::getIAMUrl().'/oauth/v2/token';
+        return self::getIAMUrl() . '/oauth/v2/token';
     }
 
-    public static function getRefreshTokenURL()
+    public static function getRefreshTokenURL(): string
     {
-        return self::getIAMUrl().'/oauth/v2/token';
+        return self::getIAMUrl() . '/oauth/v2/token';
     }
 
-    public static function getRevokeTokenURL()
+    public static function getRevokeTokenURL(): string
     {
-        return self::getIAMUrl().'/oauth/v2/token/revoke';
+        return self::getIAMUrl() . '/oauth/v2/token/revoke';
     }
 
-    public static function getUserInfoURL()
+    public static function getUserInfoURL(): string
     {
-        return self::getIAMUrl().'/oauth/user/info';
+        return self::getIAMUrl() . '/oauth/user/info';
     }
 
     public static function getClientID()
@@ -135,25 +134,32 @@ class ZohoOAuth
         return self::getConfigValue(ZohoOAuthConstants::ACCESS_TYPE);
     }
 
+    /**
+     * @throws ZohoOAuthException
+     */
     public static function getPersistenceHandlerInstance()
     {
         try {
             if ('' != ZohoOAuth::getConfigValue('token_persistence_path')) {
                 return new ZohoOAuthPersistenceByFile();
-            } elseif ('ZohoOAuthPersistenceHandler' == self::$configProperties[ZohoOAuthConstants::PERSISTENCE_HANDLER_CLASS]) {
-                return new ZohoOAuthPersistenceHandler();
-            } else {
-                require_once realpath(self::$configProperties[ZohoOAuthConstants::PERSISTENCE_HANDLER_CLASS]);
-                $str = self::$configProperties[ZohoOAuthConstants::PERSISTENCE_HANDLER_CLASS_NAME];
-
-                return new $str();
             }
-        } catch (Exception $ex) {
+            if ('ZohoOAuthPersistenceHandler' == self::$configProperties[ZohoOAuthConstants::PERSISTENCE_HANDLER_CLASS]) {
+                return new ZohoOAuthPersistenceHandler();
+            }
+
+            require_once realpath(self::$configProperties[ZohoOAuthConstants::PERSISTENCE_HANDLER_CLASS]);
+            $str = self::$configProperties[ZohoOAuthConstants::PERSISTENCE_HANDLER_CLASS_NAME];
+
+            return new $str();
+        } catch (\Exception $ex) {
             throw new ZohoOAuthException($ex);
         }
     }
 
-    public static function getClientInstance()
+    /**
+     * @throws ZohoOAuthException
+     */
+    public static function getClientInstance(): ZohoOAuthClient
     {
         if (null == ZohoOAuthClient::getInstanceWithOutParam()) {
             throw new ZohoOAuthException('ZCRMRestClient::initialize($configMap) must be called before this.');

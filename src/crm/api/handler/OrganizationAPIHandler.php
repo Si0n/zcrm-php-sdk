@@ -3,6 +3,8 @@
 namespace zcrmsdk\crm\api\handler;
 
 use zcrmsdk\crm\api\APIRequest;
+use zcrmsdk\crm\api\response\APIResponse;
+use zcrmsdk\crm\api\response\BulkAPIResponse;
 use zcrmsdk\crm\crud\ZCRMNote;
 use zcrmsdk\crm\crud\ZCRMOrgTax;
 use zcrmsdk\crm\crud\ZCRMPermission;
@@ -35,7 +37,7 @@ class OrganizationAPIHandler extends APIHandler
         return new OrganizationAPIHandler();
     }
 
-    public function getNotes($param_map, $header_map)
+    public function getNotes(array $param_map = [], array $header_map = [])
     {
         try {
             $this->urlPath = 'Notes';
@@ -58,7 +60,7 @@ class OrganizationAPIHandler extends APIHandler
             foreach ($notesDetails as $notesObj) {
                 $record_Ins = ZCRMRecord::getInstance($notesObj['$se_module'], $notesObj['Parent_Id']['id']);
                 $noteIns = ZCRMNote::getInstance($record_Ins, $notesObj['id']);
-                array_push($noteInstancesArray, RelatedListAPIHandler::getInstance($record_Ins, 'Notes')->getZCRMNote($notesObj, $noteIns));
+                $noteInstancesArray[] = RelatedListAPIHandler::getInstance($record_Ins, 'Notes')->getZCRMNote($notesObj, $noteIns);
             }
             $responseInstance->setData($noteInstancesArray);
 
@@ -69,7 +71,7 @@ class OrganizationAPIHandler extends APIHandler
         }
     }
 
-    public function createNotes($noteInstances)
+    public function createNotes(array $noteInstances): BulkAPIResponse
     {
         if (sizeof($noteInstances) > 100) {
             throw new ZCRMException(APIConstants::API_MAX_NOTES_MSG, APIConstants::RESPONSECODE_BAD_REQUEST);
@@ -79,7 +81,7 @@ class OrganizationAPIHandler extends APIHandler
             foreach ($noteInstances as $noteInstance) {
                 if (null == $noteInstance->getId()) {
                     $record_Ins = ZCRMRecord::getInstance($noteInstance->getParentModule(), $noteInstance->getParentId());
-                    array_push($dataArray, RelatedListAPIHandler::getInstance($record_Ins, 'Notes')->getZCRMNoteAsJSON($noteInstance));
+                    $dataArray[] = RelatedListAPIHandler::getInstance($record_Ins, 'Notes')->getZCRMNoteAsJSON($noteInstance);
                 } else {
                     throw new ZCRMException(' ID MUST be null for create operation.', APIConstants::RESPONSECODE_BAD_REQUEST);
                 }
@@ -92,16 +94,14 @@ class OrganizationAPIHandler extends APIHandler
             $this->addHeader('Content-Type', 'application/json');
             $this->requestBody = $requestBodyObj;
 
-            $responseInstance = APIRequest::getInstance($this)->getBulkAPIResponse();
-
-            return $responseInstance;
+            return APIRequest::getInstance($this)->getBulkAPIResponse();
         } catch (ZCRMException $exception) {
             APIExceptionHandler::logException($exception);
             throw $exception;
         }
     }
 
-    public function deleteNotes($noteIds)
+    public function deleteNotes(array $noteIds): BulkAPIResponse
     {
         if (sizeof($noteIds) > 100) {
             throw new ZCRMException(APIConstants::API_MAX_NOTES_MSG, APIConstants::RESPONSECODE_BAD_REQUEST);
@@ -111,16 +111,15 @@ class OrganizationAPIHandler extends APIHandler
             $this->requestMethod = APIConstants::REQUEST_METHOD_DELETE;
             $this->addHeader('Content-Type', 'application/json');
             $this->addParam('ids', implode(',', $noteIds)); // converts array to string with specified seperator
-            $responseInstance = APIRequest::getInstance($this)->getBulkAPIResponse();
 
-            return $responseInstance;
+            return APIRequest::getInstance($this)->getBulkAPIResponse();
         } catch (ZCRMException $exception) {
             APIExceptionHandler::logException($exception);
             throw $exception;
         }
     }
 
-    public function getOrganizationDetails()
+    public function getOrganizationDetails(): APIResponse
     {
         try {
             $this->urlPath = 'org';
@@ -138,7 +137,7 @@ class OrganizationAPIHandler extends APIHandler
         }
     }
 
-    public function getOrganizationTaxes()
+    public function getOrganizationTaxes(): BulkAPIResponse
     {
         try {
             $this->urlPath = 'org/taxes';
@@ -149,7 +148,7 @@ class OrganizationAPIHandler extends APIHandler
             $orgTaxes = $responseJSON['taxes'];
             $orgTaxInstancesArray = [];
             foreach ($orgTaxes as $orgTaxobj) {
-                array_push($orgTaxInstancesArray, self::getZCRMorgTax($orgTaxobj));
+                $orgTaxInstancesArray[] = self::getZCRMorgTax($orgTaxobj);
             }
             $responseInstance->setData($orgTaxInstancesArray);
 
@@ -160,10 +159,10 @@ class OrganizationAPIHandler extends APIHandler
         }
     }
 
-    public function getOrganizationTax($orgTaxId)
+    public function getOrganizationTax(string $orgTaxId): APIResponse
     {
         try {
-            $this->urlPath = 'org/taxes/'.$orgTaxId;
+            $this->urlPath = 'org/taxes/' . $orgTaxId;
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
             $this->addHeader('Content-Type', 'application/json');
             $responseInstance = APIRequest::getInstance($this)->getAPIResponse();
@@ -178,7 +177,7 @@ class OrganizationAPIHandler extends APIHandler
         }
     }
 
-    public function createOrganizationTaxes($orgTaxInstances)
+    public function createOrganizationTaxes(array $orgTaxInstances): BulkAPIResponse
     {
         if (sizeof($orgTaxInstances) > 100) {
             throw new ZCRMException(APIConstants::API_MAX_ORGTAX_MSG, APIConstants::RESPONSECODE_BAD_REQUEST);
@@ -187,7 +186,7 @@ class OrganizationAPIHandler extends APIHandler
             $dataArray = [];
             foreach ($orgTaxInstances as $orgTaxInstance) {
                 if (null == $orgTaxInstance->getId()) {
-                    array_push($dataArray, self::constructJSONForZCRMOrgTax($orgTaxInstance));
+                    $dataArray[] = self::constructJSONForZCRMOrgTax($orgTaxInstance);
                 } else {
                     throw new ZCRMException(' ID MUST be null for create operation.', APIConstants::RESPONSECODE_BAD_REQUEST);
                 }
@@ -200,16 +199,14 @@ class OrganizationAPIHandler extends APIHandler
             $this->addHeader('Content-Type', 'application/json');
             $this->requestBody = $requestBodyObj;
 
-            $responseInstance = APIRequest::getInstance($this)->getBulkAPIResponse();
-
-            return $responseInstance;
+            return APIRequest::getInstance($this)->getBulkAPIResponse();
         } catch (ZCRMException $exception) {
             APIExceptionHandler::logException($exception);
             throw $exception;
         }
     }
 
-    public function updateOrganizationTaxes($orgTaxInstances)
+    public function updateOrganizationTaxes(array $orgTaxInstances): BulkAPIResponse
     {
         if (sizeof($orgTaxInstances) > 100) {
             throw new ZCRMException(APIConstants::API_MAX_ORGTAX_MSG, APIConstants::RESPONSECODE_BAD_REQUEST);
@@ -218,7 +215,7 @@ class OrganizationAPIHandler extends APIHandler
             $dataArray = [];
             foreach ($orgTaxInstances as $orgTaxInstance) {
                 if (null != $orgTaxInstance->getId()) {
-                    array_push($dataArray, self::constructJSONForZCRMOrgTax($orgTaxInstance));
+                    $dataArray[] = self::constructJSONForZCRMOrgTax($orgTaxInstance);
                 } else {
                     throw new ZCRMException(' ID MUST not be null for update operation.', APIConstants::RESPONSECODE_BAD_REQUEST);
                 }
@@ -230,31 +227,28 @@ class OrganizationAPIHandler extends APIHandler
             $this->addHeader('Content-Type', 'application/json');
             $this->requestBody = $requestBodyObj;
 
-            $responseInstance = APIRequest::getInstance($this)->getBulkAPIResponse();
-
-            return $responseInstance;
+            return APIRequest::getInstance($this)->getBulkAPIResponse();
         } catch (ZCRMException $exception) {
             APIExceptionHandler::logException($exception);
             throw $exception;
         }
     }
 
-    public function deleteOrganizationTax($orgTaxId)
+    public function deleteOrganizationTax(array $orgTaxId): APIResponse
     {
         try {
-            $this->urlPath = 'org/taxes/'.$orgTaxId;
+            $this->urlPath = 'org/taxes/' . $orgTaxId;
             $this->requestMethod = APIConstants::REQUEST_METHOD_DELETE;
             $this->addHeader('Content-Type', 'application/json');
-            $responseInstance = APIRequest::getInstance($this)->getAPIResponse();
 
-            return $responseInstance;
+            return APIRequest::getInstance($this)->getAPIResponse();
         } catch (ZCRMException $exception) {
             APIExceptionHandler::logException($exception);
             throw $exception;
         }
     }
 
-    public function deleteOrganizationTaxes($orgTaxIds)
+    public function deleteOrganizationTaxes(array $orgTaxIds): BulkAPIResponse
     {
         if (sizeof($orgTaxIds) > 100) {
             throw new ZCRMException(APIConstants::API_MAX_ORGTAX_MSG, APIConstants::RESPONSECODE_BAD_REQUEST);
@@ -264,16 +258,15 @@ class OrganizationAPIHandler extends APIHandler
             $this->requestMethod = APIConstants::REQUEST_METHOD_DELETE;
             $this->addHeader('Content-Type', 'application/json');
             $this->addParam('ids', implode(',', $orgTaxIds)); // converts array to string with specified seperator
-            $responseInstance = APIRequest::getInstance($this)->getBulkAPIResponse();
 
-            return $responseInstance;
+            return APIRequest::getInstance($this)->getBulkAPIResponse();
         } catch (ZCRMException $exception) {
             APIExceptionHandler::logException($exception);
             throw $exception;
         }
     }
 
-    public function getZCRMorgTax($orgTaxDetails)
+    public function getZCRMorgTax(array $orgTaxDetails): ZCRMOrgTax
     {
         $orgTaxInstance = ZCRMOrgTax::getInstance($orgTaxDetails['name'], $orgTaxDetails['id']);
         $orgTaxInstance->setValue($orgTaxDetails['display_label']);
@@ -282,7 +275,7 @@ class OrganizationAPIHandler extends APIHandler
         return $orgTaxInstance;
     }
 
-    public function setOrganizationDetails($orgDetails)
+    public function setOrganizationDetails(array $orgDetails): ZCRMOrganization
     {
         $orgInsatance = ZCRMOrganization::getInstance($orgDetails['company_name'], $orgDetails['id']);
         $orgInsatance->setAlias($orgDetails['alias']);
@@ -321,7 +314,7 @@ class OrganizationAPIHandler extends APIHandler
         return $orgInsatance;
     }
 
-    public function getAllRoles()
+    public function getAllRoles(): BulkAPIResponse
     {
         try {
             $this->urlPath = 'settings/roles';
@@ -332,7 +325,7 @@ class OrganizationAPIHandler extends APIHandler
             $roles = $responseJSON['roles'];
             $roleInstanceArray = [];
             foreach ($roles as $role) {
-                array_push($roleInstanceArray, self::getZCRMRole($role));
+                $roleInstanceArray[] = self::getZCRMRole($role);
             }
             $responseInstance->setData($roleInstanceArray);
 
@@ -343,10 +336,10 @@ class OrganizationAPIHandler extends APIHandler
         }
     }
 
-    public function getRole($roleId)
+    public function getRole(string $roleId): APIResponse
     {
         try {
-            $this->urlPath = 'settings/roles/'.$roleId;
+            $this->urlPath = 'settings/roles/' . $roleId;
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
             $this->addHeader('Content-Type', 'application/json');
             $responseInstance = APIRequest::getInstance($this)->getAPIResponse();
@@ -361,7 +354,7 @@ class OrganizationAPIHandler extends APIHandler
         }
     }
 
-    public function getZCRMRole($roleDetails)
+    public function getZCRMRole(array $roleDetails): ZCRMRole
     {
         $crmRoleInstance = ZCRMRole::getInstance($roleDetails['id'], $roleDetails['name']);
         $crmRoleInstance->setDisplayLabel($roleDetails['display_label']);
@@ -373,7 +366,12 @@ class OrganizationAPIHandler extends APIHandler
         return $crmRoleInstance;
     }
 
-    public function createUser($userInstance)
+    /**
+     * @param $userInstance
+     * @return APIResponse
+     * @throws ZCRMException
+     */
+    public function createUser(ZCRMUser $userInstance): APIResponse
     {
         try {
             $userJson = self::constructJSONForUser([
@@ -384,52 +382,49 @@ class OrganizationAPIHandler extends APIHandler
             $this->addHeader('Content-Type', 'application/json');
             $this->requestBody = $userJson;
             $this->apiKey = 'users';
-            $responseInstance = APIRequest::getInstance($this)->getAPIResponse();
 
-            return $responseInstance;
+            return APIRequest::getInstance($this)->getAPIResponse();
         } catch (ZCRMException $exception) {
             APIExceptionHandler::logException($exception);
             throw $exception;
         }
     }
 
-    public function updateUser($userInstance)
+    public function updateUser(ZCRMUser $userInstance): APIResponse
     {
         try {
             $userJson = self::constructJSONForUser([
                 $userInstance,
             ]);
-            $this->urlPath = 'users/'.$userInstance->getId();
+            $this->urlPath = 'users/' . $userInstance->getId();
             $this->requestMethod = APIConstants::REQUEST_METHOD_PUT;
             $this->addHeader('Content-Type', 'application/json');
             $this->requestBody = $userJson;
             $this->apiKey = 'users';
-            $responseInstance = APIRequest::getInstance($this)->getAPIResponse();
 
-            return $responseInstance;
+            return APIRequest::getInstance($this)->getAPIResponse();
         } catch (ZCRMException $exception) {
             APIExceptionHandler::logException($exception);
             throw $exception;
         }
     }
 
-    public function deleteUser($userId)
+    public function deleteUser(string $userId): APIResponse
     {
         try {
-            $this->urlPath = 'users/'.$userId;
+            $this->urlPath = 'users/' . $userId;
             $this->requestMethod = APIConstants::REQUEST_METHOD_DELETE;
             $this->addHeader('Content-Type', 'application/json');
             $this->apiKey = 'users';
-            $responseInstance = APIRequest::getInstance($this)->getAPIResponse();
 
-            return $responseInstance;
+            return APIRequest::getInstance($this)->getAPIResponse();
         } catch (ZCRMException $exception) {
             APIExceptionHandler::logException($exception);
             throw $exception;
         }
     }
 
-    public function constructJSONForZCRMOrgTax($orgTaxInstance)
+    public function constructJSONForZCRMOrgTax($orgTaxInstance): array
     {
         $orgTaxJson = [];
 
@@ -449,7 +444,7 @@ class OrganizationAPIHandler extends APIHandler
         return $orgTaxJson;
     }
 
-    public function constructJSONForUser($userInstanceArray)
+    public function constructJSONForUser($userInstanceArray): bool|string
     {
         $userArray = [];
         foreach ($userInstanceArray as $user) {
@@ -547,7 +542,7 @@ class OrganizationAPIHandler extends APIHandler
             foreach ($customFields as $key => $value) {
                 $userInfoJson[$key] = $value;
             }
-            array_push($userArray, $userInfoJson);
+            $userArray[] = $userInfoJson;
         }
 
         return json_encode([
@@ -555,7 +550,7 @@ class OrganizationAPIHandler extends APIHandler
         ]);
     }
 
-    public function getAllProfiles()
+    public function getAllProfiles(): BulkAPIResponse
     {
         try {
             $this->urlPath = 'settings/profiles';
@@ -566,7 +561,7 @@ class OrganizationAPIHandler extends APIHandler
             $profiles = $responseJSON['profiles'];
             $profileInstanceArray = [];
             foreach ($profiles as $profile) {
-                array_push($profileInstanceArray, self::getZCRMProfile($profile));
+                $profileInstanceArray[] = self::getZCRMProfile($profile);
             }
             $responseInstance->setData($profileInstanceArray);
 
@@ -577,10 +572,10 @@ class OrganizationAPIHandler extends APIHandler
         }
     }
 
-    public function getProfile($profileId)
+    public function getProfile(string $profileId): APIResponse
     {
         try {
-            $this->urlPath = 'settings/profiles/'.$profileId;
+            $this->urlPath = 'settings/profiles/' . $profileId;
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
             $this->addHeader('Content-Type', 'application/json');
             $responseInstance = APIRequest::getInstance($this)->getAPIResponse();
@@ -595,7 +590,7 @@ class OrganizationAPIHandler extends APIHandler
         }
     }
 
-    public function getZCRMProfile($profileDetails)
+    public function getZCRMProfile(array $profileDetails): ZCRMProfile
     {
         $profileInstance = ZCRMProfile::getInstance($profileDetails['id'], $profileDetails['name']);
         $profileInstance->setCreatedTime($profileDetails['created_time']);
@@ -641,10 +636,13 @@ class OrganizationAPIHandler extends APIHandler
         return $profileInstance;
     }
 
-    public function getUser($userId)
+    /**
+     * @throws ZCRMException
+     */
+    public function getUser(string $userId): APIResponse
     {
         try {
-            $this->urlPath = 'users/'.$userId;
+            $this->urlPath = 'users/' . $userId;
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
             $this->addHeader('Content-Type', 'application/json');
             $responseInstance = APIRequest::getInstance($this)->getAPIResponse();
@@ -659,7 +657,10 @@ class OrganizationAPIHandler extends APIHandler
         }
     }
 
-    public function getUsers($param_map, $header_map, $type)
+    /**
+     * @throws ZCRMException
+     */
+    public function getUsers(array $param_map, array $header_map, string $type): BulkAPIResponse
     {
         try {
             $this->urlPath = 'users';
@@ -683,7 +684,7 @@ class OrganizationAPIHandler extends APIHandler
             $users = $responseJSON['users'];
             $userInstanceArray = [];
             foreach ($users as $user) {
-                array_push($userInstanceArray, self::getZCRMUser($user));
+                $userInstanceArray[] = self::getZCRMUser($user);
             }
             $responseInstance->setData($userInstanceArray);
 
@@ -694,7 +695,7 @@ class OrganizationAPIHandler extends APIHandler
         }
     }
 
-    public function searchUsersByCriteria($criteria, $param_map)
+    public function searchUsersByCriteria($criteria, $param_map): BulkAPIResponse
     {
         try {
             $this->urlPath = 'users/search';
@@ -711,7 +712,7 @@ class OrganizationAPIHandler extends APIHandler
             $users = $responseJSON['users'];
             $userInstanceArray = [];
             foreach ($users as $user) {
-                array_push($userInstanceArray, self::getZCRMUser($user));
+                $userInstanceArray[] = self::getZCRMUser($user);
             }
             $responseInstance->setData($userInstanceArray);
 
@@ -722,73 +723,103 @@ class OrganizationAPIHandler extends APIHandler
         }
     }
 
-    public function getAllUsers($param_map, $header_map)
+    /**
+     * @throws ZCRMException
+     */
+    public function getAllUsers(array $param_map = [], array $header_map = []): BulkAPIResponse
     {
         return self::getUsers($param_map, $header_map, 'AllUsers');
     }
 
-    public function getAllDeactiveUsers($param_map, $header_map)
+    /**
+     * @throws ZCRMException
+     */
+    public function getAllDeactiveUsers(array $param_map = [], array $header_map = []): BulkAPIResponse
     {
         return self::getUsers($param_map, $header_map, 'DeactiveUsers');
     }
 
-    public function getAllActiveUsers($param_map, $header_map)
+    /**
+     * @throws ZCRMException
+     */
+    public function getAllActiveUsers(array $param_map = [], array $header_map = []): BulkAPIResponse
     {
         return self::getUsers($param_map, $header_map, 'ActiveUsers');
     }
 
-    public function getAllConfirmedUsers($param_map, $header_map)
+    /**
+     * @throws ZCRMException
+     */
+    public function getAllConfirmedUsers(array $param_map = [], array $header_map = []): BulkAPIResponse
     {
         return self::getUsers($param_map, $header_map, 'ConfirmedUsers');
     }
 
-    public function getAllNotConfirmedUsers($param_map, $header_map)
+    /**
+     * @throws ZCRMException
+     */
+    public function getAllNotConfirmedUsers(array $param_map = [], array $header_map = []): BulkAPIResponse
     {
         return self::getUsers($param_map, $header_map, 'NotConfirmedUsers');
     }
 
-    public function getAllDeletedUsers($param_map, $header_map)
+    /**
+     * @throws ZCRMException
+     */
+    public function getAllDeletedUsers(array $param_map = [], array $header_map = []): BulkAPIResponse
     {
         return self::getUsers($param_map, $header_map, 'DeletedUsers');
     }
 
-    public function getAllActiveConfirmedUsers($param_map, $header_map)
+    /**
+     * @throws ZCRMException
+     */
+    public function getAllActiveConfirmedUsers(array $param_map = [], array $header_map = []): BulkAPIResponse
     {
         return self::getUsers($param_map, $header_map, 'ActiveConfirmedUsers');
     }
 
-    public function getAllAdminUsers($param_map, $header_map)
+    /**
+     * @throws ZCRMException
+     */
+    public function getAllAdminUsers(array $param_map = [], array $header_map = []): BulkAPIResponse
     {
         return self::getUsers($param_map, $header_map, 'AdminUsers');
     }
 
-    public function getAllActiveConfirmedAdmins($param_map, $header_map)
+    /**
+     * @throws ZCRMException
+     */
+    public function getAllActiveConfirmedAdmins(array $param_map = [], array $header_map = []): BulkAPIResponse
     {
         return self::getUsers($param_map, $header_map, 'ActiveConfirmedAdmins');
     }
 
-    public function getCurrentUser()
+    /**
+     * @throws ZCRMException
+     */
+    public function getCurrentUser(): BulkAPIResponse
     {
         return self::getUsers([], [], 'CurrentUser');
     }
 
-    public function getZCRMUser($userDetails)
+    public function getZCRMUser($userDetails): ZCRMUser
     {
         $userInstance = ZCRMUser::getInstance($userDetails['id'], isset($userDetails['name']) ? $userDetails['name'] : null);
-        $userInstance->setCountry(isset($userDetails['country']) ? $userDetails['country'] : null);
+        $userInstance->setCountry($userDetails['country'] ?? null);
         $roleInstance = ZCRMRole::getInstance($userDetails['role']['id'], $userDetails['role']['name']);
         $userInstance->setRole($roleInstance);
         if (array_key_exists('customize_info', $userDetails)) {
             $userInstance->setCustomizeInfo(self::getZCRMUserCustomizeInfo($userDetails['customize_info']));
         }
         $userInstance->setCity($userDetails['city']);
-        $userInstance->setSignature(isset($userDetails['signature']) ? $userDetails['signature'] : null);
+        $userInstance->setSignature($userDetails['signature'] ?? null);
 
-        $userInstance->setNameFormat(isset($userDetails['name_format']) ? $userDetails['name_format'] : null);
+        $userInstance->setNameFormat($userDetails['name_format'] ?? null);
         $userInstance->setLanguage($userDetails['language']);
         $userInstance->setLocale($userDetails['locale']);
-        $userInstance->setPersonalAccount(isset($userDetails['personal_account']) ? $userDetails['personal_account'] : null);
-        $userInstance->setDefaultTabGroup(isset($userDetails['default_tab_group']) ? $userDetails['default_tab_group'] : null);
+        $userInstance->setPersonalAccount($userDetails['personal_account'] ?? null);
+        $userInstance->setDefaultTabGroup($userDetails['default_tab_group'] ?? null);
         $userInstance->setAlias($userDetails['alias']);
         $userInstance->setStreet($userDetails['street']);
         if (array_key_exists('theme', $userDetails)) {
@@ -800,7 +831,7 @@ class OrganizationAPIHandler extends APIHandler
         $userInstance->setFirstName($userDetails['first_name']);
         $userInstance->setEmail($userDetails['email']);
         $userInstance->setZip($userDetails['zip']);
-        $userInstance->setDecimalSeparator(isset($userDetails['decimal_separator']) ? $userDetails['decimal_separator'] : null);
+        $userInstance->setDecimalSeparator($userDetails['decimal_separator'] ?? null);
         $userInstance->setWebsite($userDetails['website']);
         $userInstance->setTimeFormat($userDetails['time_format']);
         $profile = ZCRMProfile::getInstance($userDetails['profile']['id'], $userDetails['profile']['name']);
@@ -815,12 +846,12 @@ class OrganizationAPIHandler extends APIHandler
         $userInstance->setDob($userDetails['dob']);
         $userInstance->setDateFormat($userDetails['date_format']);
         $userInstance->setStatus($userDetails['status']);
-        $userInstance->setTerritories(isset($userDetails['territories']) ? $userDetails['territories'] : null);
-        $userInstance->setReportingTo(isset($userDetails['reporting_to']) ? $userDetails['reporting_to'] : null);
+        $userInstance->setTerritories($userDetails['territories'] ?? null);
+        $userInstance->setReportingTo($userDetails['reporting_to'] ?? null);
         $userInstance->setCreatedBy($userDetails['created_by']);
         $userInstance->setModifiedBy($userDetails['Modified_By']);
         $userInstance->setIsOnline($userDetails['Isonline']);
-        $userInstance->setCurrency(isset($userDetails['Currency']) ? $userDetails['Currency'] : null);
+        $userInstance->setCurrency($userDetails['Currency'] ?? null);
         $userInstance->setCreatedTime($userDetails['created_time']);
         $userInstance->setModifiedTime($userDetails['Modified_Time']);
         foreach ($userDetails as $key => $value) {
@@ -832,7 +863,7 @@ class OrganizationAPIHandler extends APIHandler
         return $userInstance;
     }
 
-    public function getZCRMUserCustomizeInfo($customizeInfo)
+    public function getZCRMUserCustomizeInfo(array $customizeInfo): ZCRMUserCustomizeInfo
     {
         $customizeInfoInstance = ZCRMUserCustomizeInfo::getInstance();
         if (null != $customizeInfo['notes_desc']) {
@@ -857,7 +888,7 @@ class OrganizationAPIHandler extends APIHandler
         return $customizeInfoInstance;
     }
 
-    public function getZCRMUserTheme($themeDetails)
+    public function getZCRMUserTheme(array $themeDetails): ZCRMUserTheme
     {
         $themeInstance = ZCRMUserTheme::getInstance();
         $themeInstance->setNormalTabFontColor($themeDetails['normal_tab']['font_color']);

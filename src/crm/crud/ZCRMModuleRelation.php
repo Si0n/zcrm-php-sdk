@@ -14,42 +14,42 @@ class ZCRMModuleRelation
      *
      * @var string
      */
-    private $label = null;
+    private $label;
 
     /**
      * api name of the module relation.
      *
      * @var string
      */
-    private $apiName = null;
+    private $apiName;
 
     /**
      * id of the module relation.
      *
      * @var string
      */
-    private $id = null;
+    private $id;
 
     /**
      * module api name of the parent module.
      *
      * @var string
      */
-    private $parentModuleAPIName = null;
+    private $parentModuleAPIName;
 
     /**
      * visibility of the module relation.
      *
      * @var bool
      */
-    private $visible = null;
+    private $visible;
 
     /**
      * the instance of the record to which the relation belongs.
      *
      * @var ZCRMRecord
      */
-    private $parentRecord = null;
+    private $parentRecord;
 
     /**
      * the instance of the junction record.
@@ -61,9 +61,6 @@ class ZCRMModuleRelation
     /**
      * constructor to assign the parent module api name or the instance of the parent record and the related list api name or the instance of the junction record.
      *
-     * @param string     $parentModuleAPIName module api name of the module
-     * @param ZCRMRecord $ParentRecord        instance of the ZCRMRecord class
-     * @param string     $relatedListAPIName  related list api name
      * @param ZCRMJunctionRecord instance of the JunctionRecord class
      */
     private function __construct($parentModuleAPINameOrParentRecord, $relatedListAPINameOrJunctionRecord)
@@ -84,9 +81,7 @@ class ZCRMModuleRelation
     /**
      * method to get the instance of the module relation.
      *
-     * @param string     $parentModuleAPIName module api name of the module
-     * @param ZCRMRecord $ParentRecord        instance of the ZCRMRecord class
-     * @param string     $relatedListAPIName  related list api name
+     * @param string $relatedListAPIName related list api name
      *
      * @return ZCRMModuleRelation instance of the ZCRMModuleRelation
      */

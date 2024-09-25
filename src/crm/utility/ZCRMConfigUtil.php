@@ -10,14 +10,17 @@ use zcrmsdk\oauth\ZohoOAuth;
 
 class ZCRMConfigUtil
 {
-    private static $configProperties = [];
+    private static array $configProperties = [];
 
-    public static function getInstance()
+    public static function getInstance(): ZCRMConfigUtil
     {
         return new ZCRMConfigUtil();
     }
 
-    public static function initialize($configuration)
+    /**
+     * @throws ZohoOAuthException
+     */
+    public static function initialize(array $configuration): void
     {
         $mandatory_keys = [
             ZohoOAuthConstants::CLIENT_ID,
@@ -27,19 +30,19 @@ class ZCRMConfigUtil
         // check if user input contains all mandatory values
         foreach ($mandatory_keys as $key) {
             if (!array_key_exists($key, $configuration)) {
-                throw new ZohoOAuthException($key.' is mandatory');
-            } elseif (array_key_exists($key, $configuration) && '' == $configuration[$key]) {
-                throw new ZohoOAuthException($key.' value is missing');
+                throw new ZohoOAuthException($key . ' is mandatory');
+            } elseif ('' == $configuration[$key]) {
+                throw new ZohoOAuthException($key . ' value is missing');
             }
         }
-        if (array_key_exists(APIConstants::CURRENT_USER_EMAIL, $configuration) && '' != $configuration[APIConstants::CURRENT_USER_EMAIL]) {//if current user email id is provided in map and is not empty
+        if (array_key_exists(APIConstants::CURRENT_USER_EMAIL, $configuration) && '' != $configuration[APIConstants::CURRENT_USER_EMAIL]) {// if current user email id is provided in map and is not empty
             ZCRMRestClient::setCurrentUserEmailId($configuration[APIConstants::CURRENT_USER_EMAIL]);
         }
         self::setConfigValues($configuration);
         ZohoOAuth::initialize($configuration);
     }
 
-    private static function setConfigValues($configuration)
+    private static function setConfigValues(array $configuration): void
     {
         $config_keys = [
             APIConstants::CURRENT_USER_EMAIL,
@@ -47,6 +50,8 @@ class ZCRMConfigUtil
             APIConstants::API_BASE_URL,
             APIConstants::API_VERSION,
             APIConstants::APPLICATION_LOGFILE_PATH,
+            APIConstants::APPLICATION_LOGGER_INSTANCE,
+            APIConstants::APPLICATION_LOG_RESPONSE_BODY,
             APIConstants::FILE_UPLOAD_URL,
         ];
 
@@ -66,12 +71,12 @@ class ZCRMConfigUtil
         }
     }
 
-    public static function getConfigValue($key)
+    public static function getConfigValue(int|string $key): mixed
     {
-        return isset(self::$configProperties[$key]) ? self::$configProperties[$key] : '';
+        return self::$configProperties[$key] ?? '';
     }
 
-    public static function setConfigValue($key, $value)
+    public static function setConfigValue(int|string $key, mixed $value): void
     {
         self::$configProperties[$key] = $value;
     }
@@ -91,6 +96,10 @@ class ZCRMConfigUtil
         return self::getConfigValue(APIConstants::API_VERSION);
     }
 
+    /**
+     * @throws ZCRMException
+     * @throws ZohoOAuthException
+     */
     public static function getAccessToken()
     {
         $currentUserEmail = ZCRMRestClient::getCurrentUserEmailID();
@@ -105,7 +114,7 @@ class ZCRMConfigUtil
         return $oAuthCliIns->getAccessToken($currentUserEmail);
     }
 
-    public static function getAllConfigs()
+    public static function getAllConfigs(): array
     {
         return self::$configProperties;
     }

@@ -4,17 +4,17 @@ namespace zcrmsdk\crm\api\handler;
 
 class APIHandler implements APIHandlerInterface
 {
-    protected $requestMethod = null;
+    protected $requestMethod;
 
-    protected $urlPath = null;
+    protected $urlPath;
 
-    protected $requestHeaders = null;
+    protected $requestHeaders;
 
-    protected $requestParams = null;
+    protected $requestParams;
 
-    protected $requestBody = null;
+    protected $requestBody;
 
-    protected $apiKey = null;
+    protected $apiKey;
 
     protected $isBulk = false;
 
@@ -63,12 +63,12 @@ class APIHandler implements APIHandlerInterface
 
     public function getRequestHeadersAsMap()
     {
-        return CommonUtil.convertJSONObjectToHashMap($this->requestHeaders);
+        return CommonUtil . convertJSONObjectToHashMap($this->requestHeaders);
     }
 
     public function getRequestParamsAsMap()
     {
-        return CommonUtil.convertJSONObjectToHashMap($this->requestParams);
+        return CommonUtil . convertJSONObjectToHashMap($this->requestParams);
     }
 
     public static function getEmptyJSONObject()
@@ -118,8 +118,6 @@ class APIHandler implements APIHandlerInterface
 
     /**
      * Set the requestBody.
-     *
-     * @param $requestBody
      */
     public function setRequestBody($requestBody)
     {
