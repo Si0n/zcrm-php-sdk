@@ -75,9 +75,9 @@ class ZohoHTTPConnector
         LogManager::info(sprintf('Request %s %s', $this->requestType, $url), [
             'requestHeaders' => $requestHeaders,
             'requestPostBody' => $requestPostBody,
-            'responseHeaders' => ZCRMConfigUtil::getConfigValue(APIConstants::APPLICATION_LOG_RESPONSE_HEADERS) ? $headers : 'not logged',
-            'responseContent' => ZCRMConfigUtil::getConfigValue(APIConstants::APPLICATION_LOG_RESPONSE_BODY) ? $content : 'not logged',
-            'responseInfo' => ZCRMConfigUtil::getConfigValue(APIConstants::APPLICATION_LOG_RESPONSE_INFO) ? $responseInfo : 'not logged',
+            'responseInfo' => ZCRMConfigUtil::getConfigValue(APIConstants::APPLICATION_LOG_RESPONSE_INFO) ? $responseInfo : '<logging disabled>',
+            'responseHeaders' => ZCRMConfigUtil::getConfigValue(APIConstants::APPLICATION_LOG_RESPONSE_HEADERS) ? $headers : '<logging disabled>',
+            'responseContent' => ZCRMConfigUtil::getConfigValue(APIConstants::APPLICATION_LOG_RESPONSE_BODY) ? $content : '<logging disabled>',
         ]);
 
         return [
