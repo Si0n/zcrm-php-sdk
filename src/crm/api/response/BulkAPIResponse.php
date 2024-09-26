@@ -49,9 +49,11 @@ class BulkAPIResponse extends CommonAPIResponse
     }
 
     /**
+     * @throws ZCRMException
+     *
      * @see CommonAPIResponse::handleForFaultyResponses()
      */
-    public function handleForFaultyResponses()
+    public function handleForFaultyResponses(): void
     {
         $statusCode = self::getHttpStatusCode();
         if (in_array($statusCode, APIExceptionHandler::getFaultyResponseCodes())) {
@@ -59,56 +61,34 @@ class BulkAPIResponse extends CommonAPIResponse
                 $exception = new ZCRMException('No Content', $statusCode);
                 $exception->setExceptionCode('NO CONTENT');
                 throw $exception;
-            } elseif (APIConstants::RESPONSECODE_NOT_MODIFIED == $statusCode) {
+            }
+            if (APIConstants::RESPONSECODE_NOT_MODIFIED == $statusCode) {
                 $exception = new ZCRMException('Not Modified', $statusCode);
                 $exception->setExceptionCode('NOT MODIFIED');
                 throw $exception;
-            } else {
-                $responseJSON = $this->getResponseJSON();
-                $exception = new ZCRMException($responseJSON[APIConstants::MESSAGE], $statusCode);
-                $exception->setExceptionCode($responseJSON[APIConstants::CODE]);
-                $exception->setExceptionDetails($responseJSON[APIConstants::DETAILS]);
-                throw $exception;
             }
+            $responseJSON = $this->getResponseJSON();
+            $exception = new ZCRMException($responseJSON[APIConstants::MESSAGE], $statusCode);
+            $exception->setExceptionCode($responseJSON[APIConstants::CODE]);
+            $exception->setExceptionDetails($responseJSON[APIConstants::DETAILS]);
+            throw $exception;
         }
     }
 
     /**
      * @see CommonAPIResponse::processResponseData()
      */
-    public function processResponseData()// status of the response
+    public function processResponseData(): void// status of the response
     {
         $this->bulkEntitiesResponse = [];
         $bulkResponseJSON = $this->getResponseJSON();
-        if (array_key_exists(APIConstants::DATA, $bulkResponseJSON)) {
-            $recordsArray = $bulkResponseJSON[APIConstants::DATA];
-            foreach ($recordsArray as $record) {
-                if (null != $record && array_key_exists(APIConstants::STATUS, $record)) {
-                    array_push($this->bulkEntitiesResponse, new EntityResponse($record));
-                }
-            }
-        }
-        if (array_key_exists(APIConstants::TAGS, $bulkResponseJSON)) {
-            $TagsArray = $bulkResponseJSON[APIConstants::TAGS];
-            foreach ($TagsArray as $Tags) {
-                if (null != $Tags && array_key_exists(APIConstants::STATUS, $Tags)) {
-                    array_push($this->bulkEntitiesResponse, new EntityResponse($Tags));
-                }
-            }
-        }
-        if (array_key_exists(APIConstants::TAXES, $bulkResponseJSON)) {
-            $orgTaxesArray = $bulkResponseJSON[APIConstants::TAXES];
-            foreach ($orgTaxesArray as $orgTax) {
-                if (null != $orgTax && array_key_exists(APIConstants::STATUS, $orgTax)) {
-                    array_push($this->bulkEntitiesResponse, new EntityResponse($orgTax));
-                }
-            }
-        }
-        if (array_key_exists(APIConstants::VARIABLES, $bulkResponseJSON)) {
-            $variables = $bulkResponseJSON[APIConstants::VARIABLES];
-            foreach ($variables as $variable) {
-                if (null != $variable && array_key_exists(APIConstants::STATUS, $variable)) {
-                    array_push($this->bulkEntitiesResponse, new EntityResponse($variable));
+        foreach ([APIConstants::DATA, APIConstants::TAGS, APIConstants::TAXES, APIConstants::VARIABLES] as $key) {
+            if (array_key_exists($key, $bulkResponseJSON)) {
+                $recordsArray = $bulkResponseJSON[$key];
+                foreach ($recordsArray as $record) {
+                    if (null != $record && array_key_exists(APIConstants::STATUS, $record)) {
+                        $this->bulkEntitiesResponse[] = new EntityResponse($record);
+                    }
                 }
             }
         }
@@ -149,7 +129,7 @@ class BulkAPIResponse extends CommonAPIResponse
      *
      * @param string $status the response status
      */
-    public function setStatus($status)
+    public function setStatus($status): void
     {
         $this->status = $status;
     }
@@ -167,7 +147,7 @@ class BulkAPIResponse extends CommonAPIResponse
     /**
      * method to set the response information.
      */
-    public function setInfo()
+    public function setInfo(): void
     {
         if (array_key_exists(APIConstants::INFO, $this->getResponseJSON())) {
             $this->info = new ResponseInfo($this->getResponseJSON()[APIConstants::INFO]);

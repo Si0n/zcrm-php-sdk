@@ -2,6 +2,8 @@
 
 namespace zcrmsdk\crm\utility;
 
+use zcrmsdk\crm\api\response\CommonAPIResponse;
+
 /**
  * Purpose of this class is to trigger API call and fetch the response.
  *
@@ -68,10 +70,13 @@ class ZohoHTTPConnector
         $responseInfo = curl_getinfo($curl_pointer);
         curl_close($curl_pointer);
 
+        [$headers, $content] = CommonAPIResponse::handleCurlResponse($result, $responseInfo[APIConstants::HTTP_CODE]);
+
         LogManager::info(sprintf('Request %s %s', $this->requestType, $url), [
             'requestHeaders' => $requestHeaders,
             'requestPostBody' => $requestPostBody,
-            'response' => ZCRMConfigUtil::getConfigValue(APIConstants::APPLICATION_LOG_RESPONSE_BODY) ? $result : 'not logged',
+            'responseHeaders' => ZCRMConfigUtil::getConfigValue(APIConstants::APPLICATION_LOG_RESPONSE_BODY) ? $headers : 'not logged',
+            'responseContent' => ZCRMConfigUtil::getConfigValue(APIConstants::APPLICATION_LOG_RESPONSE_BODY) ? $content : 'not logged',
             'responseInfo' => ZCRMConfigUtil::getConfigValue(APIConstants::APPLICATION_LOG_RESPONSE_BODY) ? $responseInfo : 'not logged',
         ]);
 

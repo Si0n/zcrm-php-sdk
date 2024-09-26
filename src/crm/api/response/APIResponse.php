@@ -17,11 +17,8 @@ class APIResponse extends CommonAPIResponse
 
     /**
      * response status of the api.
-     *
-     * @var string
      */
     private null|string $status = null;
-
 
     /**
      * method to set the data of the class object.
