@@ -70,7 +70,7 @@ class ZohoHTTPConnector
         $responseInfo = curl_getinfo($curl_pointer);
         curl_close($curl_pointer);
 
-        [$headers, $content] = CommonAPIResponse::handleCurlResponse($result, $responseInfo[APIConstants::HTTP_CODE]);
+        [$content, $headers] = CommonAPIResponse::handleCurlResponse($result, $responseInfo[APIConstants::HTTP_CODE]);
 
         LogManager::info(sprintf('Request %s %s', $this->requestType, $url), [
             'requestHeaders' => $requestHeaders,
