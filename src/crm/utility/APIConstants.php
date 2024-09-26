@@ -167,6 +167,10 @@ class APIConstants
 
     public const APPLICATION_LOG_RESPONSE_BODY = 'applicationLogResponseBody';
 
+    public const APPLICATION_LOG_RESPONSE_INFO = 'applicationLogResponseInfo';
+
+    public const APPLICATION_LOG_RESPONSE_HEADERS = 'applicationLogResponseHeaders';
+
     public const APPLICATION_LOGFILE_NAME = '/ZCRMClientLibrary.log';
 
     public const CURRENT_USER_EMAIL = 'currentUserEmail';

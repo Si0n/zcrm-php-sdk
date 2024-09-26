@@ -52,6 +52,8 @@ class ZCRMConfigUtil
             APIConstants::APPLICATION_LOGFILE_PATH,
             APIConstants::APPLICATION_LOGGER_INSTANCE,
             APIConstants::APPLICATION_LOG_RESPONSE_BODY,
+            APIConstants::APPLICATION_LOG_RESPONSE_INFO,
+            APIConstants::APPLICATION_LOG_RESPONSE_HEADERS,
             APIConstants::FILE_UPLOAD_URL,
         ];
 
