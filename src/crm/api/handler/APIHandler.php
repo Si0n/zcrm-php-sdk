@@ -4,46 +4,46 @@ namespace zcrmsdk\crm\api\handler;
 
 class APIHandler implements APIHandlerInterface
 {
-    protected $requestMethod;
+    protected null|string $requestMethod = null;
 
-    protected $urlPath;
+    protected null|string $urlPath = null;
 
-    protected $requestHeaders;
+    protected null|array $requestHeaders = null;
 
-    protected $requestParams;
+    protected null|array $requestParams = [];
 
-    protected mixed $requestBody;
+    protected mixed $requestBody = null;
 
-    protected $apiKey;
+    protected null|string $apiKey = null;
 
-    protected $isBulk = false;
+    protected null|bool $isBulk = false;
 
-    public function getRequestMethod()
+    public function getRequestMethod(): ?string
     {
         return $this->requestMethod;
     }
 
-    public function getUrlPath()
+    public function getUrlPath(): ?string
     {
         return $this->urlPath;
     }
 
-    public function getRequestHeaders()
+    public function getRequestHeaders(): ?array
     {
         return $this->requestHeaders;
     }
 
-    public function getRequestBody()
+    public function getRequestBody(): mixed
     {
         return $this->requestBody;
     }
 
-    public function getRequestParams()
+    public function getRequestParams(): ?array
     {
         return $this->requestParams;
     }
 
-    public function addParam($key, $value)
+    public function addParam(int|string $key, mixed $value): void
     {
         if (!isset($this->requestParams[$key])) {
             $this->requestParams[$key] = [
@@ -51,67 +51,59 @@ class APIHandler implements APIHandlerInterface
             ];
         } else {
             $valArray = $this->requestParams[$key];
-            array_push($valArray, $value);
+            $valArray[] = $value;
             $this->requestParams[$key] = $valArray;
         }
     }
 
-    public function addHeader($key, $value)
+    public function addHeader(string $key, mixed $value): void
     {
         $this->requestHeaders[$key] = $value;
     }
 
-    public function getRequestHeadersAsMap()
+    public function getRequestHeadersAsMap(): ?array
     {
-        return CommonUtil . convertJSONObjectToHashMap($this->requestHeaders);
+        return $this->requestHeaders;
     }
 
-    public function getRequestParamsAsMap()
+    public function getRequestParamsAsMap(): ?array
     {
-        return CommonUtil . convertJSONObjectToHashMap($this->requestParams);
+        return $this->requestParams;
     }
 
-    public static function getEmptyJSONObject()
+    public static function getEmptyJSONObject(): mixed
     {
         return json_decode('{}');
     }
 
     /**
      * Set the request method.
-     *
-     * @param string $requestMethod
      */
-    public function setRequestMethod($requestMethod)
+    public function setRequestMethod(null|string $requestMethod): void
     {
         $this->requestMethod = $requestMethod;
     }
 
     /**
      * Set the request urlPath.
-     *
-     * @param string $urlPath
      */
-    public function setUrlPath($urlPath)
+    public function setUrlPath(null|string $urlPath): void
     {
         $this->urlPath = $urlPath;
     }
 
     /**
      * set the request Headers.
-     *
-     * @param array $requestHeaders
      */
-    public function setRequestHeaders($requestHeaders)
+    public function setRequestHeaders(null|array $requestHeaders): void
     {
         $this->requestHeaders = $requestHeaders;
     }
 
     /**
      * Set the request parameters.
-     *
-     * @param array $requestParams
      */
-    public function setRequestParams($requestParams): void
+    public function setRequestParams(null|array $requestParams): void
     {
         $this->requestParams = $requestParams;
     }
@@ -126,20 +118,16 @@ class APIHandler implements APIHandlerInterface
 
     /**
      * Get the API Key used in the input json data(like 'modules', 'data','layouts',..etc).
-     *
-     * @return string
      */
-    public function getApiKey()
+    public function getApiKey(): ?string
     {
         return $this->apiKey;
     }
 
     /**
      * Set the API Key used in the input json data(like 'modules', 'data','layouts',..etc).
-     *
-     * @param string $apiKey
      */
-    public function setApiKey($apiKey)
+    public function setApiKey(null|string $apiKey): void
     {
         $this->apiKey = $apiKey;
     }
@@ -149,7 +137,7 @@ class APIHandler implements APIHandlerInterface
      *
      * @return bool|bool
      */
-    public function isBulk()
+    public function isBulk(): ?bool
     {
         return $this->isBulk;
     }
