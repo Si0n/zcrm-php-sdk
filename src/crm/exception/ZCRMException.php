@@ -26,7 +26,7 @@ class ZCRMException extends \Exception
         parent::__construct($message, $code);
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return get_class($this) . " Caused by:'{$this->message}' in {$this->file}({$this->line})\n{$this->getTraceAsString()}";
     }

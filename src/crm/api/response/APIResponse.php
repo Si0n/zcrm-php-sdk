@@ -76,7 +76,7 @@ class APIResponse extends CommonAPIResponse
                 throw $exception;
             }
             $responseJSON = $this->getResponseJSON();
-            $exception = new ZCRMException($responseJSON[APIConstants::MESSAGE], $statusCode);
+            $exception = new ZCRMException($responseJSON[APIConstants::MESSAGE] ?? 'unknown', $statusCode);
             $exception->setExceptionCode($responseJSON[APIConstants::CODE]);
             $exception->setExceptionDetails($responseJSON[APIConstants::DETAILS]);
 
@@ -112,7 +112,7 @@ class APIResponse extends CommonAPIResponse
             $responseJSON = $responseJSON['variables'][0];
         }
         if (isset($responseJSON[APIConstants::STATUS]) && APIConstants::STATUS_ERROR == $responseJSON[APIConstants::STATUS]) {
-            $exception = new ZCRMException($responseJSON[APIConstants::MESSAGE], $this->getHttpStatusCode());
+            $exception = new ZCRMException($responseJSON[APIConstants::MESSAGE] ?? 'unknown', $this->getHttpStatusCode());
             $exception->setExceptionCode($responseJSON[APIConstants::CODE]);
             $exception->setExceptionDetails($responseJSON[APIConstants::DETAILS]);
 
