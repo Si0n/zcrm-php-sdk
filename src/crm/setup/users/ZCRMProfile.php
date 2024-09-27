@@ -12,63 +12,63 @@ class ZCRMProfile
      *
      * @var string profile id
      */
-    private $id = null;
+    private $id;
 
     /**
      * profile name.
      *
      * @var string
      */
-    private $name = null;
+    private $name;
 
     /**
      * default profile.
      *
      * @var bool
      */
-    private $default = null;
+    private $default;
 
     /**
      * creation time of the profile.
      *
      * @var string
      */
-    private $createdTime = null;
+    private $createdTime;
 
     /**
      * modification time of the profile.
      *
      * @var string
      */
-    private $modifiedTime = null;
+    private $modifiedTime;
 
     /**
      * modifier of the profile.
      *
      * @var ZCRMUser
      */
-    private $modifiedBy = null;
+    private $modifiedBy;
 
     /**
      * description of the profile.
      *
      * @var string
      */
-    private $description = null;
+    private $description;
 
     /**
      * creator of the profile.
      *
      * @var ZCRMUser
      */
-    private $createdBy = null;
+    private $createdBy;
 
     /**
      * category.
      *
      * @var string
      */
-    private $category = null;
+    private $category;
 
     /**
      * permission list.

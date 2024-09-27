@@ -18,49 +18,49 @@ class ZCRMBulkWrite
      *
      * @var string
      */
-    private $jobId = null;
+    private $jobId;
 
     /**
      * charset of the uploaded file.
      *
      * @var string
      */
-    private $character_encoding = null;
+    private $character_encoding;
 
     /**
      * bulk write operation.
      *
      * @var string
      */
-    private $operation = null;
+    private $operation;
 
     /**
      * bulk write call back.
      *
      * @var ZCRMBulkCallBack
      */
-    private $callback = null;
+    private $callback;
 
     /**
      * the user who created the bulk write job.
      *
      * @var ZCRMUser
      */
-    private $created_by = null;
+    private $created_by;
 
     /**
      * creation time of the bulk write job.
      *
      * @var string
      */
-    private $created_time = null;
+    private $created_time;
 
     /**
      * status of the bulk write job.
      *
      * @var string
      */
-    private $status = null;
+    private $status;
 
     /**
      * bulk read resource.

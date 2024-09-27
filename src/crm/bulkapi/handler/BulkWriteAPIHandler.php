@@ -18,7 +18,7 @@ use zcrmsdk\crm\utility\ZCRMConfigUtil;
 
 class BulkWriteAPIHandler extends APIHandler
 {
-    protected $record = null;
+    protected $record;
 
     private function __construct($zcrmbulkread)
     {
@@ -40,10 +40,10 @@ class BulkWriteAPIHandler extends APIHandler
                 throw new ZCRMException('Headers must not be null for file upload operation.', APIConstants::RESPONSECODE_BAD_REQUEST);
             }
             $this->requestMethod = APIConstants::REQUEST_METHOD_POST;
-            $this->urlPath = ZCRMConfigUtil::getFileUploadURL().'/crm/'.ZCRMConfigUtil::getAPIVersion().'/'.APIConstants::UPLOAD;
+            $this->urlPath = ZCRMConfigUtil::getFileUploadURL() . '/crm/' . ZCRMConfigUtil::getAPIVersion() . '/' . APIConstants::UPLOAD;
             if (null != $headers) {
                 foreach ($headers as $key => $value) {
-                    $this->addHeader($key, ' '.$value); //header value with space in starting position
+                    $this->addHeader($key, ' ' . $value); // header value with space in starting position
                 }
             }
             $responseInstance = APIRequest::getInstance($this)->uploadFile($filePath);
@@ -70,7 +70,7 @@ class BulkWriteAPIHandler extends APIHandler
             $this->requestBody = json_encode(self::getZCRMBulkWriteAsJSON());
             $this->isBulk = true;
 
-            //fire request
+            // fire request
             $responseInstance = APIRequest::getInstance($this)->getAPIResponse();
             $reponseDetails = $responseInstance->getResponseJSON()[APIConstants::DETAILS];
             self::setBulkWriteRecordProperties($reponseDetails);
@@ -90,7 +90,7 @@ class BulkWriteAPIHandler extends APIHandler
                 throw new ZCRMException('JOB ID must not be null for get operation.', APIConstants::RESPONSECODE_BAD_REQUEST);
             }
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
-            $this->urlPath = APIConstants::WRITE.'/'.$this->record->getJobId();
+            $this->urlPath = APIConstants::WRITE . '/' . $this->record->getJobId();
             $this->addHeader('Content-Type', 'application/json');
             $this->isBulk = true;
 

@@ -9,21 +9,21 @@ class ZCRMBulkCriteria
      *
      * @var string
      */
-    private $apiName = null;
+    private $apiName;
 
     /**
      * field value.
      *
      * @var object
      */
-    private $apiValue = null;
+    private $apiValue;
 
     /**
      *  group operator.
      *
      * @var string
      */
-    private $groupOperator = null;
+    private $groupOperator;
 
     /**
      * group of criteria.
@@ -37,11 +37,11 @@ class ZCRMBulkCriteria
      *
      * @var string
      */
-    private $comparator = null;
+    private $comparator;
 
-    private $pattern = null;
-    private $index = null;
-    private $criteria = null;
+    private $pattern;
+    private $index;
+    private $criteria;
 
     /**
      * empty constructor.

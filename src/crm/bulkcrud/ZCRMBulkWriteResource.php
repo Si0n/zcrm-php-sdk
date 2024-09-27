@@ -9,35 +9,35 @@ class ZCRMBulkWriteResource
      *
      * @var string
      */
-    private $status = null;
+    private $status;
 
     /**
      * resource error message.
      *
      * @var string
      */
-    private $message = null;
+    private $message;
 
     /**
      * resource type.
      *
      * @var string
      */
-    private $type = null;
+    private $type;
 
     /**
      * resource module api name.
      *
      * @var string
      */
-    private $module = null;
+    private $module;
 
     /**
      * uploaded file id.
      *
      * @var string
      */
-    private $fileId = null;
+    private $fileId;
 
     /**
      * ignore empty value.
@@ -63,7 +63,7 @@ class ZCRMBulkWriteResource
      *
      * @var ZCRMBulkWriteFileStatus instance
      */
-    private $fileStatus = null;
+    private $fileStatus;
 
     /**
      * constructor to set the module name and file id.

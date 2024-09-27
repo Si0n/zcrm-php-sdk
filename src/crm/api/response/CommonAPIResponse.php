@@ -39,7 +39,7 @@ class CommonAPIResponse
         protected null|int $httpStatusCode,
         protected null|string $apiName = null
     ) {
-        [$this->responseJSON, $this->responseHeaders] = self::handleCurlResponse($this->response, $this->httpStatusCode);;
+        [$this->responseJSON, $this->responseHeaders] = self::handleCurlResponse($this->response, $this->httpStatusCode);
         $this->processResponse();
     }
 

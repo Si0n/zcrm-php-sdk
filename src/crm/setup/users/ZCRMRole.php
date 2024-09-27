@@ -9,35 +9,35 @@ class ZCRMRole
      *
      * @var string
      */
-    private $name = null;
+    private $name;
 
     /**
      * role id.
      *
      * @var string
      */
-    private $id = null;
+    private $id;
 
     /**
      * reporting to user.
      *
      * @var ZCRMUser
      */
-    private $reportingTo = null;
+    private $reportingTo;
 
     /**
      * label name.
      *
      * @var string
      */
-    private $label = null;
+    private $label;
 
     /**
      * admin role.
      *
      * @var bool
      */
-    private $isAdmin = null;
+    private $isAdmin;
 
     /**
      * constructor to assign the role id and role name.

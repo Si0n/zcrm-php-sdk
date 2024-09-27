@@ -9,42 +9,42 @@ class ZCRMBulkWriteFileStatus
      *
      * @var string
      */
-    private $status = null;
+    private $status;
 
     /**
      * file name.
      *
      * @var string
      */
-    private $name = null;
+    private $name;
 
     /**
      * added record count.
      *
      * @var int
      */
-    private $added_count = null;
+    private $added_count;
 
     /**
      * skipped record count.
      *
      * @var int
      */
-    private $skipped_count = null;
+    private $skipped_count;
 
     /**
      * updated record count.
      *
      * @var int
      */
-    private $updated_count = null;
+    private $updated_count;
 
     /**
      * total record count.
      *
      * @var int
      */
-    private $total_count = null;
+    private $total_count;
 
     /**
      * constructor to set the file name.

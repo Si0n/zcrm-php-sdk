@@ -9,301 +9,301 @@ class ZCRMUser
      *
      * @var string
      */
-    private $id = null;
+    private $id;
 
     /**
      * user name.
      *
      * @var string
      */
-    private $name = null;
+    private $name;
 
     /**
      * signature of the user.
      *
      * @var string
      */
-    private $signature = null;
+    private $signature;
 
     /**
      * country name of the user.
      *
      * @var string
      */
-    private $country = null;
+    private $country;
 
     /**
      * method to get the role of the user.
      *
      * @var ZCRMRole
      */
-    private $role = null;
+    private $role;
 
     /**
      * user customize info.
      *
      * @var ZCRMUserCustomizeInfo
      */
-    private $customizeInfo = null;
+    private $customizeInfo;
 
     /**
      * city name of the user.
      *
      * @var string
      */
-    private $city = null;
+    private $city;
 
     /**
      * name format of the user.
      *
      * @var string
      */
-    private $nameFormat = null;
+    private $nameFormat;
 
     /**
      * language of the user.
      *
      * @var string
      */
-    private $language = null;
+    private $language;
 
     /**
      * locale of the user.
      *
      * @var string
      */
-    private $locale = null;
+    private $locale;
 
     /**
      * personal account.
      *
      * @var bool
      */
-    private $isPersonalAccount = null;
+    private $isPersonalAccount;
 
     /**
      * default tab group.
      *
      * @var string
      */
-    private $defaultTabGroup = null;
+    private $defaultTabGroup;
 
     /**
      * street name of the user.
      *
      * @var string
      */
-    private $street = null;
+    private $street;
 
     /**
      * alias of the user.
      *
      * @var string
      */
-    private $alias = null;
+    private $alias;
 
     /**
      * user theme.
      *
      * @var ZCRMUserTheme
      */
-    private $theme = null;
+    private $theme;
 
     /**
      * statename of the user.
      *
      * @var string
      */
-    private $state = null;
+    private $state;
 
     /**
      * country locale of the user.
      *
      * @var string
      */
-    private $countryLocale = null;
+    private $countryLocale;
 
     /**
      * fax of the user.
      *
      * @var string
      */
-    private $fax = null;
+    private $fax;
 
     /**
      * firstname of the user.
      *
      * @var string
      */
-    private $firstName = null;
+    private $firstName;
 
     /**
      * email of the user.
      *
      * @var string
      */
-    private $email = null;
+    private $email;
 
     /**
      * zip of the user.
      *
      * @var string
      */
-    private $zip = null;
+    private $zip;
 
     /**
      * decimal separator.
      *
      * @var string
      */
-    private $decimalSeparator = null;
+    private $decimalSeparator;
 
     /**
      * website of the user.
      *
      * @var string
      */
-    private $website = null;
+    private $website;
 
     /**
      * time format of the user.
      *
      * @var string
      */
-    private $timeFormat = null;
+    private $timeFormat;
 
     /**
      * user profile.
      *
      * @var ZCRMProfile
      */
-    private $profile = null;
+    private $profile;
 
     /**
      * mobile number of the user.
      *
      * @var string
      */
-    private $mobile = null;
+    private $mobile;
 
     /**
      * last name of the user.
      *
      * @var string
      */
-    private $lastName = null;
+    private $lastName;
 
     /**
      * time zone of the user.
      *
      * @var string
      */
-    private $timeZone = null;
+    private $timeZone;
 
     /**
      * zoho user id.
      *
      * @var string
      */
-    private $zuid = null;
+    private $zuid;
 
     /**
      * confirm user.
      *
      * @var bool
      */
-    private $isConfirm = null;
+    private $isConfirm;
 
     /**
      * user full name.
      *
      * @var string
      */
-    private $fullName = null;
+    private $fullName;
 
     /**
      * phone number of the user.
      *
      * @var string
      */
-    private $phone = null;
+    private $phone;
 
     /**
      * date of birth of the user.
      *
      * @var string
      */
-    private $dob = null;
+    private $dob;
 
     /**
      * date format of the user.
      *
      * @var string
      */
-    private $dateFormat = null;
+    private $dateFormat;
 
     /**
      * user status.
      *
      * @var string
      */
-    private $status = null;
+    private $status;
 
     /**
      * creator user.
      *
      * @var ZCRMUser
      */
-    private $createdBy = null;
+    private $createdBy;
 
     /**
      * modifier user.
      *
      * @var ZCRMUser
      */
-    private $modifiedBy = null;
+    private $modifiedBy;
 
     /**
      * territories of the user.
      *
      * @var array
      */
-    private $territories = null;
+    private $territories;
 
     /**
      * user who the current user reports.
      *
      * @var ZCRMUser
      */
-    private $reportingTo = null;
+    private $reportingTo;
 
     /**
      * user online.
      *
      * @var bool
      */
-    private $isOnline = null;
+    private $isOnline;
 
     /**
      * currency of the user.
      *
      * @var string
      */
-    private $currency = null;
+    private $currency;
 
     /**
      * creation time of the user.
      *
      * @var string
      */
-    private $createdTime = null;
+    private $createdTime;
 
     /**
      * modification time of the user.
      *
      * @var string
      */
-    private $modifiedTime = null;
+    private $modifiedTime;
 
     /**
      * key value pair of the field name and the value.

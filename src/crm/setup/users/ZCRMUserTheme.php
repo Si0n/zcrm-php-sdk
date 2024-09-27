@@ -12,28 +12,28 @@ class ZCRMUserTheme
      *
      * @var string
      */
-    private $normalTabFontColor = null;
+    private $normalTabFontColor;
 
     /**
      * normal Tab back ground.
      *
      * @var string
      */
-    private $normalTabBackground = null;
+    private $normalTabBackground;
 
     /**
      * selected Tab Font Color.
      *
      * @var string
      */
-    private $selectedTabFontColor = null;
+    private $selectedTabFontColor;
 
     /**
      * selected Tab back ground.
      *
      * @var string
      */
-    private $selectedTabBackground = null;
+    private $selectedTabBackground;
 
     private function __construct()
     {

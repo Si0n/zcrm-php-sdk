@@ -9,14 +9,14 @@ class ZCRMBulkQuery
      *
      * @var string
      */
-    private $module = null;
+    private $module;
 
     /**
      * custom view id.
      *
      * @var string
      */
-    private $cvId = null;
+    private $cvId;
 
     /**
      * array of field api names.
@@ -30,18 +30,18 @@ class ZCRMBulkQuery
      *
      * @var int
      */
-    private $page = null;
+    private $page;
 
     /**
      * ZCRMBulkCriteria - instance.
      *
      * @var ZCRMBulkCriteria
      */
-    private $criteria = null;
+    private $criteria;
 
-    private $criteriaPattern = null;
+    private $criteriaPattern;
 
-    private $criteriaCondition = null;
+    private $criteriaCondition;
 
     /**
      * empty constructor.

@@ -9,35 +9,35 @@ class ZCRMBulkResult
      *
      * @var int
      */
-    private $page = null;
+    private $page;
 
     /**
      * record count.
      *
      * @var int
      */
-    private $count = null;
+    private $count;
 
     /**
      * result download url.
      *
      * @var string
      */
-    private $downloadUrl = null;
+    private $downloadUrl;
 
     /**
      * result per page.
      *
      * @var string
      */
-    private $perPage = null;
+    private $perPage;
 
     /**
      * result more records.
      *
      * @var bool
      */
-    private $moreRecords = null;
+    private $moreRecords;
 
     /**
      * Method to get instance of ZCRMBulkResult class.

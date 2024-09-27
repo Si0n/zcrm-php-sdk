@@ -367,8 +367,6 @@ class OrganizationAPIHandler extends APIHandler
     }
 
     /**
-     * @param $userInstance
-     * @return APIResponse
      * @throws ZCRMException
      */
     public function createUser(ZCRMUser $userInstance): APIResponse

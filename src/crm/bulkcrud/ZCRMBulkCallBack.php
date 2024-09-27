@@ -9,14 +9,14 @@ class ZCRMBulkCallBack
      *
      * @var string
      */
-    private $url = null;
+    private $url;
 
     /**
      * request method.
      *
      * @var string
      */
-    private $method = null;
+    private $method;
 
     /**
      * constructor to set the callback url and method.

@@ -9,42 +9,42 @@ class ZCRMUserCustomizeInfo
      *
      * @var string
      */
-    private $notesDesc = null;
+    private $notesDesc;
 
     /**
      * show right panel.
      *
      * @var bool
      */
-    private $isToShowRightPanel = null;
+    private $isToShowRightPanel;
 
     /**
      * business card view.
      *
      * @var bool
      */
-    private $isBcView = null;
+    private $isBcView;
 
     /**
      * show home.
      *
      * @var bool
      */
-    private $isToShowHome = null;
+    private $isToShowHome;
 
     /**
      * shown detail view.
      *
      * @var bool
      */
-    private $isToShowDetailView = null;
+    private $isToShowDetailView;
 
     /**
      * shown to right panel.
      *
      * @var string
      */
-    private $unpinRecentItem = null;
+    private $unpinRecentItem;
 
     private function __construct()
     {

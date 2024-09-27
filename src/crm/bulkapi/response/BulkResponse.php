@@ -2,21 +2,20 @@
 
 namespace zcrmsdk\crm\bulkapi\response;
 
-use Exception;
 use zcrmsdk\crm\exception\ZCRMException;
 use zcrmsdk\crm\utility\APIConstants;
 
 class BulkResponse
 {
-    private $filePointer = null;
-    private $moduleAPIName = null;
+    private $filePointer;
+    private $moduleAPIName;
     private $fieldAPINames = [];
     private $fieldsvsValue = [];
-    private $apiHandlerIns = null;
+    private $apiHandlerIns;
     private $rowNumber = 0;
     private $checkFailedRecord = false;
     private $data = [];
-    private $fileType = null;
+    private $fileType;
 
     /**
      * @return multitype:
@@ -45,7 +44,7 @@ class BulkResponse
     public function setFieldValues($fieldValues)
     {
         if (sizeof($fieldValues) == sizeof($this->fieldAPINames)) {
-            for ($index = 0; $index < sizeof($this->fieldAPINames); $index++) {
+            for ($index = 0; $index < sizeof($this->fieldAPINames); ++$index) {
                 $this->fieldsvsValue[$this->fieldAPINames[$index]] = $fieldValues[$index];
             }
         }
@@ -90,7 +89,7 @@ class BulkResponse
     {
         $this->fieldsvsValue = [];
         try {
-            if ((!is_resource($this->filePointer))) {
+            if (!is_resource($this->filePointer)) {
                 return false;
             }
             if (($fieldValues = fgetcsv($this->filePointer)) != false) {
@@ -106,11 +105,11 @@ class BulkResponse
                                 $this->fieldsvsValue[$value[0]] = $value[1];
                             }
                         }
-                    } while ((($fieldValues = fgetcsv($this->filePointer)) !== false));
+                    } while (($fieldValues = fgetcsv($this->filePointer)) !== false);
                     fclose($this->filePointer);
                 } elseif ($this->checkFailedRecord) {
                     do {
-                        $this->rowNumber++;
+                        ++$this->rowNumber;
                         if (in_array(APIConstants::BULK_WRITE_STATUS, $this->fieldAPINames)) {
                             $index = array_search(APIConstants::BULK_WRITE_STATUS, $this->fieldAPINames);
                             if (!in_array($fieldValues[$index], APIConstants::WRITE_STATUS)) {
@@ -119,13 +118,13 @@ class BulkResponse
                                 return true;
                             }
                         }
-                    } while ((($fieldValues = fgetcsv($this->filePointer)) !== false));
+                    } while (($fieldValues = fgetcsv($this->filePointer)) !== false);
                     $this->rowNumber = 0;
                     fclose($this->filePointer);
                 } else {
                     if (null != $fieldValues) {
                         self::setFieldValues($fieldValues);
-                        $this->rowNumber++;
+                        ++$this->rowNumber;
 
                         return true;
                     } else {
@@ -136,7 +135,7 @@ class BulkResponse
             }
 
             return false;
-        } catch (Exception $ex) {
+        } catch (\Exception $ex) {
             throw new ZCRMException($ex, APIConstants::RESPONSECODE_BAD_REQUEST);
         }
     }

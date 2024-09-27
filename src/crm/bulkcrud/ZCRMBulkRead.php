@@ -18,68 +18,68 @@ class ZCRMBulkRead
      *
      * @var string
      */
-    private $jobId = null;
+    private $jobId;
 
     /**
      * bulk read operation.
      *
      * @var string
      */
-    private $operation = null;
+    private $operation;
 
     /**
      * status of bulk read.
      *
      * @var string
      */
-    private $state = null;
+    private $state;
 
     /**
      * result of the bulk read.
      *
      * @var ZCRMBulkResult
      */
-    private $result = null;
+    private $result;
 
     /**
      * query of the bulk read.
      *
      * @var ZCRMBulkQuery
      */
-    private $query = null;
+    private $query;
 
     /**
      * callback of the bulk read.
      *
      * @var ZCRMBulkCallBack
      */
-    private $callback = null;
+    private $callback;
 
     /**
      * the user who created the record.
      *
      * @var ZCRMUser
      */
-    private $createdBy = null;
+    private $createdBy;
 
     /**
      * created time of the record.
      *
      * @var string
      */
-    private $createdTime = null;
+    private $createdTime;
 
     /**
      * api name of the module.
      *
      * @var string
      */
-    private $moduleAPIName = null;
+    private $moduleAPIName;
 
     /** when you want to export the events as an ICS file.
      * @var string
      */
-    private $file_type = null;
+    private $file_type;
 
     /**
      * constructor to set the module API name and job id.
@@ -108,8 +108,6 @@ class ZCRMBulkRead
 
     /**
      * Method to set the API Name of the module to be read.
-     *
-     * @param string $moduleApiName
      */
     public function setModuleAPIName($moduleAPIName)
     {

@@ -15,7 +15,7 @@ use zcrmsdk\crm\utility\APIConstants;
 
 class BulkReadAPIHandler extends APIHandler
 {
-    protected $record = null;
+    protected $record;
     private $index = 1;
 
     private function __construct($zcrmbulkread)
@@ -35,7 +35,7 @@ class BulkReadAPIHandler extends APIHandler
                 throw new ZCRMException('JOB ID must not be null for get operation.', APIConstants::RESPONSECODE_BAD_REQUEST);
             }
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
-            $this->urlPath = APIConstants::READ.'/'.$this->record->getJobId();
+            $this->urlPath = APIConstants::READ . '/' . $this->record->getJobId();
             $this->addHeader('Content-Type', 'application/json');
             $this->isBulk = true;
 
@@ -63,7 +63,7 @@ class BulkReadAPIHandler extends APIHandler
             $this->addHeader('Content-Type', 'application/json');
             $this->requestBody = json_encode(self::getZCRMBulkQueryAsJSON());
             $this->isBulk = true;
-            //fire request
+            // fire request
             $responseInstance = APIRequest::getInstance($this)->getAPIResponse();
 
             $responseDataArray = $responseInstance->getResponseJSON()[APIConstants::DATA];
@@ -86,7 +86,7 @@ class BulkReadAPIHandler extends APIHandler
                 throw new ZCRMException('JOB ID must not be null for get bulk read result operation.', APIConstants::RESPONSECODE_BAD_REQUEST);
             }
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
-            $this->urlPath = APIConstants::READ.'/'.$this->record->getJobId().'/'.APIConstants::RESULT;
+            $this->urlPath = APIConstants::READ . '/' . $this->record->getJobId() . '/' . APIConstants::RESULT;
             $this->isBulk = true;
 
             return APIRequest::getInstance($this)->downloadFile();
@@ -160,8 +160,8 @@ class BulkReadAPIHandler extends APIHandler
             }
             $recordCriteria->setIndex($this->index);
             $recordCriteria->setPattern((string) $this->index);
-            $this->index = $this->index + 1;
-            $recordCriteria->setCriteria('('.$criteriaJSON['api_name'].':'.$criteriaJSON['comparator'].':'.json_encode($recordCriteria->getValue()).')');
+            ++$this->index;
+            $recordCriteria->setCriteria('(' . $criteriaJSON['api_name'] . ':' . $criteriaJSON['comparator'] . ':' . json_encode($recordCriteria->getValue()) . ')');
         }
 
         if (isset($criteriaJSON['group'])) {
@@ -179,7 +179,7 @@ class BulkReadAPIHandler extends APIHandler
             $count = sizeof($group_criteria);
             $i = 0;
             foreach ($group_criteria as $criteriaObj) {
-                $i++;
+                ++$i;
                 $criteriavalue .= $criteriaObj->getCriteria();
                 $pattern .= $criteriaObj->getPattern();
                 if ($i < $count) {
@@ -187,8 +187,8 @@ class BulkReadAPIHandler extends APIHandler
                     $pattern .= $recordCriteria->getGroupOperator();
                 }
             }
-            $recordCriteria->setCriteria($criteriavalue.')');
-            $recordCriteria->setPattern($pattern.')');
+            $recordCriteria->setCriteria($criteriavalue . ')');
+            $recordCriteria->setPattern($pattern . ')');
 
             // $recordCriteria->setCriteria("(".$group_criteria[0]->getCriteria().$recordCriteria->getGroupOperator().$group_criteria[1]->getCriteria().")");
             // $recordCriteria->setPattern("(".$group_criteria[0]->getPattern().$recordCriteria->getGroupOperator().$group_criteria[1]->getPattern().")");

@@ -9,28 +9,28 @@ class ZCRMBulkWriteFieldMapping
      *
      * @var string
      */
-    private $api_name = null;
+    private $api_name;
 
     /**
      * field value index.
      *
      * @var int
      */
-    private $index = null;
+    private $index;
 
     /**
      * unique field name or record id.
      *
      * @var string
      */
-    private $find_by = null;
+    private $find_by;
 
     /**
      * field value format.
      *
      * @var string
      */
-    private $format = null;
+    private $format;
 
     /**
      * field default value.

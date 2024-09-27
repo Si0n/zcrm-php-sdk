@@ -647,8 +647,6 @@ class ZCRMOrganization
 
     /**
      * method to get the Zip Code of the organization.
-     *
-     * @param string $zipCode the ZipCode of the organization
      */
     public function getZipCode()
     {
@@ -667,8 +665,6 @@ class ZCRMOrganization
 
     /**
      * method to get the Country Code of the organization.
-     *
-     * @param string $country_code the Country Code of the organization
      */
     public function getCountryCode()
     {
@@ -965,6 +961,7 @@ class ZCRMOrganization
      * method to get the profiles of the organization.
      *
      * @return BulkAPIResponse instance of the BulkAPIResponse class containing the bulk api response
+     *
      * @throws ZCRMException
      */
     public function getAllProfiles(): BulkAPIResponse
@@ -978,6 +975,7 @@ class ZCRMOrganization
      * @param string $profileId the profile id of the organization
      *
      * @return APIResponse instance of the APIResponse class containing the api response
+     *
      * @throws ZCRMException
      */
     public function getProfile(string $profileId): APIResponse
@@ -989,6 +987,7 @@ class ZCRMOrganization
      * method to get the roles of the organization.
      *
      * @return BulkAPIResponse instance of the BulkAPIResponse class containing the bulk api response
+     *
      * @throws ZCRMException
      */
     public function getAllRoles(): BulkAPIResponse
@@ -1002,6 +1001,7 @@ class ZCRMOrganization
      * @param string $roleId the role id of the organization
      *
      * @return APIResponse instance of the APIResponse class containing the api response
+     *
      * @throws ZCRMException
      */
     public function getRole(string $roleId): APIResponse
@@ -1048,8 +1048,6 @@ class ZCRMOrganization
 
     /**
      * method to delete the user of the organization.
-     *
-     * @param string $userIdid of the user
      *
      * @return APIResponse instance of the APIResponse class containing the api response
      */
@@ -1118,8 +1116,6 @@ class ZCRMOrganization
 
     /**
      *method to delete organization tax.
-     *
-     * @param string $orgTaxIds org tax id
      *
      * @return APIResponse instance of the APIResponse   class containing the  api response
      */
