@@ -12,7 +12,7 @@ class APIHandler implements APIHandlerInterface
 
     protected $requestParams;
 
-    protected $requestBody;
+    protected mixed $requestBody;
 
     protected $apiKey;
 
@@ -111,7 +111,7 @@ class APIHandler implements APIHandlerInterface
      *
      * @param array $requestParams
      */
-    public function setRequestParams($requestParams)
+    public function setRequestParams($requestParams): void
     {
         $this->requestParams = $requestParams;
     }
@@ -119,7 +119,7 @@ class APIHandler implements APIHandlerInterface
     /**
      * Set the requestBody.
      */
-    public function setRequestBody($requestBody)
+    public function setRequestBody(mixed $requestBody): void
     {
         $this->requestBody = $requestBody;
     }
