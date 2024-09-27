@@ -19,7 +19,7 @@ class ZohoHTTPConnector
 
     private null|int $requestParamCount = 0;
 
-    private null|array $requestBody = null;
+    private mixed $requestBody = null;
 
     private null|string $requestType = APIConstants::REQUEST_METHOD_GET;
 
@@ -175,12 +175,12 @@ class ZohoHTTPConnector
         return $this->requestParams;
     }
 
-    public function setRequestBody(null|array $reqBody): void
+    public function setRequestBody(mixed $reqBody): void
     {
         $this->requestBody = $reqBody;
     }
 
-    public function getRequestBody(): null|array
+    public function getRequestBody(): mixed
     {
         return $this->requestBody;
     }
