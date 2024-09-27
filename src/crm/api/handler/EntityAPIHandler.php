@@ -488,12 +488,12 @@ class EntityAPIHandler extends APIHandler
                     $taxIns->setValue($lineTax['value']);
                     $this->record->addTax($taxIns);
                 }
-            } elseif ('$' == substr($key, 0, 1)) {
+            } elseif (str_starts_with($key, '$')) {
                 $this->record->setProperty(str_replace('$', '', $key), $value);
             } elseif (is_array($value)) {
                 if (isset($value['id'])) {
-                    $lookupRecord = ZCRMRecord::getInstance($key, isset($value['id']) ? $value['id'] : '0');
-                    $lookupRecord->setLookupLabel(isset($value['name']) ? $value['name'] : null);
+                    $lookupRecord = ZCRMRecord::getInstance($key, $value['id']);
+                    $lookupRecord->setLookupLabel($value['name'] ?? null);
                     $this->record->setFieldValue($key, $lookupRecord);
                 } else {
                     $this->record->setFieldValue($key, $value);

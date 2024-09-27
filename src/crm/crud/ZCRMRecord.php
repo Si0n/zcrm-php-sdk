@@ -19,20 +19,6 @@ use zcrmsdk\crm\utility\APIConstants;
 class ZCRMRecord
 {
     /**
-     * the record id.
-     *
-     * @var string
-     */
-    private $entityId;
-
-    /**
-     * api name of the module.
-     *
-     * @var string
-     */
-    private $moduleApiName;
-
-    /**
      * the inventory item list.
      *
      * @var array
@@ -165,16 +151,8 @@ class ZCRMRecord
      */
     private $rowNumber;
 
-    /**
-     * constructor to set the module name and record id.
-     *
-     * @param string $module
-     * @param string $entityId
-     */
-    private function __construct($module, $entityId)
+    private function __construct(protected null|string $moduleApiName, protected null|string $entityId)
     {
-        $this->moduleApiName = $module;
-        $this->entityId = $entityId;
     }
 
     /**
@@ -182,10 +160,8 @@ class ZCRMRecord
      *
      * @param string $module   api name of the module
      * @param string $entityId the record id
-     *
-     * @return ZCRMRecord-instance
      */
-    public static function getInstance($module, $entityId)
+    public static function getInstance(null|string $module, null|string $entityId): ZCRMRecord
     {
         return new ZCRMRecord($module, $entityId);
     }
@@ -195,9 +171,9 @@ class ZCRMRecord
      *
      * @param ZCRMTax $taxIns the tax instance
      */
-    public function addTax($taxIns)
+    public function addTax($taxIns): void
     {
-        array_push($this->taxList, $taxIns);
+        $this->taxList[] = $taxIns;
     }
 
     /**
@@ -300,7 +276,7 @@ class ZCRMRecord
      */
     public function addLineItem($lineItem)
     {
-        array_push($this->lineItems, $lineItem);
+        $this->lineItems[] = $lineItem;
     }
 
     /**
@@ -314,7 +290,7 @@ class ZCRMRecord
             throw new ZCRMException('Line item id missing');
         }
         self::removeLineItem($updatedlineItem->getId());
-        array_push($this->lineItems, $updatedlineItem);
+        $this->lineItems[] = $updatedlineItem;
     }
 
     /**
@@ -870,7 +846,7 @@ class ZCRMRecord
      *
      * @return APIResponse APIResponse instance of the APIResponse class which holds the API response
      */
-    public function removeRelation(ZCRMJunctionRecord $junctionRecord)
+    public function removeRelation(ZCRMJunctionRecord $junctionRecord): APIResponse
     {
         return ZCRMModuleRelation::getInstance($this, $junctionRecord)->removeRelation();
     }
@@ -884,7 +860,7 @@ class ZCRMRecord
      *
      * @throws ZCRMException if the record or module or tag doesn't exist
      */
-    public function addTags($tagNames)
+    public function addTags(array $tagNames): APIResponse
     {
         if (null == $this->entityId || '' == $this->entityId) {
             throw new ZCRMException('Record ID MUST NOT be null/empty for Add Tags to a Specific record operation');
@@ -908,7 +884,7 @@ class ZCRMRecord
      *
      * @throws ZCRMException if the record or module or tag doesn't exist
      */
-    public function removeTags($tagNames)
+    public function removeTags(array $tagNames): APIResponse
     {
         if (null == $this->entityId || '' == $this->entityId) {
             throw new ZCRMException('Record ID MUST NOT be null/empty for Remove Tags from a Specific record operation');

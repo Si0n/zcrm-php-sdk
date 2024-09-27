@@ -9,61 +9,23 @@ use zcrmsdk\crm\setup\users\ZCRMUser;
 
 class ZCRMTag
 {
-    /**
-     * tag id.
-     *
-     * @var string
-     */
-    private $id;
+    private null|ZCRMUser $createdBy = null;
 
-    /**
-     * tag name.
-     *
-     * @var string
-     */
-    private $name;
+    private null|string $createdTime = null;
 
-    /**
-     * creator of the tag.
-     *
-     * @var ZCRMUser
-     */
-    private $createdBy;
+    private null|ZCRMUser $modifiedBy = null;
 
-    /**
-     * creation time of the tag.
-     *
-     * @var string
-     */
-    private $createdTime;
-
-    /**
-     * modifier of the tag.
-     *
-     * @var ZCRMUser
-     */
-    private $modifiedBy;
-
-    /**
-     * modification time of the tag.
-     *
-     * @var string
-     */
-    private $modifiedTime;
+    private null|string $modifiedTime = null;
 
     /**
      * number of record tagged.
-     *
-     * @var int
      */
-    private $count;
+    private null|int $count = null;
 
     /**
      * api name of the module to which the tag belongs.
-     *
-     * @var string
      */
-    private $moduleAPIName;
+    private null|string $moduleAPIName = null;
 
     /**
      * constructor to assign tag id and module api name to the tag.
@@ -71,10 +33,8 @@ class ZCRMTag
      * @param string $id   tag id
      * @param string $name tag name
      */
-    private function __construct($id, $name)
+    private function __construct(protected null|string $id, protected null|string $name)
     {
-        $this->id = $id;
-        $this->name = $name;
     }
 
     /**
@@ -85,7 +45,7 @@ class ZCRMTag
      *
      * @return ZCRMTag instance of the ZCRMTag class
      */
-    public static function getInstance($id = null, $name = null)
+    public static function getInstance(null|string $id = null, null|string $name = null): ZCRMTag
     {
         return new ZCRMTag($id, $name);
     }
@@ -95,7 +55,7 @@ class ZCRMTag
      *
      * @return string the tag id
      */
-    public function getId()
+    public function getId(): ?string
     {
         return $this->id;
     }
@@ -105,7 +65,7 @@ class ZCRMTag
      *
      * @param string $id the tag id
      */
-    public function setId($id)
+    public function setId(null|string $id): void
     {
         $this->id = $id;
     }
@@ -115,7 +75,7 @@ class ZCRMTag
      *
      * @return string the tag name
      */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -125,7 +85,7 @@ class ZCRMTag
      *
      * @param string $name the tag name
      */
-    public function setName($name)
+    public function setName(null|string $name): void
     {
         $this->name = $name;
     }
@@ -135,7 +95,7 @@ class ZCRMTag
      *
      * @return ZCRMUser instance of the ZCRMUser class
      */
-    public function getCreatedBy()
+    public function getCreatedBy(): ?ZCRMUser
     {
         return $this->createdBy;
     }
@@ -145,7 +105,7 @@ class ZCRMTag
      *
      * @param ZCRMUser $createdBy instance of the ZCRMUser class
      */
-    public function setCreatedBy($createdBy)
+    public function setCreatedBy(null|ZCRMUser $createdBy): void
     {
         $this->createdBy = $createdBy;
     }
@@ -155,7 +115,7 @@ class ZCRMTag
      *
      * @return ZCRMUser instance of the ZCRMUser class
      */
-    public function getModifiedBy()
+    public function getModifiedBy(): ?ZCRMUser
     {
         return $this->modifiedBy;
     }
@@ -165,7 +125,7 @@ class ZCRMTag
      *
      * @param ZCRMUser $modifiedBy instance of the ZCRMUser class
      */
-    public function setModifiedBy($modifiedBy)
+    public function setModifiedBy(null|ZCRMUser $modifiedBy): void
     {
         $this->modifiedBy = $modifiedBy;
     }
@@ -175,7 +135,7 @@ class ZCRMTag
      *
      * @return string tag creation time in iso 8601 format
      */
-    public function getCreatedTime()
+    public function getCreatedTime(): ?string
     {
         return $this->createdTime;
     }
@@ -185,7 +145,7 @@ class ZCRMTag
      *
      * @param string $createdTime creation time in iso 8601 format
      */
-    public function setCreatedTime($createdTime)
+    public function setCreatedTime(null|string $createdTime): void
     {
         $this->createdTime = $createdTime;
     }
@@ -195,7 +155,7 @@ class ZCRMTag
      *
      * @return string modification time in iso 8601 format
      */
-    public function getModifiedTime()
+    public function getModifiedTime(): ?string
     {
         return $this->modifiedTime;
     }
@@ -205,7 +165,7 @@ class ZCRMTag
      *
      * @param string $modifiedTime modification time in iso 8601 format
      */
-    public function setModifiedTime($modifiedTime)
+    public function setModifiedTime(null|string $modifiedTime): void
     {
         $this->modifiedTime = $modifiedTime;
     }
@@ -215,7 +175,7 @@ class ZCRMTag
      *
      * @return int record count of the tag
      */
-    public function getCount()
+    public function getCount(): ?int
     {
         return $this->count;
     }
@@ -225,7 +185,7 @@ class ZCRMTag
      *
      * @param int $count record count of the tag
      */
-    public function setCount($count)
+    public function setCount(null|int $count): void
     {
         $this->count = $count;
     }
@@ -235,7 +195,7 @@ class ZCRMTag
      *
      * @return string module api name of the module to which tag belongs
      */
-    public function getModuleAPIName()
+    public function getModuleAPIName(): ?string
     {
         return $this->moduleAPIName;
     }
@@ -243,7 +203,7 @@ class ZCRMTag
     /**
      * method to set the module api name of the module to which tag belongs.
      */
-    public function setModuleAPIName($moduleAPIName)
+    public function setModuleAPIName(null|string $moduleAPIName): void
     {
         $this->moduleAPIName = $moduleAPIName;
     }
@@ -255,7 +215,7 @@ class ZCRMTag
      *
      * @throws ZCRMException if tag is invalid
      */
-    public function delete()
+    public function delete(): APIResponse
     {
         if (null == $this->id || '' == $this->id) {
             throw new ZCRMException('Tag ID MUST NOT be null/empty for delete operation');
@@ -267,22 +227,22 @@ class ZCRMTag
     /**
      * method to merge the tags.
      *
-     * @param ZCRMTag $mergetag tag to be merged with
+     * @param ZCRMTag $tag tag to be merged with
      *
      * @return APIResponse instance of the APIResponse class containing the api response
      *
      * @throws ZCRMException if tags are invalid
      */
-    public function merge($mergetag)
+    public function merge(ZCRMTag $tag): APIResponse
     {
         if (null == $this->id || '' == $this->id) {
             throw new ZCRMException('Tag ID MUST NOT be null/empty for merge operation');
         }
-        if (null == $mergetag->id || 0 == $mergetag->id) {
+        if (null == $tag->id || 0 == $tag->id) {
             throw new ZCRMException('Merge Tag ID MUST NOT be null/empty for merge operation');
         }
 
-        return TagAPIHandler::getInstance()->merge($this->id, $mergetag->id);
+        return TagAPIHandler::getInstance()->merge($this->id, $tag->id);
     }
 
     /**
@@ -292,7 +252,7 @@ class ZCRMTag
      *
      * @throws ZCRMException if the tag id , tag name or the ,odule api name is invalid
      */
-    public function update()
+    public function update(): APIResponse
     {
         if (null == $this->id || '' == $this->id) {
             throw new ZCRMException('Tag ID MUST NOT be null/empty for update operation');
