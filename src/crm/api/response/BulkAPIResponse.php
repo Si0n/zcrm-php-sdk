@@ -68,9 +68,9 @@ class BulkAPIResponse extends CommonAPIResponse
                 throw $exception;
             }
             $responseJSON = $this->getResponseJSON();
-            $exception = new ZCRMException($responseJSON[APIConstants::MESSAGE] ?? 'unknown', $statusCode);
-            $exception->setExceptionCode($responseJSON[APIConstants::CODE]);
-            $exception->setExceptionDetails($responseJSON[APIConstants::DETAILS]);
+            $exception = new ZCRMException($responseJSON[APIConstants::MESSAGE] ?? 'Unknown', $statusCode);
+            $exception->setExceptionCode($responseJSON[APIConstants::CODE] ?? 'Unknown');
+            $exception->setExceptionDetails($responseJSON[APIConstants::DETAILS] ?? []);
             throw $exception;
         }
     }
