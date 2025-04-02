@@ -2,11 +2,13 @@
 
 namespace zcrmsdk\oauth\persistence;
 
+use zcrmsdk\oauth\utility\ZohoOAuthTokens;
+
 interface ZohoOAuthPersistenceInterface
 {
-    public function saveOAuthData($zohoOAuthTokens);
+    public function saveOAuthData(ZohoOAuthTokens $zohoOAuthTokens): void;
 
-    public function getOAuthTokens($userEmailId);
+    public function getOAuthTokens(?string $userEmailId): ZohoOAuthTokens;
 
-    public function deleteOAuthTokens($userEmailId);
+    public function deleteOAuthTokens(?string $userEmailId): void;
 }

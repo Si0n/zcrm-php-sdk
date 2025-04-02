@@ -4,7 +4,7 @@ namespace zcrmsdk\oauth;
 
 use zcrmsdk\oauth\exception\ZohoOAuthException;
 use zcrmsdk\oauth\persistence\ZohoOAuthPersistenceByFile;
-use zcrmsdk\oauth\persistence\ZohoOAuthPersistenceHandler;
+use zcrmsdk\oauth\persistence\ZohoOAuthPersistenceInterface;
 use zcrmsdk\oauth\utility\ZohoOAuthConstants;
 use zcrmsdk\oauth\utility\ZohoOAuthParams;
 
@@ -137,14 +137,11 @@ class ZohoOAuth
     /**
      * @throws ZohoOAuthException
      */
-    public static function getPersistenceHandlerInstance()
+    public static function getPersistenceHandlerInstance(): ZohoOAuthPersistenceInterface
     {
         try {
             if ('' != ZohoOAuth::getConfigValue('token_persistence_path')) {
                 return new ZohoOAuthPersistenceByFile();
-            }
-            if ('ZohoOAuthPersistenceHandler' == self::$configProperties[ZohoOAuthConstants::PERSISTENCE_HANDLER_CLASS]) {
-                return new ZohoOAuthPersistenceHandler();
             }
 
             require_once realpath(self::$configProperties[ZohoOAuthConstants::PERSISTENCE_HANDLER_CLASS]);

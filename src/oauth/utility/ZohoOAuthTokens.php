@@ -6,38 +6,39 @@ use zcrmsdk\oauth\exception\ZohoOAuthException;
 
 class ZohoOAuthTokens
 {
-    private $refreshToken;
+    private ?string $refreshToken = null;
 
-    private $accessToken;
+    private ?string $accessToken = null;
 
-    private $expiryTime;
+    private ?int $expiryTime = null;
 
-    private $userEmailId;
+    private ?string $userEmailId = null;
 
-    public function getRefreshToken()
+    public function getRefreshToken(): ?string
     {
         return $this->refreshToken;
     }
 
-    public function setRefreshToken($refreshToken)
+    public function setRefreshToken(?string $refreshToken): void
     {
         $this->refreshToken = $refreshToken;
     }
 
-    public function getAccessToken()
+    public function getAccessToken(): string
     {
         if ($this->isValidAccessToken()) {
             return $this->accessToken;
         }
+
         throw new ZohoOAuthException('Access token got expired!');
     }
 
-    public function setAccessToken($accessToken)
+    public function setAccessToken(?string $accessToken): void
     {
         $this->accessToken = $accessToken;
     }
 
-    public function getExpiryTime()
+    public function getExpiryTime(): ?int
     {
         return $this->expiryTime;
     }
@@ -47,32 +48,28 @@ class ZohoOAuthTokens
         return $this->expiryTime = $expiryTime;
     }
 
-    public function isValidAccessToken()
+    public function isValidAccessToken(): bool
     {
         return ($this->getExpiryTime() - $this->getCurrentTimeInMillis()) > 1000;
     }
 
-    public function getCurrentTimeInMillis()
+    public function getCurrentTimeInMillis(): int
     {
         return round(microtime(true) * 1000);
     }
 
     /**
      * userEmailId.
-     *
-     * @return string
      */
-    public function getUserEmailId()
+    public function getUserEmailId(): ?string
     {
         return $this->userEmailId;
     }
 
     /**
      * userEmailId.
-     *
-     * @param string $userEmailId
      */
-    public function setUserEmailId($userEmailId)
+    public function setUserEmailId(?string $userEmailId): void
     {
         $this->userEmailId = $userEmailId;
     }
