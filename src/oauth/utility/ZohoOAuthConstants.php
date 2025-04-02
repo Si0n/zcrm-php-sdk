@@ -50,7 +50,7 @@ class ZohoOAuthConstants
 
     public const EXPIRES_IN_SEC = 'expires_in_sec';
 
-    public const EXPIRIY_TIME = 'expiry_time';
+    public const EXPIRY_TIME = 'expiry_time';
 
     public const PERSISTENCE_HANDLER_CLASS = 'persistence_handler_class';
 
