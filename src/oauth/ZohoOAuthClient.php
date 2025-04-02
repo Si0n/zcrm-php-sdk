@@ -141,7 +141,7 @@ class ZohoOAuthClient
     {
         $connector = new ZohoOAuthHTTPConnector();
         $connector->setUrl(ZohoOAuth::getUserInfoURL());
-        $connector->addHeadder(ZohoOAuthConstants::AUTHORIZATION, ZohoOAuthConstants::OAUTH_HEADER_PREFIX . $accessToken);
+        $connector->addHeader(ZohoOAuthConstants::AUTHORIZATION, ZohoOAuthConstants::OAUTH_HEADER_PREFIX . $accessToken);
         $apiResponse = $connector->get();
         $jsonResponse = self::processResponse($apiResponse);
         if (empty($jsonResponse['Email'])) {

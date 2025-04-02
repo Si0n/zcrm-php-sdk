@@ -4,15 +4,15 @@ namespace zcrmsdk\oauth\utility;
 
 class ZohoOAuthHTTPConnector
 {
-    private $url;
+    private ?string $url = null;
 
-    private $requestParams = [];
+    private array $requestParams = [];
 
-    private $requestHeaders = [];
+    private array $requestHeaders = [];
 
-    private $requestParamCount = 0;
+    private int $requestParamCount = 0;
 
-    public function post()
+    public function post(): bool|string
     {
         $curl_pointer = curl_init();
         curl_setopt($curl_pointer, CURLOPT_URL, self::getUrl());
@@ -29,7 +29,7 @@ class ZohoOAuthHTTPConnector
         return $result;
     }
 
-    public function get()
+    public function get(): bool|string
     {
         $curl_pointer = curl_init();
         $url = self::getUrl() . '?' . http_build_query($this->requestParams);
@@ -45,17 +45,17 @@ class ZohoOAuthHTTPConnector
         return $result;
     }
 
-    public function getUrl()
+    public function getUrl(): ?string
     {
         return $this->url;
     }
 
-    public function setUrl($url)
+    public function setUrl(?string $url): void
     {
         $this->url = $url;
     }
 
-    public function addParam($key, $value)
+    public function addParam(string $key, mixed $value): void
     {
         if (!isset($this->requestParams[$key])) {
             $this->requestParams[$key] = [
@@ -63,22 +63,22 @@ class ZohoOAuthHTTPConnector
             ];
         } else {
             $valArray = $this->requestParams[$key];
-            array_push($valArray, $value);
+            $valArray[] = $value;
             $this->requestParams[$key] = $valArray;
         }
     }
 
-    public function addHeadder($key, $value)
+    public function addHeader(string $key, mixed $value): void
     {
         $this->requestHeaders[$key] = $value;
     }
 
-    public function getRequestHeadersMap()
+    public function getRequestHeadersMap(): array
     {
         return $this->requestHeaders;
     }
 
-    public function getUrlParamsAsString($urlParams)
+    public function getUrlParamsAsString(array $urlParams): string
     {
         $params_as_string = '';
         foreach ($urlParams as $key => $valueArray) {
@@ -88,12 +88,11 @@ class ZohoOAuthHTTPConnector
             }
         }
         $params_as_string = rtrim($params_as_string, '&');
-        $params_as_string = str_replace(PHP_EOL, '', $params_as_string);
 
-        return $params_as_string;
+        return str_replace(PHP_EOL, '', $params_as_string);
     }
 
-    public function getRequestHeadersAsArray()
+    public function getRequestHeadersAsArray(): array
     {
         $headersArray = [];
         $headersMap = self::getRequestHeadersMap();
