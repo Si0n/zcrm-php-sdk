@@ -3,6 +3,8 @@
 namespace zcrmsdk\crm\api\handler;
 
 use zcrmsdk\crm\api\APIRequest;
+use zcrmsdk\crm\api\response\APIResponse;
+use zcrmsdk\crm\api\response\FileAPIResponse;
 use zcrmsdk\crm\crud\ZCRMEventParticipant;
 use zcrmsdk\crm\crud\ZCRMInventoryLineItem;
 use zcrmsdk\crm\crud\ZCRMLayout;
@@ -17,19 +19,17 @@ use zcrmsdk\crm\utility\APIConstants;
 
 class EntityAPIHandler extends APIHandler
 {
-    protected $record;
 
-    private function __construct($zcrmrecord)
+    private function __construct(protected ZCRMRecord $record)
     {
-        $this->record = $zcrmrecord;
     }
 
-    public static function getInstance($zcrmrecord)
+    public static function getInstance(ZCRMRecord $zcrmRecord): EntityAPIHandler
     {
-        return new EntityAPIHandler($zcrmrecord);
+        return new EntityAPIHandler($zcrmRecord);
     }
 
-    public function getRecord($param_map = [], $header_map = [])
+    public function getRecord(array $param_map = [], array $header_map = []): APIResponse
     {
         try {
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
@@ -58,7 +58,7 @@ class EntityAPIHandler extends APIHandler
         }
     }
 
-    public function createRecord($trigger, $lar_id, $process)
+    public function createRecord(?array $trigger, ?string $lar_id, ?array $process): APIResponse
     {
         try {
             if (null != $this->record->getEntityId()) {
@@ -69,15 +69,15 @@ class EntityAPIHandler extends APIHandler
             $this->addHeader('Content-Type', 'application/json');
             $requestBodyObj = [];
             $dataArray = [];
-            array_push($dataArray, self::getZCRMRecordAsJSON());
+            $dataArray[] = self::getZCRMRecordAsJSON();
             $requestBodyObj['data'] = $dataArray;
-            if (null !== $trigger && is_array($trigger)) {
+            if (is_array($trigger)) {
                 $requestBodyObj['trigger'] = $trigger;
             }
             if (null !== $lar_id) {
                 $requestBodyObj['lar_id'] = $lar_id;
             }
-            if (null !== $process && is_array($process)) {
+            if (is_array($process)) {
                 $requestBodyObj['process'] = $process;
             }
 
@@ -86,10 +86,10 @@ class EntityAPIHandler extends APIHandler
             $responseInstance = APIRequest::getInstance($this)->getAPIResponse();
             $responseDataArray = $responseInstance->getResponseJSON()['data'];
             $responseData = $responseDataArray[0];
-            $reponseDetails = $responseData['details'];
-            $this->record->setEntityId($reponseDetails['id']);
-            $this->record->setCreatedTime($reponseDetails['Created_Time']);
-            $createdBy = $reponseDetails['Created_By'];
+            $responseDetails = $responseData['details'];
+            $this->record->setEntityId($responseDetails['id']);
+            $this->record->setCreatedTime($responseDetails['Created_Time']);
+            $createdBy = $responseDetails['Created_By'];
             $this->record->setCreatedBy(ZCRMUser::getInstance($createdBy['id'], $createdBy['name']));
             $responseInstance->setData($this->record);
 
@@ -100,7 +100,7 @@ class EntityAPIHandler extends APIHandler
         }
     }
 
-    public function updateRecord($trigger, $process)
+    public function updateRecord(?array $trigger, ?array $process): APIResponse
     {
         try {
             if (null == $this->record->getEntityId()) {
@@ -111,12 +111,12 @@ class EntityAPIHandler extends APIHandler
             $this->addHeader('Content-Type', 'application/json');
             $requestBodyObj = [];
             $dataArray = [];
-            array_push($dataArray, self::getZCRMRecordAsJSON());
+            $dataArray[] = self::getZCRMRecordAsJSON();
             $requestBodyObj['data'] = $dataArray;
-            if (null !== $trigger && is_array($trigger)) {
+            if (is_array($trigger)) {
                 $requestBodyObj['trigger'] = $trigger;
             }
-            if (null !== $process && is_array($process)) {
+            if (is_array($process)) {
                 $requestBodyObj['process'] = $process;
             }
 
@@ -125,12 +125,12 @@ class EntityAPIHandler extends APIHandler
 
             $responseDataArray = $responseInstance->getResponseJSON()['data'];
             $responseData = $responseDataArray[0];
-            $reponseDetails = $responseData['details'];
-            $this->record->setCreatedTime($reponseDetails['Created_Time']);
-            $this->record->setModifiedTime($reponseDetails['Modified_Time']);
-            $createdBy = $reponseDetails['Created_By'];
+            $responseDetails = $responseData['details'];
+            $this->record->setCreatedTime($responseDetails['Created_Time']);
+            $this->record->setModifiedTime($responseDetails['Modified_Time']);
+            $createdBy = $responseDetails['Created_By'];
             $this->record->setCreatedBy(ZCRMUser::getInstance($createdBy['id'], $createdBy['name']));
-            $modifiedBy = $reponseDetails['Modified_By'];
+            $modifiedBy = $responseDetails['Modified_By'];
             $this->record->setModifiedBy(ZCRMUser::getInstance($modifiedBy['id'], $modifiedBy['name']));
             $responseInstance->setData($this->record);
 
@@ -141,7 +141,7 @@ class EntityAPIHandler extends APIHandler
         }
     }
 
-    public function deleteRecord()
+    public function deleteRecord(): APIResponse
     {
         try {
             if (null == $this->record->getEntityId()) {
@@ -151,23 +151,21 @@ class EntityAPIHandler extends APIHandler
             $this->urlPath = $this->record->getModuleApiName() . '/' . $this->record->getEntityId();
             $this->addHeader('Content-Type', 'application/json');
 
-            $responseInstance = APIRequest::getInstance($this)->getAPIResponse();
-
-            return $responseInstance;
+            return APIRequest::getInstance($this)->getAPIResponse();
         } catch (ZCRMException $exception) {
             APIExceptionHandler::logException($exception);
             throw $exception;
         }
     }
 
-    public function convertRecord($potentialRecord, $details)
+    public function convertRecord(?ZCRMRecord $potentialRecord = null, ?array $details = null): array
     {
         try {
             $this->requestMethod = APIConstants::REQUEST_METHOD_POST;
             $this->urlPath = $this->record->getModuleApiName() . '/' . $this->record->getEntityId() . '/actions/convert';
             $this->addHeader('Content-Type', 'application/json');
             $dataObject = [];
-            if (null != $details) {
+            if (is_array($details)) {
                 foreach ($details as $key => $value) {
                     if ('overwrite' == $key) {
                         $dataObject['overwrite'] = $value;
@@ -189,7 +187,7 @@ class EntityAPIHandler extends APIHandler
                     }
                 }
             }
-            if (null != $potentialRecord) {
+            if (null !== $potentialRecord) {
                 $dataObject['Deals'] = self::getInstance($potentialRecord)->getZCRMRecordAsJSON();
             }
             if (sizeof($dataObject) > 0) {
@@ -211,7 +209,7 @@ class EntityAPIHandler extends APIHandler
             // Process Response JSON
             $convertedIdsJSON = $responseJSON[APIConstants::DATA][0];
             $convertedIds = [];
-            $convertedIds[APIConstants::CONTACTS] = isset($convertedIdsJSON[APIConstants::CONTACTS]) ? $convertedIdsJSON[APIConstants::CONTACTS] : null;
+            $convertedIds[APIConstants::CONTACTS] = $convertedIdsJSON[APIConstants::CONTACTS] ?? null;
             if (isset($convertedIdsJSON[APIConstants::ACCOUNTS]) && null != $convertedIdsJSON[APIConstants::ACCOUNTS]) {
                 $convertedIds[APIConstants::ACCOUNTS] = $convertedIdsJSON[APIConstants::ACCOUNTS];
             }
@@ -226,7 +224,7 @@ class EntityAPIHandler extends APIHandler
         }
     }
 
-    public function uploadPhoto($filePath)
+    public function uploadPhoto(string $filePath): APIResponse
     {
         try {
             if (function_exists('curl_file_create')) { // php 5.6+
@@ -240,16 +238,15 @@ class EntityAPIHandler extends APIHandler
             $this->requestMethod = APIConstants::REQUEST_METHOD_POST;
             $this->urlPath = $this->record->getModuleApiName() . '/' . $this->record->getEntityId() . '/photo';
             $this->requestBody = $post;
-            $responseInstance = APIRequest::getInstance($this)->getAPIResponse();
 
-            return $responseInstance;
+            return APIRequest::getInstance($this)->getAPIResponse();
         } catch (ZCRMException $exception) {
             APIExceptionHandler::logException($exception);
             throw $exception;
         }
     }
 
-    public function downloadPhoto()
+    public function downloadPhoto(): FileAPIResponse
     {
         try {
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
@@ -262,7 +259,7 @@ class EntityAPIHandler extends APIHandler
         }
     }
 
-    public function deletePhoto()
+    public function deletePhoto(): APIResponse
     {
         try {
             $this->requestMethod = APIConstants::REQUEST_METHOD_DELETE;
@@ -275,7 +272,7 @@ class EntityAPIHandler extends APIHandler
         }
     }
 
-    public function getZCRMRecordAsJSON()
+    public function getZCRMRecordAsJSON(): array
     {
         $recordJSON = [];
         $apiNameVsValues = $this->record->getData();
@@ -315,13 +312,13 @@ class EntityAPIHandler extends APIHandler
         return $recordJSON;
     }
 
-    public function getTaxListAsJSON($key)
+    public function getTaxListAsJSON(?string $key): array
     {
         $taxes = [];
         $taxList = $this->record->getTaxList();
-        if ('Tax' == $key) {
+        if ('Tax' === $key) {
             foreach ($taxList as $taxIns) {
-                array_push($taxes, $taxIns->getTaxName());
+                $taxes[] = $taxIns->getTaxName();
             }
         } else {
             foreach ($taxList as $lineTaxInstance) {
@@ -329,25 +326,25 @@ class EntityAPIHandler extends APIHandler
                 $tax['name'] = $lineTaxInstance->getTaxName();
                 $tax['value'] = $lineTaxInstance->getValue();
                 $tax['percentage'] = $lineTaxInstance->getPercentage();
-                array_push($taxes, $tax);
+                $taxes[] = $tax;
             }
         }
 
         return $taxes;
     }
 
-    public function getPriceDetailsAsJSONArray()
+    public function getPriceDetailsAsJSONArray(): array
     {
         $priceDetailsArr = [];
         $priceDetailsList = $this->record->getPriceDetails();
         foreach ($priceDetailsList as $priceDetailIns) {
-            array_push($priceDetailsArr, self::getZCRMPriceDetailAsJSON($priceDetailIns));
+            $priceDetailsArr[] = self::getZCRMPriceDetailAsJSON($priceDetailIns);
         }
 
         return $priceDetailsArr;
     }
 
-    public function getZCRMPriceDetailAsJSON(ZCRMPriceBookPricing $priceDetailIns)
+    public function getZCRMPriceDetailAsJSON(ZCRMPriceBookPricing $priceDetailIns): array
     {
         $priceDetailJSON = [];
         if (null != $priceDetailIns->getId()) {
@@ -360,31 +357,31 @@ class EntityAPIHandler extends APIHandler
         return $priceDetailJSON;
     }
 
-    public function getParticipantsAsJSONArray()
+    public function getParticipantsAsJSONArray(): array
     {
         $participantsArr = [];
         $participantsList = $this->record->getParticipants();
         foreach ($participantsList as $participantIns) {
-            array_push($participantsArr, self::getZCRMParticipantAsJSON($participantIns));
+            $participantsArr[] = self::getZCRMParticipantAsJSON($participantIns);
         }
 
         return $participantsArr;
     }
 
-    public function getZCRMParticipantAsJSON(ZCRMEventParticipant $participantIns)
+    public function getZCRMParticipantAsJSON(ZCRMEventParticipant $participantIns): array
     {
         $participantJSON = [];
-        $participantJSON['participant'] = '' . $participantIns->getId();
-        $participantJSON['type'] = '' . $participantIns->getType();
-        $participantJSON['name'] = '' . $participantIns->getName();
-        $participantJSON['Email'] = '' . $participantIns->getEmail();
+        $participantJSON['participant'] = $participantIns->getId();
+        $participantJSON['type'] = $participantIns->getType();
+        $participantJSON['name'] = $participantIns->getName();
+        $participantJSON['Email'] = $participantIns->getEmail();
         $participantJSON['invited'] = (bool) $participantIns->isInvited();
-        $participantJSON['status'] = '' . $participantIns->getStatus();
+        $participantJSON['status'] = $participantIns->getStatus();
 
         return $participantJSON;
     }
 
-    public function getLineItemJSON($lineItemsArray)
+    public function getLineItemJSON(array $lineItemsArray): array
     {
         $lineItemsAsJSONArray = [];
         foreach ($lineItemsArray as $lineItem) {
@@ -421,17 +418,20 @@ class EntityAPIHandler extends APIHandler
                 $tax['name'] = $lineTaxInstance->getTaxName();
                 $tax['value'] = $lineTaxInstance->getValue();
                 $tax['percentage'] = $lineTaxInstance->getPercentage();
-                array_push($lineTaxArray, $tax);
+                $lineTaxArray[] = $tax;
             }
             $lineItemData['line_tax'] = $lineTaxArray;
 
-            array_push($lineItemsAsJSONArray, array_filter($lineItemData, 'zcrmsdk\crm\utility\CommonUtil::removeNullValuesAlone'));
+            $lineItemsAsJSONArray[] = array_filter(
+                $lineItemData,
+                'zcrmsdk\crm\utility\CommonUtil::removeNullValuesAlone'
+            );
         }
 
         return array_filter($lineItemsAsJSONArray);
     }
 
-    public function setRecordProperties($recordDetails)
+    public function setRecordProperties($recordDetails): void
     {
         foreach ($recordDetails as $key => $value) {
             if ('id' == $key) {
@@ -476,7 +476,7 @@ class EntityAPIHandler extends APIHandler
                 $tags = [];
                 foreach ($value as $tag) {
                     $tagIns = ZCRMTag::getInstance($tag['id'], $tag['name']);
-                    array_push($tags, $tagIns);
+                    $tags[] = $tagIns;
                 }
                 $this->record->setTags($tags);
             } elseif ('tags' === $key && is_array($value)) {
@@ -504,24 +504,23 @@ class EntityAPIHandler extends APIHandler
         }
     }
 
-    private function setParticipants($participants)
+    private function setParticipants(iterable $participants): void
     {
         foreach ($participants as $participantDetail) {
             $this->record->addParticipant(self::getZCRMParticipant($participantDetail));
         }
     }
 
-    private function setPriceDetails($priceDetails)
+    private function setPriceDetails(iterable $priceDetails): void
     {
         foreach ($priceDetails as $priceDetail) {
             $this->record->addPriceDetail(self::getZCRMPriceDetail($priceDetail));
         }
     }
 
-    public function getZCRMParticipant($participantDetail)
+    public function getZCRMParticipant($participantDetail): ZCRMEventParticipant
     {
         $id = null;
-        $email = null;
         if (array_key_exists('Email', $participantDetail)) {
             $email = $participantDetail['Email'];
             $id = $participantDetail['participant'];
@@ -537,7 +536,7 @@ class EntityAPIHandler extends APIHandler
         return $participant;
     }
 
-    public function getZCRMPriceDetail($priceDetails)
+    public function getZCRMPriceDetail($priceDetails): ZCRMPriceBookPricing
     {
         $priceDetailIns = ZCRMPriceBookPricing::getInstance($priceDetails['id']);
         $priceDetailIns->setDiscount((float) $priceDetails['discount']);
@@ -547,14 +546,14 @@ class EntityAPIHandler extends APIHandler
         return $priceDetailIns;
     }
 
-    public function setInventoryLineItems($lineItems)
+    public function setInventoryLineItems(iterable $lineItems): void
     {
         foreach ($lineItems as $lineItem) {
             $this->record->addLineItem(self::getZCRMLineItemInstance($lineItem));
         }
     }
 
-    public function getZCRMLineItemInstance($lineItemDetails)
+    public function getZCRMLineItemInstance($lineItemDetails): ZCRMInventoryLineItem
     {
         $productDetails = $lineItemDetails['product'];
         $lineItemId = $lineItemDetails['id'];

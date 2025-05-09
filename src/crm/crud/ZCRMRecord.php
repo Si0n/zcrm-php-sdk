@@ -20,136 +20,98 @@ class ZCRMRecord
 {
     /**
      * the inventory item list.
-     *
-     * @var array
      */
-    private $lineItems = [];
+    private array $lineItems = [];
 
     /**
      * the lookup label.
-     *
-     * @var string
      */
-    private $lookupLabel;
+    private ?string $lookupLabel= null;
 
     /**
      * the owner of the record.
-     *
-     * @var ZCRMUser
      */
-    private $owner;
+    private ?ZCRMUser $owner = null;
 
     /**
      * the user who created the record.
-     *
-     * @var ZCRMUser
      */
-    private $createdBy;
+    private ?ZCRMUser $createdBy = null;
 
     /**
      * the user who modified the record.
-     *
-     * @var ZCRMUser
      */
-    private $modifiedBy;
+    private ?ZCRMUser $modifiedBy = null;
 
     /**
      * creation time of the record.
-     *
-     * @var string
      */
-    private $createdTime;
+    private ?string $createdTime = null;
 
     /**
      * modification time of the record.
-     *
-     * @var string
      */
-    private $modifiedTime;
+    private ?string $modifiedTime = null;
 
     /**
      * the record data.
-     *
-     * @var array
      */
-    private $fieldNameVsValue = [];
+    private array $fieldNameVsValue = [];
 
     /**
      * properties of the record.
-     *
-     * @var array
      */
-    private $properties = [];
+    private array $properties = [];
 
     /**
      * participants in the record.
-     *
-     * @var array
      */
-    private $participants = [];
+    private array $participants = [];
 
     /**
      * price detail of the product.
-     *
-     * @var array
      */
-    private $priceDetails = [];
+    private array $priceDetails = [];
 
     /**
      * layout of the record.
-     *
-     * @var string
      */
-    private $layout;
+    private ?string $layout = null;
 
     /**
      * the list of tax.
-     *
-     * @var array ZCRMTax class instances array
      */
-    private $taxList = [];
+    private array $taxList = [];
 
     /**
      * the time of the last activity done on the record.
-     *
-     * @var string
      */
-    private $lastActivityTime;
+    private ?string $lastActivityTime = null;
 
     /**
      * list of all the tags.
-     *
-     * @var array
      */
-    private $tags = [];
+    private array $tags = [];
 
     /**
      * list of all the tag names.
-     *
-     * @var array
      */
-    private $tagnames = [];
+    private array $tagNames = [];
 
     /**
      * bulk write status of the record.
-     *
-     * @var string
      */
-    private $status;
+    private ?string $status = null;
 
     /**
      * bulk write error message of the record.
-     *
-     * @var string
      */
-    private $error;
+    private ?string $error = null;
 
     /**
      * csv record row number.
-     *
-     * @var int
      */
-    private $rowNumber;
+    private ?int $rowNumber = null;
 
     private function __construct(protected null|string $moduleApiName, protected null|string $entityId)
     {
@@ -168,10 +130,8 @@ class ZCRMRecord
 
     /**
      * Method inserts the tax associated to the record.
-     *
-     * @param ZCRMTax $taxIns the tax instance
      */
-    public function addTax($taxIns): void
+    public function addTax(ZCRMTax $taxIns): void
     {
         $this->taxList[] = $taxIns;
     }
@@ -181,27 +141,23 @@ class ZCRMRecord
      *
      * @return array array of ZCRMTax tax instances
      */
-    public function getTaxList()
+    public function getTaxList(): array
     {
         return $this->taxList;
     }
 
     /**
      * Method to get the record id.
-     *
-     * @return string record id
      */
-    public function getEntityId()
+    public function getEntityId(): ?string
     {
         return $this->entityId;
     }
 
     /**
      * Method to set the record id.
-     *
-     * @param string $entityId record id
      */
-    public function setEntityId($entityId)
+    public function setEntityId(?string $entityId): void
     {
         $this->entityId = $entityId;
     }
@@ -211,7 +167,7 @@ class ZCRMRecord
      *
      * @return string api name of the module
      */
-    public function getModuleApiName()
+    public function getModuleApiName(): ?string
     {
         return $this->moduleApiName;
     }
@@ -221,30 +177,23 @@ class ZCRMRecord
      *
      * @param string $moduleApiName module api name of the record
      */
-    public function setModuleApiName($moduleApiName)
+    public function setModuleApiName(?string $moduleApiName) : void
     {
         $this->moduleApiName = $moduleApiName;
     }
 
     /**
      * Method to get the field value by api name of the field of the record.
-     *
-     * @param string $apiName field api name
-     *
-     * @return string the field value of that field api name
      */
-    public function getFieldValue($apiName)
+    public function getFieldValue(string $apiName, mixed $defaultValue = null): mixed
     {
-        return $this->fieldNameVsValue[$apiName];
+        return $this->fieldNameVsValue[$apiName] ?? $defaultValue;
     }
 
     /**
      * Method to set the field value by api name of the field of the record.
-     *
-     * @param string $apiName api name of the field
-     * @param string $value   value of the field (the value must be of the same datatype of the field. Ex. "val1", 10, 200.56, true)
      */
-    public function setFieldValue($apiName, $value)
+    public function setFieldValue(string $apiName, mixed $value): void
     {
         $this->fieldNameVsValue[$apiName] = $value;
     }
@@ -254,7 +203,7 @@ class ZCRMRecord
      *
      * @return array key-value pair of field name and field value
      */
-    public function getData()
+    public function getData(): array
     {
         return $this->fieldNameVsValue;
     }
@@ -262,19 +211,17 @@ class ZCRMRecord
     /**
      * Method to get the line items of the inventory record.
      *
-     * @return array containing the ZCRMInventoryLineItem
+     * @return array<ZCRMInventoryLineItem>
      */
-    public function getLineItems()
+    public function getLineItems(): array
     {
         return $this->lineItems;
     }
 
     /**
      * Method adds the line item to the inventory record.
-     *
-     * @param ZCRMInventoryLineItem $lineItem line item to add
      */
-    public function addLineItem($lineItem)
+    public function addLineItem(ZCRMInventoryLineItem $lineItem): void
     {
         $this->lineItems[] = $lineItem;
     }
@@ -282,33 +229,32 @@ class ZCRMRecord
     /**
      * Method update the line item of the inventory record.
      *
-     * @param ZCRMInventoryLineItem $updatedlineItem updated line item
+     * @param ZCRMInventoryLineItem $updatedLineItem updated line item
      */
-    public function updateLineItem($updatedlineItem)
+    public function updateLineItem(ZCRMInventoryLineItem $updatedLineItem): void
     {
-        if (null == $updatedlineItem->getId()) {
+        if (null == $updatedLineItem->getId()) {
             throw new ZCRMException('Line item id missing');
         }
-        self::removeLineItem($updatedlineItem->getId());
-        $this->lineItems[] = $updatedlineItem;
+        $this->removeLineItem($updatedLineItem->getId());
+        $this->lineItems[] = $updatedLineItem;
     }
 
-    /**
-     * Method removes the line item from the inventory record.
-     *
-     * @param string $lineItemId line item id to remove
-     */
-    public function removeLineItem($lineItemId)
+    public function removeLineItem(string $lineItemId): void
     {
-        $lineitemexistence = 0;
+        $found = false;
+        /**
+         * @var ZCRMInventoryLineItem $lineItem
+         */
         foreach ($this->lineItems as $key => $lineItem) {
-            if ($lineItemId == $lineItem->getId()) {
-                $lineitemexistence = 1;
-                unset($this->lineItems[$key]);
-                break;
+            if ($lineItemId !== $lineItem->getId()) {
+                continue;
             }
+            $found = true;
+            unset($this->lineItems[$key]);
+            break;
         }
-        if (0 == $lineitemexistence) {
+        if (!$found) {
             throw new ZCRMException("Line item with such id doesn't exist");
         }
     }
@@ -316,25 +262,25 @@ class ZCRMRecord
     /**
      * Method to add Line item to existing record.
      */
-    public function addLineItemtoExistingRecord($lineItem)
+    public function addLineItemToExistingRecord(ZCRMInventoryLineItem $lineItem)
     {
-        $recordinstance = EntityAPIHandler::getInstance($this)->getRecord()->getData(); // returns ZCRMRecord object
-        $recordinstance->addLineItem($lineItem);
+        $recordInstance = EntityAPIHandler::getInstance($this)->getRecord()->getData(); // returns ZCRMRecord object
+        $recordInstance->addLineItem($lineItem);
 
-        return $recordinstance->update();
+        return $recordInstance->update();
     }
 
     /**
      * Method to update Line item from the existing record.
      *
-     * @param ZCRMInventoryLineItem $updatedlineItem updated line item
+     * @param ZCRMInventoryLineItem $updatedLineItem updated line item
      */
-    public function updateLineItemofTheExistingRecord($updatedlineItem)
+    public function updateLineItemOfTheExistingRecord(ZCRMInventoryLineItem $updatedLineItem)
     {
-        $recordinstance = EntityAPIHandler::getInstance($this)->getRecord()->getData(); // returns ZCRMRecord object
-        $recordinstance->updateLineItem($updatedlineItem);
+        $recordInstance = EntityAPIHandler::getInstance($this)->getRecord()->getData(); // returns ZCRMRecord object
+        $recordInstance->updateLineItem($updatedLineItem);
 
-        return $recordinstance->update();
+        return $recordInstance->update();
     }
 
     /**
@@ -344,12 +290,12 @@ class ZCRMRecord
      *
      * @oaram
      */
-    public function deleteLineItemFromTheExistingRecord($lineItemId)
+    public function deleteLineItemFromTheExistingRecord(string $lineItemId)
     {
-        $recordinstance = EntityAPIHandler::getInstance($this)->getRecord()->getData(); // returns ZCRMRecord object
-        $recordinstance->removeLineItem($lineItemId);
+        $recordInstance = EntityAPIHandler::getInstance($this)->getRecord()->getData(); // returns ZCRMRecord object
+        $recordInstance->removeLineItem($lineItemId);
 
-        return $recordinstance->update();
+        return $recordInstance->update();
     }
 
     /**
@@ -357,7 +303,7 @@ class ZCRMRecord
      *
      * @return string -the look up label of the record
      */
-    public function getLookupLabel()
+    public function getLookupLabel(): ?string
     {
         return $this->lookupLabel;
     }
@@ -367,7 +313,7 @@ class ZCRMRecord
      *
      * @param string $lookupLabel lookup label that you want to set
      */
-    public function setLookupLabel($lookupLabel)
+    public function setLookupLabel(?string $lookupLabel): void
     {
         $this->lookupLabel = $lookupLabel;
     }
@@ -377,7 +323,7 @@ class ZCRMRecord
      *
      * @return ZCRMUser owner of the record
      */
-    public function getOwner()
+    public function getOwner(): ?ZCRMUser
     {
         return $this->owner;
     }
@@ -387,7 +333,7 @@ class ZCRMRecord
      *
      * @param ZCRMUser $owner owner of the record
      */
-    public function setOwner($owner)
+    public function setOwner(?ZCRMUser $owner): void
     {
         $this->owner = $owner;
     }
@@ -397,7 +343,7 @@ class ZCRMRecord
      *
      * @return ZCRMUser user who created the record
      */
-    public function getCreatedBy()
+    public function getCreatedBy(): ?ZCRMUser
     {
         return $this->createdBy;
     }
@@ -407,7 +353,7 @@ class ZCRMRecord
      *
      * @param ZCRMUser $createdBy user who created the record
      */
-    public function setCreatedBy($createdBy)
+    public function setCreatedBy(ZCRMUser $createdBy): void
     {
         $this->createdBy = $createdBy;
     }
@@ -417,7 +363,7 @@ class ZCRMRecord
      *
      * @return ZCRMUser user who modified the record
      */
-    public function getModifiedBy()
+    public function getModifiedBy(): ?ZCRMUser
     {
         return $this->modifiedBy;
     }
@@ -427,7 +373,7 @@ class ZCRMRecord
      *
      * @param ZCRMUser $modifiedBy user who modified the record
      */
-    public function setModifiedBy($modifiedBy)
+    public function setModifiedBy(?ZCRMUser $modifiedBy): void
     {
         $this->modifiedBy = $modifiedBy;
     }
@@ -437,7 +383,7 @@ class ZCRMRecord
      *
      * @return string creation time in ISO 8601 format
      */
-    public function getCreatedTime()
+    public function getCreatedTime() :?string
     {
         return $this->createdTime;
     }
@@ -447,7 +393,7 @@ class ZCRMRecord
      *
      * @param string $createdTime creation time in ISO 8601 format
      */
-    public function setCreatedTime($createdTime)
+    public function setCreatedTime(?string $createdTime): void
     {
         $this->createdTime = $createdTime;
     }
@@ -457,7 +403,7 @@ class ZCRMRecord
      *
      * @return string the modification time in ISO 8601 format
      */
-    public function getModifiedTime()
+    public function getModifiedTime(): ?string
     {
         return $this->modifiedTime;
     }
@@ -467,7 +413,7 @@ class ZCRMRecord
      *
      * @param string $modifiedTime modification time in ISO 8601 format
      */
-    public function setModifiedTime($modifiedTime)
+    public function setModifiedTime(?string $modifiedTime) :void
     {
         $this->modifiedTime = $modifiedTime;
     }
@@ -475,9 +421,9 @@ class ZCRMRecord
     /**
      * Method to get the tags for the record.
      *
-     * @return array array of ZCRMTag instances related to the record
+     * @return array<ZCRMTag>
      */
-    public function getTags()
+    public function getTags(): array
     {
         return $this->tags;
     }
@@ -485,9 +431,9 @@ class ZCRMRecord
     /**
      * Method to set the tags for the record.
      *
-     * @param array $tags array of ZCRMTag instances related to the record
+     * @param array<ZCRMTag> $tags array of ZCRMTag instances related to the record
      */
-    public function setTags($tags)
+    public function setTags(array $tags): void
     {
         $this->tags = $tags;
     }
@@ -497,27 +443,25 @@ class ZCRMRecord
      *
      * @return array array of tag name of the record
      */
-    public function getTagNames()
+    public function getTagNames(): array
     {
-        return $this->tagnames;
+        return $this->tagNames;
     }
 
     /**
      * Method to set the tags for the record.
      *
-     * @param array $tagnames array of tag name of the record
+     * @param array $tagNames array of tag name of the record
      */
-    public function setTagNames($tagnames)
+    public function setTagNames(array $tagNames) :void
     {
-        $this->tagnames = $tagnames;
+        $this->tagNames = $tagNames;
     }
 
     /**
      * To set create record status.
-     *
-     * @param status of the record
      */
-    public function setStatus($status)
+    public function setStatus(?string $status): void
     {
         $this->status = $status;
     }
@@ -527,37 +471,31 @@ class ZCRMRecord
      *
      * @return string status of the record
      */
-    public function getStatus()
+    public function getStatus():?string
     {
         return $this->status;
     }
 
     /**
      * To set record error message.
-     *
-     * @param error message of the record
      */
-    public function setErrorMessage($error)
+    public function setErrorMessage(?string $error): void
     {
         $this->error = $error;
     }
 
     /**
      * To get record error message.
-     *
-     * @return string record error message
      */
-    public function getErrorMessage()
+    public function getErrorMessage(): ?string
     {
         return $this->error;
     }
 
     /**
      * To set record row number.
-     *
-     * @param rowNumber of the record
      */
-    public function setRecordRowNumber($rowNumber)
+    public function setRecordRowNumber(?int $rowNumber): void
     {
         $this->rowNumber = $rowNumber;
     }
@@ -567,7 +505,7 @@ class ZCRMRecord
      *
      * @return int record row number
      */
-    public function getRecordRowNumber()
+    public function getRecordRowNumber(): ?int
     {
         return $this->rowNumber;
     }
@@ -575,14 +513,13 @@ class ZCRMRecord
     /**
      * Method creates record.
      *
-     ** @param string $trigger array of triggers
      * @param string $lar_id lead assignment rule id
      *
      * @return APIResponse instance of the APIResponse class which holds the API response
      *
      * @throws ZCRMException if Entity ID of the record is not NULL
      */
-    public function create($trigger = null, $lar_id = null, $process = null)
+    public function create(?array $trigger = null, ?string $lar_id = null, ?array $process = null): APIResponse
     {
         if (null != self::getEntityId()) {
             $exception = new ZCRMException('Entity ID MUST be null for create operation.', APIConstants::RESPONSECODE_BAD_REQUEST);
@@ -602,7 +539,7 @@ class ZCRMRecord
      *
      * @throws ZCRMException if Entity ID of the record is NULL
      */
-    public function update($trigger = null, $process = null)
+    public function update(?array $trigger = null, ?array $process = null): APIResponse
     {
         if (null == self::getEntityId()) {
             $exception = new ZCRMException('Entity ID MUST NOT be null for update operation.', APIConstants::RESPONSECODE_BAD_REQUEST);
@@ -620,7 +557,7 @@ class ZCRMRecord
      *
      * @throws ZCRMException if Entity ID of the record is NULL
      */
-    public function delete()
+    public function delete(): APIResponse
     {
         if (null == self::getEntityId()) {
             $exception = new ZCRMException('Entity ID MUST NOT be null for delete operation.', APIConstants::RESPONSECODE_BAD_REQUEST);
@@ -635,10 +572,8 @@ class ZCRMRecord
      * Method to convert the record.
      *
      * @param ZCRMRecord $potentialRecord the potential record
-     *
-     * @return APIResponse instance of the APIResponse class which holds the API response
      */
-    public function convert($potentialRecord = null, $details = null)
+    public function convert(?ZCRMRecord $potentialRecord = null, $details = null): array
     {
         return EntityAPIHandler::getInstance($this)->convertRecord($potentialRecord, $details);
     }

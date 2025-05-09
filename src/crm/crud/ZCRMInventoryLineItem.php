@@ -344,18 +344,16 @@ class ZCRMInventoryLineItem
      *
      * @return array ZCRMTax array of ZCRMTax instances related to the inventory line item
      */
-    public function getLineTax()
+    public function getLineTax(): array
     {
         return $this->lineTax;
     }
 
     /**
      * Method to add a tax to the inventory line item.
-     *
-     * @param array $lineTax array of ZCRMTax class instances
      */
-    public function addLineTax($lineTax)
+    public function addLineTax(ZCRMTax $lineTax): void
     {
-        array_push($this->lineTax, $lineTax);
+        $this->lineTax[] = $lineTax;
     }
 }

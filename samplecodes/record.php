@@ -6,7 +6,6 @@ use zcrmsdk\crm\crud\ZCRMNote;
 use zcrmsdk\crm\crud\ZCRMRecord;
 use zcrmsdk\crm\crud\ZCRMTax;
 use zcrmsdk\crm\setup\restclient\ZCRMRestClient;
-use zcrmsdk\crm\setup\users\ZCRMUser;
 
 
 class Record
@@ -14,8 +13,7 @@ class Record
 
     public function __construct()
     {
-        $configuration = [];
-        ZCRMRestClient::initialize($configuration);
+        ZCRMRestClient::initialize([]);
     }
 
     public function create()
@@ -204,7 +202,7 @@ class Record
         $lineItem->setListPrice(100); // To set line item list price
         $lineItem->setProduct(ZCRMRecord::getInstance("Products", "{record_id}")); // To set product to line item
         $lineItem->setQuantity(100); //
-        $responseIns = $record->addLineItemtoExistingRecord($lineItem);
+        $responseIns = $record->addLineItemToExistingRecord($lineItem);
         echo "HTTP Status Code:" . $responseIns->getHttpStatusCode(); // To get http response code
         echo "Status:" . $responseIns->getStatus(); // To get response status
         echo "Message:" . $responseIns->getMessage(); // To get response message
@@ -223,7 +221,7 @@ class Record
         $lineItem->setListPrice(12312); // To set line item list price
         $lineItem->setProduct(ZCRMRecord::getInstance("Products", "{record_id}")); // To set product to line item
         $lineItem->setQuantity(100); //
-        $responseIns = $record->updateLineItemofTheExistingRecord($lineItem);
+        $responseIns = $record->updateLineItemOfTheExistingRecord($lineItem);
         echo "HTTP Status Code:" . $responseIns->getHttpStatusCode(); // To get http response code
         echo "Status:" . $responseIns->getStatus(); // To get response status
         echo "Message:" . $responseIns->getMessage(); // To get response message
