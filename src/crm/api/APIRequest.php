@@ -170,11 +170,12 @@ class APIRequest
     /**
      * @throws ZCRMException
      */
-    public function uploadLinkAsAttachment(string $linkURL): APIResponse
+    public function uploadLinkAsAttachment(string $linkURL, ?string $title = null): APIResponse
     {
-        $post = [
+        $post = array_filter([
             'attachmentUrl' => $linkURL,
-        ];
+            'title' => $title,
+        ]);
 
         $connector = ZohoHTTPConnector::getInstance();
         $connector->setUrl($this->url);

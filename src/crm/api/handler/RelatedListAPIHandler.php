@@ -3,6 +3,8 @@
 namespace zcrmsdk\crm\api\handler;
 
 use zcrmsdk\crm\api\APIRequest;
+use zcrmsdk\crm\api\response\APIResponse;
+use zcrmsdk\crm\api\response\FileAPIResponse;
 use zcrmsdk\crm\crud\ZCRMAttachment;
 use zcrmsdk\crm\crud\ZCRMModuleRelation;
 use zcrmsdk\crm\crud\ZCRMNote;
@@ -236,7 +238,7 @@ class RelatedListAPIHandler extends APIHandler
         }
     }
 
-    public function uploadAttachment($filePath)
+    public function uploadAttachment(string $filePath): APIResponse
     {
         try {
             $this->requestMethod = APIConstants::REQUEST_METHOD_POST;
@@ -244,7 +246,7 @@ class RelatedListAPIHandler extends APIHandler
 
             $responseInstance = APIRequest::getInstance($this)->uploadFile($filePath);
             $responseJson = $responseInstance->getResponseJSON();
-            $detailsJSON = isset($responseJson['data'][0]['details']) ? $responseJson['data'][0]['details'] : [];
+            $detailsJSON = $responseJson['data'][0]['details'] ?? [];
             $responseInstance->setData(ZCRMAttachment::getInstance($this->parentRecord, isset($detailsJSON['id']) ? ($detailsJSON['id']) : '0'));
 
             return $responseInstance;
@@ -254,15 +256,15 @@ class RelatedListAPIHandler extends APIHandler
         }
     }
 
-    public function uploadLinkAsAttachment($attachmentUrl)
+    public function uploadLinkAsAttachment(string $attachmentUrl, ?string $title = null): APIResponse
     {
         try {
             $this->requestMethod = APIConstants::REQUEST_METHOD_POST;
             $this->urlPath = $this->parentRecord->getModuleApiName() . '/' . $this->parentRecord->getEntityId() . '/' . $this->relatedList->getApiName();
 
-            $responseInstance = APIRequest::getInstance($this)->uploadLinkAsAttachment($attachmentUrl);
+            $responseInstance = APIRequest::getInstance($this)->uploadLinkAsAttachment($attachmentUrl, $title);
             $responseJson = $responseInstance->getResponseJSON();
-            $detailsJSON = isset($responseJson['data'][0]['details']) ? $responseJson['data'][0]['details'] : [];
+            $detailsJSON = $responseJson['data'][0]['details'] ?? [];
 
             $responseInstance->setData(ZCRMAttachment::getInstance($this->parentRecord, isset($detailsJSON['id']) ? ($detailsJSON['id']) : '0'));
 
@@ -273,7 +275,7 @@ class RelatedListAPIHandler extends APIHandler
         }
     }
 
-    public function downloadAttachment($attachmentId)
+    public function downloadAttachment(string $attachmentId): FileAPIResponse
     {
         try {
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
@@ -286,7 +288,7 @@ class RelatedListAPIHandler extends APIHandler
         }
     }
 
-    public function deleteAttachment($attachmentId)
+    public function deleteAttachment(string $attachmentId): APIResponse
     {
         try {
             $this->requestMethod = APIConstants::REQUEST_METHOD_DELETE;
