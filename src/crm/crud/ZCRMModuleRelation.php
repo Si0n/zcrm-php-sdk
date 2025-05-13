@@ -176,7 +176,7 @@ class ZCRMModuleRelation
      *
      * @return APIResponse instance of the APIResponse class containing the api response
      */
-    public function uploadAttachment($filePath)
+    public function uploadAttachment(string $filePath): APIResponse
     {
         return RelatedListAPIHandler::getInstance($this->parentRecord, $this)->uploadAttachment($filePath);
     }
@@ -188,9 +188,9 @@ class ZCRMModuleRelation
      *
      * @return APIResponse instance of the APIResponse class containing the api response
      */
-    public function uploadLinkAsAttachment($attachmentUrl)
+    public function uploadLinkAsAttachment(string $attachmentUrl, ?string $title = null): APIResponse
     {
-        return RelatedListAPIHandler::getInstance($this->parentRecord, $this)->uploadLinkAsAttachment($attachmentUrl);
+        return RelatedListAPIHandler::getInstance($this->parentRecord, $this)->uploadLinkAsAttachment($attachmentUrl, $title);
     }
 
     /**
@@ -200,7 +200,7 @@ class ZCRMModuleRelation
      *
      * @return FileAPIResponse instance of the FileAPIResponse class containing the file api response
      */
-    public function downloadAttachment($attachmentId)
+    public function downloadAttachment(string $attachmentId): FileAPIResponse
     {
         return RelatedListAPIHandler::getInstance($this->parentRecord, $this)->downloadAttachment($attachmentId);
     }
@@ -212,7 +212,7 @@ class ZCRMModuleRelation
      *
      * @return APIResponse instance of the APIResponse class containing the api response
      */
-    public function deleteAttachment($attachmentId)
+    public function deleteAttachment(string $attachmentId): APIResponse
     {
         return RelatedListAPIHandler::getInstance($this->parentRecord, $this)->deleteAttachment($attachmentId);
     }
