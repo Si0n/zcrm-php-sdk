@@ -393,21 +393,21 @@ class TagAPIHandler extends APIHandler
     public function setTagProperties(ZCRMTag $tagInstance, array $tagDetails): void
     {
         foreach ($tagDetails as $key => $value) {
-            if ('id' == $key) {
+            if ('id' === $key) {
                 $tagInstance->setId($value);
-            } elseif ('name' == $key) {
+            } elseif ('name' === $key) {
                 $tagInstance->setName($value);
-            } elseif ('created_by' == $key) {
+            } elseif ('created_by' === $key && is_array($value)) {
                 $createdBy = ZCRMUser::getInstance($value['id'], $value['name']);
                 $tagInstance->setCreatedBy($createdBy);
-            } elseif ('modified_by' == $key) {
+            } elseif ('modified_by' === $key && is_array($value)) {
                 $modifiedBy = ZCRMUser::getInstance($value['id'], $value['name']);
                 $tagInstance->setModifiedBy($modifiedBy);
-            } elseif ('created_time' == $key) {
+            } elseif ('created_time' === $key) {
                 $tagInstance->setCreatedTime('' . $value);
-            } elseif ('modified_time' == $key) {
+            } elseif ('modified_time' === $key) {
                 $tagInstance->setModifiedTime('' . $value);
-            } elseif ('count' == $key) {
+            } elseif ('count' === $key) {
                 $tagInstance->setCount($value);
             }
         }
