@@ -930,7 +930,7 @@ class ZCRMModule
      *
      * @return APIResponse instance of the APIResponse class which holds the API response
      */
-    public function getLayoutDetails($layoutId)
+    public function getLayoutDetails(string $layoutId): APIResponse
     {
         return ModuleAPIHandler::getInstance($this)->getLayoutDetails($layoutId);
     }

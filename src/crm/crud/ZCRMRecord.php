@@ -76,7 +76,7 @@ class ZCRMRecord
     /**
      * layout of the record.
      */
-    private ?string $layout = null;
+    private ?ZCRMLayout $layout = null;
 
     /**
      * the list of tax.
@@ -907,22 +907,12 @@ class ZCRMRecord
         array_push($this->priceDetails, $priceDetail);
     }
 
-    /**
-     * Method to get the layout of the record.
-     *
-     * @return ZCRMLayout Layout
-     */
-    public function getLayout()
+    public function getLayout(): ?ZCRMLayout
     {
         return $this->layout;
     }
 
-    /**
-     * Method to set the layout.
-     *
-     * @param ZCRMLayout $layout Layout
-     */
-    public function setLayout($layout)
+    public function setLayout(?ZCRMLayout $layout): void
     {
         $this->layout = $layout;
     }
