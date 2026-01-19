@@ -9,6 +9,7 @@ use zcrmsdk\crm\api\handler\TagAPIHandler;
 use zcrmsdk\crm\api\response\APIResponse;
 use zcrmsdk\crm\api\response\BulkAPIResponse;
 use zcrmsdk\crm\exception\ZCRMException;
+use zcrmsdk\crm\setup\users\ZCRMProfile;
 use zcrmsdk\crm\setup\users\ZCRMUser;
 
 class ZCRMModule
@@ -94,11 +95,6 @@ class ZCRMModule
     private ?int $businessCardFieldLimit = null;
 
     /**
-     * module api name.
-     */
-    private ?string $apiName = null;
-
-    /**
      * api names of the fields supported.
      */
     private array $businessCardFields = [];
@@ -141,82 +137,57 @@ class ZCRMModule
 
     /**
      * related list properties of the module.
-     *
-     * @var ZCRMRelatedListProperties
      */
-    private $relatedListProperties;
+    private ?ZCRMRelatedListProperties $relatedListProperties = null;
 
     /**
      * poroperties of the module.
-     *
-     * @var array
      */
-    private $properties;
+    private ?array $properties = [];
 
     /**
      * records per page.
-     *
-     * @var int
      */
-    private $perPage;
+    private ?int $perPage = null;
 
     /**
      * search layout fields.
-     *
-     * @var array
      */
-    private $searchLayoutFields;
+    private ?array $searchLayoutFields = [];
 
     /**
      * default territory name.
-     *
-     * @var string
      */
-    private $defaultTerritoryName;
+    private ?string $defaultTerritoryName = null;
 
     /**
      * default territory id.
-     *
-     * @var string
      */
-    private $defaultTerritoryId;
+    private ?string $defaultTerritoryId = null;
 
     /**
      * default custom view id.
-     *
-     * @var string
      */
-    private $defaultCustomViewId;
+    private ?string $defaultCustomViewId = null;
 
     /**
      * custom view of the module.
-     *
-     * @var ZCRMCustomView
      */
-    private $customView;
+    private ?ZCRMCustomView $customView = null;
 
     /**
      * global search supported.
-     *
-     * @var bool
      */
-    private $globalSearchSupported;
+    private ?bool $globalSearchSupported = null;
 
     /**
      * sequence number of the module.
-     *
-     * @var int
      */
-    private $sequenceNumber;
+    private ?int $sequenceNumber = null;
 
-    /**
-     * constructor to set the module api name.
-     *
-     * @param string $apiName
-     */
-    private function __construct($apiName)
-    {
-        $this->apiName = $apiName;
+    private function __construct(
+        protected string $apiName
+    ) {
     }
 
     /**
@@ -226,7 +197,7 @@ class ZCRMModule
      *
      * @return ZCRMModule instance of ZCRMModule class
      */
-    public static function getInstance($apiName)
+    public static function getInstance(string $apiName): ZCRMModule
     {
         return new ZCRMModule($apiName);
     }
@@ -234,9 +205,9 @@ class ZCRMModule
     /**
      * method to check whether the module is creatable.
      *
-     * @return bool true if module is creatable otherwise false
+     * @return bool|null true if module is creatable otherwise false
      */
-    public function isCreatable()
+    public function isCreatable(): ?bool
     {
         return $this->creatable;
     }
@@ -246,7 +217,7 @@ class ZCRMModule
      *
      * @param bool $creatable true to set the module creatable otherwise false
      */
-    public function setCreatable($creatable)
+    public function setCreatable(?bool $creatable): void
     {
         $this->creatable = $creatable;
     }
@@ -256,7 +227,7 @@ class ZCRMModule
      *
      * @return bool true if module is convertable otherwise false
      */
-    public function isConvertable()
+    public function isConvertable(): ?bool
     {
         return $this->convertable;
     }
@@ -266,7 +237,7 @@ class ZCRMModule
      *
      * @param bool $convertable true to set the module convertable otherwise false
      */
-    public function setConvertable($convertable)
+    public function setConvertable(?bool $convertable): void
     {
         $this->convertable = $convertable;
     }
@@ -276,7 +247,7 @@ class ZCRMModule
      *
      * @return bool true if module is Editable otherwise false
      */
-    public function isEditable()
+    public function isEditable(): ?bool
     {
         return $this->editable;
     }
@@ -286,7 +257,7 @@ class ZCRMModule
      *
      * @param bool $editable editable true to set the module Editable otherwise false
      */
-    public function setEditable($editable)
+    public function setEditable(?bool $editable): void
     {
         $this->editable = $editable;
     }
@@ -296,7 +267,7 @@ class ZCRMModule
      *
      * @return bool true if module is Deletable otherwise false
      */
-    public function isDeletable()
+    public function isDeletable(): ?bool
     {
         return $this->deletable;
     }
@@ -306,7 +277,7 @@ class ZCRMModule
      *
      * @param bool $deletable true to set the module deletable otherwise false
      */
-    public function setDeletable($deletable)
+    public function setDeletable(?bool $deletable): void
     {
         $this->deletable = $deletable;
     }
@@ -314,9 +285,9 @@ class ZCRMModule
     /**
      * method to get the weblink of the webtab.
      *
-     * @return string the weblink of the webtab
+     * @return string|null the weblink of the webtab
      */
-    public function getWebLink()
+    public function getWebLink(): ?string
     {
         return $this->webLink;
     }
@@ -324,9 +295,9 @@ class ZCRMModule
     /**
      * ethod to get the weblink of the webtab.
      *
-     * @param string $webLink the weblink of the webtab
+     * @param string|null $webLink the weblink of the webtab
      */
-    public function setWebLink($webLink)
+    public function setWebLink(?string $webLink): void
     {
         $this->webLink = $webLink;
     }
@@ -336,7 +307,7 @@ class ZCRMModule
      *
      * @return string singular label singular label of the module
      */
-    public function getSingularLabel()
+    public function getSingularLabel(): ?string
     {
         return $this->singularLabel;
     }
@@ -346,7 +317,7 @@ class ZCRMModule
      *
      * @param string $singularLabel singular label of the module
      */
-    public function setSingularLabel($singularLabel)
+    public function setSingularLabel(?string $singularLabel): void
     {
         $this->singularLabel = $singularLabel;
     }
@@ -356,7 +327,7 @@ class ZCRMModule
      *
      * @return string PluralLabel Plural Label of the module
      */
-    public function getPluralLabel()
+    public function getPluralLabel(): ?string
     {
         return $this->pluralLabel;
     }
@@ -366,7 +337,7 @@ class ZCRMModule
      *
      * @param string $pluralLabel Plural Label of the module
      */
-    public function setPluralLabel($pluralLabel)
+    public function setPluralLabel(?string $pluralLabel): void
     {
         $this->pluralLabel = $pluralLabel;
     }
@@ -374,9 +345,9 @@ class ZCRMModule
     /**
      * Method to get the user who modified the module.
      *
-     * @return ZCRMUser user who modified the module
+     * @return ZCRMUser|null user who modified the module
      */
-    public function getModifiedBy()
+    public function getModifiedBy(): ?ZCRMUser
     {
         return $this->modifiedBy;
     }
@@ -386,7 +357,7 @@ class ZCRMModule
      *
      * @param ZCRMUser $modifiedBy user who modified the module
      */
-    public function setModifiedBy($modifiedBy)
+    public function setModifiedBy(?ZCRMUser $modifiedBy): void
     {
         $this->modifiedBy = $modifiedBy;
     }
@@ -394,9 +365,9 @@ class ZCRMModule
     /**
      * Method to get the modification time of the module.
      *
-     * @return string the modification time in ISO 8601 format
+     * @return string|null the modification time in ISO 8601 format
      */
-    public function getModifiedTime()
+    public function getModifiedTime(): ?string
     {
         return $this->modifiedTime;
     }
@@ -404,9 +375,9 @@ class ZCRMModule
     /**
      * Method to set the modification time of the module.
      *
-     * @param string $modifiedTime modification time in ISO 8601 format
+     * @param string|null $modifiedTime modification time in ISO 8601 format
      */
-    public function setModifiedTime($modifiedTime)
+    public function setModifiedTime(?string $modifiedTime): void
     {
         $this->modifiedTime = $modifiedTime;
     }
@@ -416,7 +387,7 @@ class ZCRMModule
      *
      * @return bool true if the module is Viewable otherwise false
      */
-    public function isViewable()
+    public function isViewable(): ?bool
     {
         return $this->viewable;
     }
@@ -426,7 +397,7 @@ class ZCRMModule
      *
      * @param bool $viewable true to set the module as viewable otherwise false
      */
-    public function setViewable($viewable)
+    public function setViewable(?bool $viewable): void
     {
         $this->viewable = $viewable;
     }
@@ -436,7 +407,7 @@ class ZCRMModule
      *
      * @return bool true if the module is ApiSupported otherwise false
      */
-    public function isApiSupported()
+    public function isApiSupported(): ?bool
     {
         return $this->apiSupported;
     }
@@ -446,7 +417,7 @@ class ZCRMModule
      *
      * @param bool $apiSupported true to set the module as apiSupported otherwise false
      */
-    public function setApiSupported($apiSupported)
+    public function setApiSupported(?bool $apiSupported): void
     {
         $this->apiSupported = $apiSupported;
     }
@@ -454,9 +425,9 @@ class ZCRMModule
     /**
      * method to check whether the module is CustomModule.
      *
-     * @return bool true if the module is CustomModule otherwise false
+     * @return bool|null true if the module is CustomModule otherwise false
      */
-    public function isCustomModule()
+    public function isCustomModule(): ?bool
     {
         return $this->customModule;
     }
@@ -466,7 +437,7 @@ class ZCRMModule
      *
      * @param bool $customModule true to set the module as customModule otherwise false
      */
-    public function setCustomModule($customModule)
+    public function setCustomModule(?bool $customModule): void
     {
         $this->customModule = $customModule;
     }
@@ -474,9 +445,9 @@ class ZCRMModule
     /**
      * method to check whether the module is ScoringSupported.
      *
-     * @return bool true if the module is ScoringSupported otherwise false
+     * @return bool|null true if the module is ScoringSupported otherwise false
      */
-    public function isScoringSupported()
+    public function isScoringSupported(): ?bool
     {
         return $this->scoringSupported;
     }
@@ -486,7 +457,7 @@ class ZCRMModule
      *
      * @param bool $scoringSupported true to set the module as scoringSupported otherwise false
      */
-    public function setScoringSupported($scoringSupported)
+    public function setScoringSupported(?bool $scoringSupported): void
     {
         $this->scoringSupported = $scoringSupported;
     }
@@ -496,7 +467,7 @@ class ZCRMModule
      *
      * @return string the module id
      */
-    public function getId()
+    public function getId(): ?string
     {
         return $this->id;
     }
@@ -506,7 +477,7 @@ class ZCRMModule
      *
      * @param string $id the module id
      */
-    public function setId($id)
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
@@ -516,7 +487,7 @@ class ZCRMModule
      *
      * @return string the module name
      */
-    public function getModuleName()
+    public function getModuleName(): ?string
     {
         return $this->moduleName;
     }
@@ -526,7 +497,7 @@ class ZCRMModule
      *
      * @param string $moduleName the module name
      */
-    public function setModuleName($moduleName)
+    public function setModuleName(?string $moduleName): void
     {
         $this->moduleName = $moduleName;
     }
@@ -534,9 +505,9 @@ class ZCRMModule
     /**
      * method to get the business card field limit.
      *
-     * @return int business card field limit
+     * @return int|null business card field limit
      */
-    public function getBusinessCardFieldLimit()
+    public function getBusinessCardFieldLimit(): ?int
     {
         return $this->businessCardFieldLimit;
     }
@@ -544,9 +515,9 @@ class ZCRMModule
     /**
      * method to set the business card field limit.
      *
-     * @param int $businessCardFieldLimit business card field limit
+     * @param int|null $businessCardFieldLimit business card field limit
      */
-    public function setBusinessCardFieldLimit($businessCardFieldLimit)
+    public function setBusinessCardFieldLimit(?int $businessCardFieldLimit): void
     {
         $this->businessCardFieldLimit = $businessCardFieldLimit;
     }
@@ -556,7 +527,7 @@ class ZCRMModule
      *
      * @param array $businessCardFields the business card fields
      */
-    public function setBusinessCardFields($businessCardFields)
+    public function setBusinessCardFields(array $businessCardFields): void
     {
         $this->businessCardFields = $businessCardFields;
     }
@@ -566,7 +537,7 @@ class ZCRMModule
      *
      * @return array the business card fields
      */
-    public function getBusinessCardFields()
+    public function getBusinessCardFields(): array
     {
         return $this->businessCardFields;
     }
@@ -576,7 +547,7 @@ class ZCRMModule
      *
      * @param string $apiName the module api name
      */
-    public function setAPIName($apiName)
+    public function setAPIName(string $apiName) : void
     {
         $this->apiName = $apiName;
     }
@@ -586,7 +557,7 @@ class ZCRMModule
      *
      * @return string the module api name
      */
-    public function getAPIName()
+    public function getAPIName(): string
     {
         return $this->apiName;
     }
@@ -596,7 +567,7 @@ class ZCRMModule
      *
      * @param array $profiles array of instances of ZCRMProfile instances
      */
-    public function setAllProfiles($profiles)
+    public function setAllProfiles(array $profiles): void
     {
         $this->profiles = $profiles;
     }
@@ -604,9 +575,9 @@ class ZCRMModule
     /**
      * method to set the profiles of modules.
      *
-     * @return array array of instances of ZCRMProfile instances
+     * @return array<ZCRMProfile> array of instances of ZCRMProfile instances
      */
-    public function getAllProfiles()
+    public function getAllProfiles(): array
     {
         return $this->profiles;
     }
@@ -614,9 +585,9 @@ class ZCRMModule
     /**
      * method to set the display field of the module.
      *
-     * @param string $name field api name
+     * @param string|null $name field api name
      */
-    public function setDisplayFieldName($name)
+    public function setDisplayFieldName(?string $name): void
     {
         $this->displayFieldName = $name;
     }
@@ -626,7 +597,7 @@ class ZCRMModule
      *
      * @return string field api name
      */
-    public function getDisplayFieldName()
+    public function getDisplayFieldName(): ?string
     {
         return $this->displayFieldName;
     }
@@ -634,9 +605,9 @@ class ZCRMModule
     /**
      * method to set the id of the display field the module.
      *
-     * @param string $id id of the the display field
+     * @param string|null $id id of the the display field
      */
-    public function setDisplayFieldId($id)
+    public function setDisplayFieldId(?string $id): void
     {
         $this->displayFieldId = $id;
     }
@@ -684,9 +655,9 @@ class ZCRMModule
     /**
      * metho to get the module layout.
      *
-     * @return ZCRMLayout instance of ZCRMLayout
+     * @return ZCRMLayout[]
      */
-    public function getLayouts()
+    public function getLayouts(): array
     {
         return $this->layouts;
     }
@@ -696,7 +667,7 @@ class ZCRMModule
      *
      * @param array $fields array of ZCRMField instances
      */
-    public function setFields($fields)
+    public function setFields(array $fields): void
     {
         $this->fields = $fields;
     }
@@ -706,7 +677,7 @@ class ZCRMModule
      *
      * @return array array of ZCRMField instances
      */
-    public function getFields()
+    public function getFields(): array
     {
         return $this->fields;
     }
@@ -716,7 +687,7 @@ class ZCRMModule
      *
      * @param ZCRMRelatedListProperties $relatedListProp instance of ZCRMRelatedListProperties class
      */
-    public function setRelatedListProperties($relatedListProp)
+    public function setRelatedListProperties(?ZCRMRelatedListProperties $relatedListProp): void
     {
         $this->relatedListProperties = $relatedListProp;
     }
@@ -726,7 +697,7 @@ class ZCRMModule
      *
      * @return ZCRMRelatedListProperties instance of ZCRMRelatedListProperties class
      */
-    public function getRelatedListProperties()
+    public function getRelatedListProperties(): ?ZCRMRelatedListProperties
     {
         return $this->relatedListProperties;
     }
@@ -736,7 +707,7 @@ class ZCRMModule
      *
      * @return array Properties of the module
      */
-    public function getProperties()
+    public function getProperties(): ?array
     {
         return $this->properties;
     }
@@ -746,7 +717,7 @@ class ZCRMModule
      *
      * @param array $properties Properties of the module
      */
-    public function setProperties($properties)
+    public function setProperties(?array $properties): void
     {
         $this->properties = $properties;
     }
@@ -756,7 +727,7 @@ class ZCRMModule
      *
      * @return int number of records shown in module list view
      */
-    public function getPerPage()
+    public function getPerPage(): ?int
     {
         return $this->perPage;
     }
@@ -766,7 +737,7 @@ class ZCRMModule
      *
      * @param int $perPage the number of records to be shown in module list view
      */
-    public function setPerPage($perPage)
+    public function setPerPage(int $perPage): void
     {
         $this->perPage = $perPage;
     }
@@ -776,7 +747,7 @@ class ZCRMModule
      *
      * @return array the module search layout fields
      */
-    public function getSearchLayoutFields()
+    public function getSearchLayoutFields(): ?array
     {
         return $this->searchLayoutFields;
     }
@@ -784,9 +755,9 @@ class ZCRMModule
     /**
      * method to Set the module search layout fields.
      *
-     * @param array $searchLayoutFields the module search layout fields
+     * @param array|null $searchLayoutFields the module search layout fields
      */
-    public function setSearchLayoutFields($searchLayoutFields)
+    public function setSearchLayoutFields(?array $searchLayoutFields): void
     {
         $this->searchLayoutFields = $searchLayoutFields;
     }
@@ -796,7 +767,7 @@ class ZCRMModule
      *
      * @return string module's default Territory Name
      */
-    public function getDefaultTerritoryName()
+    public function getDefaultTerritoryName(): ?string
     {
         return $this->defaultTerritoryName;
     }
@@ -804,9 +775,9 @@ class ZCRMModule
     /**
      * method to Set the module's default Territory Name.
      *
-     * @param string $defaultTerritoryName the module's default Territory Name
+     * @param string|null $defaultTerritoryName the module's default Territory Name
      */
-    public function setDefaultTerritoryName($defaultTerritoryName)
+    public function setDefaultTerritoryName(?string $defaultTerritoryName): void
     {
         $this->defaultTerritoryName = $defaultTerritoryName;
     }
@@ -816,7 +787,7 @@ class ZCRMModule
      *
      * @return string module's default Territory Id
      */
-    public function getDefaultTerritoryId()
+    public function getDefaultTerritoryId(): ?string
     {
         return $this->defaultTerritoryId;
     }
@@ -824,9 +795,9 @@ class ZCRMModule
     /**
      * method to Set the module's default Territory Id.
      *
-     * @param string $defaultTerritoryId module's default Territory Id
+     * @param string|null $defaultTerritoryId module's default Territory Id
      */
-    public function setDefaultTerritoryId($defaultTerritoryId)
+    public function setDefaultTerritoryId(?string $defaultTerritoryId): void
     {
         $this->defaultTerritoryId = $defaultTerritoryId;
     }
@@ -836,7 +807,7 @@ class ZCRMModule
      *
      * @param ZCRMCustomView $customView instance of ZCRMCustomView
      */
-    public function setDefaultCustomView($customView)
+    public function setDefaultCustomView(?ZCRMCustomView $customView): void
     {
         $this->customView = $customView;
     }
@@ -846,7 +817,7 @@ class ZCRMModule
      *
      * @return ZCRMCustomView instance of ZCRMCustomView
      */
-    public function getDefaultCustomView()
+    public function getDefaultCustomView(): ?ZCRMCustomView
     {
         return $this->customView;
     }
@@ -856,7 +827,7 @@ class ZCRMModule
      *
      * @return bool true if the module is global search supported otherwise false
      */
-    public function isGlobalSearchSupported()
+    public function isGlobalSearchSupported(): ?bool
     {
         return $this->globalSearchSupported;
     }
@@ -866,7 +837,7 @@ class ZCRMModule
      *
      * @param bool $globalSearchSupported true to set the module as global search supported otherwise false
      */
-    public function setGlobalSearchSupported($globalSearchSupported)
+    public function setGlobalSearchSupported(?bool $globalSearchSupported): void
     {
         $this->globalSearchSupported = $globalSearchSupported;
     }
@@ -876,7 +847,7 @@ class ZCRMModule
      *
      * @return int the sequence number of the module
      */
-    public function getSequenceNumber()
+    public function getSequenceNumber(): ?int
     {
         return $this->sequenceNumber;
     }
@@ -886,7 +857,7 @@ class ZCRMModule
      *
      * @param int $sequenceNumber the sequence number of the module
      */
-    public function setSequenceNumber($sequenceNumber)
+    public function setSequenceNumber(?int $sequenceNumber): void
     {
         $this->sequenceNumber = $sequenceNumber;
     }
@@ -897,8 +868,10 @@ class ZCRMModule
      * @param string $fieldId id of the field
      *
      * @return APIResponse instance of the APIResponse class which holds the API response
+     *
+     * @throws ZCRMException
      */
-    public function getFieldDetails($fieldId)
+    public function getFieldDetails(string $fieldId): APIResponse
     {
         return ModuleAPIHandler::getInstance($this)->getFieldDetails($fieldId);
     }
@@ -907,8 +880,10 @@ class ZCRMModule
      * method to get the list of fields of the module.
      *
      * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
+     *
+     * @throws ZCRMException
      */
-    public function getAllFields()
+    public function getAllFields(): BulkAPIResponse
     {
         return ModuleAPIHandler::getInstance($this)->getAllFields();
     }
@@ -917,8 +892,10 @@ class ZCRMModule
      * method to get all the layouts of the module.
      *
      * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
+     *
+     * @throws ZCRMException
      */
-    public function getAllLayouts()
+    public function getAllLayouts(): BulkAPIResponse
     {
         return ModuleAPIHandler::getInstance($this)->getAllLayouts();
     }
@@ -929,6 +906,8 @@ class ZCRMModule
      * @param string $layoutId layout id
      *
      * @return APIResponse instance of the APIResponse class which holds the API response
+     *
+     * @throws ZCRMException
      */
     public function getLayoutDetails(string $layoutId): APIResponse
     {
@@ -941,8 +920,10 @@ class ZCRMModule
      * @param array $param_map key-value pairs containing parameters
      *
      * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
+     *
+     * @throws ZCRMException
      */
-    public function getAllCustomViews($param_map = [])
+    public function getAllCustomViews(array $param_map = []): BulkAPIResponse
     {
         return ModuleAPIHandler::getInstance($this)->getAllCustomViews($param_map);
     }
@@ -953,8 +934,10 @@ class ZCRMModule
      * @param string $customViewId id of the custom view
      *
      * @return APIResponse instance of the APIResponse class which holds the API response
+     *
+     * @throws ZCRMException
      */
-    public function getCustomView($customViewId)
+    public function getCustomView(string $customViewId): APIResponse
     {
         return ModuleAPIHandler::getInstance($this)->getCustomView($customViewId);
     }
@@ -963,8 +946,10 @@ class ZCRMModule
      * Method to update module settings.
      *
      * @return APIResponse instance of the APIResponse class which holds the API response
+     *
+     * @throws ZCRMException
      */
-    public function updateModuleSettings()
+    public function updateModuleSettings(): APIResponse
     {
         return ModuleAPIHandler::getInstance($this)->updateModuleSettings();
     }
@@ -975,8 +960,10 @@ class ZCRMModule
      * @param ZCRMCustomView $customViewInstance instance of ZCRMCustomView
      *
      * @return APIResponse instance of the APIResponse class which holds the API response
+     *
+     * @throws ZCRMException
      */
-    public function updateCustomView($customViewInstance)
+    public function updateCustomView(ZCRMCustomView $customViewInstance): APIResponse
     {
         return ModuleAPIHandler::getInstance($this)->updateCustomView($customViewInstance);
     }
@@ -985,8 +972,10 @@ class ZCRMModule
      * Method to get related lists of a module.
      *
      * @return BulkAPIResponse instance of the BulkAPIResponse class containing the Bulk api Response
+     *
+     * @throws ZCRMException
      */
-    public function getAllRelatedLists()
+    public function getAllRelatedLists(): BulkAPIResponse
     {
         return ModuleAPIHandler::getInstance($this)->getAllRelatedLists();
     }
@@ -997,8 +986,10 @@ class ZCRMModule
      * @param string $relatedListId related list's id
      *
      * @return APIResponse instance of the APIResponse class containing the api Response
+     *
+     * @throws ZCRMException
      */
-    public function getRelatedListDetails($relatedListId)
+    public function getRelatedListDetails(string $relatedListId): APIResponse
     {
         return ModuleAPIHandler::getInstance($this)->getRelatedListDetails($relatedListId);
     }
@@ -1006,9 +997,9 @@ class ZCRMModule
     /**
      * method to get the default custom id.
      *
-     * @return string default custom id
+     * @return string|null default custom id
      */
-    public function getDefaultCustomViewId()
+    public function getDefaultCustomViewId(): ?string
     {
         return $this->defaultCustomViewId;
     }
@@ -1016,9 +1007,9 @@ class ZCRMModule
     /**
      * method to set the default custom id.
      *
-     * @param string $defaultCustomViewId custom view id
+     * @param string|null $defaultCustomViewId custom view id
      */
-    public function setDefaultCustomViewId($defaultCustomViewId)
+    public function setDefaultCustomViewId(?string $defaultCustomViewId): void
     {
         $this->defaultCustomViewId = $defaultCustomViewId;
     }

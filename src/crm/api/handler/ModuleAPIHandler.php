@@ -4,6 +4,7 @@ namespace zcrmsdk\crm\api\handler;
 
 use zcrmsdk\crm\api\APIRequest;
 use zcrmsdk\crm\api\response\APIResponse;
+use zcrmsdk\crm\api\response\BulkAPIResponse;
 use zcrmsdk\crm\crud\ZCRMCustomView;
 use zcrmsdk\crm\crud\ZCRMField;
 use zcrmsdk\crm\crud\ZCRMLayout;
@@ -22,19 +23,22 @@ use zcrmsdk\crm\utility\APIConstants;
 
 class ModuleAPIHandler extends APIHandler
 {
-    private $module;
-
-    private function __construct($module)
-    {
-        $this->module = $module;
+    private function __construct(
+        protected ZCRMModule $module
+    ) {
     }
 
-    public static function getInstance(ZCRMModule $module)
+    public static function getInstance(ZCRMModule $module): ModuleAPIHandler
     {
         return new ModuleAPIHandler($module);
     }
 
-    public function getModuleDetails()
+    /**
+     * Method to get the Module details and set in the module instance.
+     *
+     * @throws ZCRMException
+     */
+    public function getModuleDetails(): void
     {
         $this->module = MetaDataAPIHandler::getInstance()->getModule($this->module->getAPIName())->getData();
     }
@@ -42,8 +46,10 @@ class ModuleAPIHandler extends APIHandler
     /**
      * Method to get the specified Field details
      * Returns api response with ZCRMField instance.
+     *
+     * @throws ZCRMException
      */
-    public function getFieldDetails($fieldId)
+    public function getFieldDetails(string $fieldId): APIResponse
     {
         try {
             $this->urlPath = 'settings/fields/' . $fieldId;
@@ -58,6 +64,7 @@ class ModuleAPIHandler extends APIHandler
             return $responseInstance;
         } catch (ZCRMException $exception) {
             APIExceptionHandler::logException($exception);
+
             throw $exception;
         }
     }
@@ -65,8 +72,10 @@ class ModuleAPIHandler extends APIHandler
     /**
      * Method to get all the Fields of a module
      * Returns api response with array of ZCRMField instances.
+     *
+     * @throws ZCRMException
      */
-    public function getAllFields()
+    public function getAllFields(): BulkAPIResponse
     {
         try {
             $this->urlPath = 'settings/fields';
@@ -78,7 +87,7 @@ class ModuleAPIHandler extends APIHandler
             $fields = $responseJSON['fields'];
             $fieldInstancesArray = [];
             foreach ($fields as $fieldObj) {
-                array_push($fieldInstancesArray, self::getZCRMField($fieldObj));
+                $fieldInstancesArray[] = self::getZCRMField($fieldObj);
             }
             $responseInstance->setData($fieldInstancesArray);
         } catch (ZCRMException $exception) {
@@ -92,8 +101,10 @@ class ModuleAPIHandler extends APIHandler
     /**
      * Method to get all the layouts of a module
      * Returns api response with array of ZCRMLayout instances.
+     *
+     * @throws ZCRMException
      */
-    public function getAllLayouts()
+    public function getAllLayouts(): BulkAPIResponse
     {
         try {
             $this->urlPath = 'settings/layouts';
@@ -105,13 +116,14 @@ class ModuleAPIHandler extends APIHandler
             $allLayouts = $responseJSON['layouts'];
             $layoutInstancesArray = [];
             foreach ($allLayouts as $layoutObj) {
-                array_push($layoutInstancesArray, self::getZCRMLayout($layoutObj));
+                $layoutInstancesArray[] = self::getZCRMLayout($layoutObj);
             }
             $responseInstance->setData($layoutInstancesArray);
 
             return $responseInstance;
         } catch (ZCRMException $exception) {
             APIExceptionHandler::logException($exception);
+
             throw $exception;
         }
     }
@@ -120,8 +132,10 @@ class ModuleAPIHandler extends APIHandler
      * Method to get the specified layout
      * Input:: layout id
      * Returns api response with ZCRMLayout instance.
+     *
+     * @throws ZCRMException
      */
-    public function getLayoutDetails($layoutId)
+    public function getLayoutDetails(string $layoutId): APIResponse
     {
         try {
             $this->urlPath = 'settings/layouts/' . $layoutId;
@@ -136,6 +150,7 @@ class ModuleAPIHandler extends APIHandler
             return $responseInstance;
         } catch (ZCRMException $exception) {
             APIExceptionHandler::logException($exception);
+
             throw $exception;
         }
     }
@@ -144,8 +159,10 @@ class ModuleAPIHandler extends APIHandler
      * Method to get the specified custom view details
      * Input:: custom view id
      * Returns api response with ZCRMCustomView instance.
+     *
+     * @throws ZCRMException
      */
-    public function getCustomView($customViewId)
+    public function getCustomView(string $customViewId): APIResponse
     {
         try {
             $this->urlPath = 'settings/custom_views/' . $customViewId;
@@ -160,6 +177,7 @@ class ModuleAPIHandler extends APIHandler
             return $responseInstance;
         } catch (ZCRMException $exception) {
             APIExceptionHandler::logException($exception);
+
             throw $exception;
         }
     }
@@ -167,16 +185,19 @@ class ModuleAPIHandler extends APIHandler
     /**
      * Method to get all the custom views of a module
      * Returns api response with array of ZCRMCustomView instances.
+     *
+     * @throws ZCRMException
      */
-    public function getAllCustomViews($param_map)
+    public function getAllCustomViews(array $param_map): BulkAPIResponse
     {
         try {
             $this->urlPath = 'settings/custom_views';
             $this->requestMethod = APIConstants::REQUEST_METHOD_GET;
             foreach ($param_map as $key => $value) {
-                if (null != $value) {
-                    $this->addParam($key, $value);
+                if (null === $value) {
+                    continue;
                 }
+                $this->addParam($key, $value);
             }
             $this->addHeader('Content-Type', 'application/json');
             $this->addParam('module', $this->module->getAPIName());
@@ -186,7 +207,7 @@ class ModuleAPIHandler extends APIHandler
             $categories = $responseJSON['info']['translation'];
             $customViewInstances = [];
             foreach ($customViews as $customView) {
-                array_push($customViewInstances, MetaDataAPIHandler::getInstance()->getZCRMCustomView($this->module->getAPIName(), $customView, $categories));
+                $customViewInstances[] = MetaDataAPIHandler::getInstance()->getZCRMCustomView($this->module->getAPIName(), $customView, $categories);
             }
             $responseInstance->setData($customViewInstances);
 
@@ -201,8 +222,10 @@ class ModuleAPIHandler extends APIHandler
      * Method to update module settings
      * Input:: ZCRMModule instance with the properties to get updated
      * Returns api response.
+     *
+     * @throws ZCRMException
      */
-    public function updateModuleSettings()
+    public function updateModuleSettings(): APIResponse
     {
         try {
             $inputJSON = self::constructJSONForModuleUpdate($this->module);
@@ -211,11 +234,11 @@ class ModuleAPIHandler extends APIHandler
             $this->addHeader('Content-Type', 'application/json');
             $this->requestBody = $inputJSON;
             $this->apiKey = 'modules';
-            $responseInstance = APIRequest::getInstance($this)->getAPIResponse();
 
-            return $responseInstance;
+            return APIRequest::getInstance($this)->getAPIResponse();
         } catch (ZCRMException $exception) {
             APIExceptionHandler::logException($exception);
+
             throw $exception;
         }
     }
@@ -224,8 +247,10 @@ class ModuleAPIHandler extends APIHandler
      * Method to update custom view settings of a module
      * Input:: ZCRMCustomView instance with the properties to get updated
      * Returns api response.
+     *
+     * @throws ZCRMException
      */
-    public function updateCustomView($customViewInstance)
+    public function updateCustomView(ZCRMCustomView $customViewInstance): APIResponse
     {
         try {
             $inputJSON = self::constructJSONForCustomView($customViewInstance);
@@ -234,12 +259,11 @@ class ModuleAPIHandler extends APIHandler
             $this->addHeader('Content-Type', 'application/json');
             $this->addParam('module', $this->module->getAPIName());
             $this->requestBody = $inputJSON;
-            // $this->apiKey='custom_views';
-            $responseInstance = APIRequest::getInstance($this)->getAPIResponse();
 
-            return $responseInstance;
+            return APIRequest::getInstance($this)->getAPIResponse();
         } catch (ZCRMException $exception) {
             APIExceptionHandler::logException($exception);
+
             throw $exception;
         }
     }
@@ -247,8 +271,10 @@ class ModuleAPIHandler extends APIHandler
     /**
      * Method to get all the related lists of a module
      * Returns api response with array of related list instances.
+     *
+     * @throws ZCRMException
      */
-    public function getAllRelatedLists()
+    public function getAllRelatedLists(): BulkAPIResponse
     {
         try {
             $this->urlPath = 'settings/related_lists';
@@ -261,13 +287,14 @@ class ModuleAPIHandler extends APIHandler
             $relatedListInstanceArray = [];
             foreach ($relatedListArray as $relatedListObj) {
                 $moduleRelatedListIns = ZCRMModuleRelatedList::getInstance($relatedListObj['api_name']);
-                array_push($relatedListInstanceArray, $moduleRelatedListIns->setRelatedListProperties($relatedListObj));
+                $relatedListInstanceArray[] = $moduleRelatedListIns->setRelatedListProperties($relatedListObj);
             }
             $responseInstance->setData($relatedListInstanceArray);
 
             return $responseInstance;
         } catch (ZCRMException $exception) {
             APIExceptionHandler::logException($exception);
+
             throw $exception;
         }
     }
@@ -304,13 +331,13 @@ class ModuleAPIHandler extends APIHandler
     {
         $layoutArray = [];
         foreach ($allLayoutDetails as $eachLayout) {
-            $layoutArray[] = self::getZCRMLayout($eachLayout);
+            $layoutArray[] = $this->getZCRMLayout($eachLayout);
         }
 
         return $layoutArray;
     }
 
-    public function getAllSectionsOfLayout($allSectionDetails)
+    public function getAllSectionsOfLayout($allSectionDetails): array
     {
         $sectionsArray = [];
         foreach ($allSectionDetails as $eachSection) {
@@ -319,7 +346,7 @@ class ModuleAPIHandler extends APIHandler
             $sectionInstance->setDisplayName($eachSection['display_label']);
             $sectionInstance->setColumnCount($eachSection['column_count'] + 0);
             $sectionInstance->setSequenceNumber($eachSection['sequence_number'] + 0);
-            $sectionInstance->setFields(self::getSectionFields($eachSection['fields']));
+            $sectionInstance->setFields($this->getSectionFields($eachSection['fields']));
 
             $sectionsArray[] = $sectionInstance;
         }
@@ -331,7 +358,7 @@ class ModuleAPIHandler extends APIHandler
     {
         $fieldsArray = [];
         foreach ($allFieldArray as $eachField) {
-            $fieldsArray[] = self::getZCRMField($eachField);
+            $fieldsArray[] = $this->getZCRMField($eachField);
         }
 
         return $fieldsArray;
@@ -341,7 +368,7 @@ class ModuleAPIHandler extends APIHandler
     {
         $fieldsArray = [];
         foreach ($allFieldArray as $eachField) {
-            $fieldsArray[] = self::getZCRMField($eachField);
+            $fieldsArray[] = $this->getZCRMField($eachField);
         }
 
         return $fieldsArray;

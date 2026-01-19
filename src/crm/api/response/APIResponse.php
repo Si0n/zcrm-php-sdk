@@ -49,21 +49,23 @@ class APIResponse extends CommonAPIResponse
      */
     public function handleForFaultyResponses(): void
     {
-        $statusCode = self::getHttpStatusCode();
-        if (in_array($statusCode, APIExceptionHandler::getFaultyResponseCodes())) {
-            if (APIConstants::RESPONSECODE_NO_CONTENT == $statusCode) {
-                $exception = new ZCRMException(APIConstants::INVALID_DATA . '-' . APIConstants::INVALID_ID_MSG, $statusCode);
-                $exception->setExceptionCode('No Content');
+        $statusCode = $this->getHttpStatusCode();
+        if (!in_array($statusCode, APIExceptionHandler::getFaultyResponseCodes())) {
+            return;
+        }
 
-                throw $exception;
-            }
-            $responseJSON = $this->getResponseJSON();
-            $exception = new ZCRMException($responseJSON[APIConstants::MESSAGE] ?? 'unknown', $statusCode);
-            $exception->setExceptionCode($responseJSON[APIConstants::CODE]);
-            $exception->setExceptionDetails($responseJSON[APIConstants::DETAILS]);
+        if (APIConstants::RESPONSECODE_NO_CONTENT === $statusCode) {
+            $exception = new ZCRMException(APIConstants::INVALID_DATA . '-' . APIConstants::INVALID_ID_MSG, $statusCode);
+            $exception->setExceptionCode('No Content');
 
             throw $exception;
         }
+        $responseJSON = $this->getResponseJSON();
+        $exception = new ZCRMException($responseJSON[APIConstants::MESSAGE] ?? 'unknown', $statusCode);
+        $exception->setExceptionCode($responseJSON[APIConstants::CODE] ?? 'unknown');
+        $exception->setExceptionDetails($responseJSON[APIConstants::DETAILS] ?? []);
+
+        throw $exception;
     }
 
     /**

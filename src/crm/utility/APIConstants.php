@@ -4,188 +4,184 @@ namespace zcrmsdk\crm\utility;
 
 class APIConstants
 {
-    public const ERROR = 'error';
+    public const string ERROR = 'error';
 
-    public const REQUEST_METHOD_GET = 'GET';
+    public const string REQUEST_METHOD_GET = 'GET';
 
-    public const REQUEST_METHOD_POST = 'POST';
+    public const string REQUEST_METHOD_POST = 'POST';
 
-    public const REQUEST_METHOD_PUT = 'PUT';
+    public const string REQUEST_METHOD_PUT = 'PUT';
 
-    public const REQUEST_METHOD_DELETE = 'DELETE';
+    public const string REQUEST_METHOD_DELETE = 'DELETE';
 
-    public const OAUTH_HEADER_PREFIX = 'Zoho-oauthtoken ';
+    public const string OAUTH_HEADER_PREFIX = 'Zoho-oauthtoken ';
 
-    public const AUTHORIZATION = 'Authorization';
+    public const string AUTHORIZATION = 'Authorization';
 
-    public const API_NAME = 'api_name';
+    public const string API_NAME = 'api_name';
 
-    public const INVALID_ID_MSG = 'The given id seems to be invalid.';
+    public const string INVALID_ID_MSG = 'The given id seems to be invalid.';
 
-    public const API_MAX_RECORDS_MSG = 'Cannot process more than 100 records at a time.';
+    public const string API_MAX_RECORDS_MSG = 'Cannot process more than 100 records at a time.';
 
-    public const API_MAX_ORGTAX_MSG = 'Cannot process more than 100 org taxes at a time.';
+    public const string API_MAX_ORGTAX_MSG = 'Cannot process more than 100 org taxes at a time.';
 
-    public const API_MAX_NOTES_MSG = 'Cannot process more than 100 notes at a time.';
+    public const string API_MAX_NOTES_MSG = 'Cannot process more than 100 notes at a time.';
 
-    public const API_MAX_TAGS_MSG = 'Cannot process more than 50 tags at a time.';
+    public const string API_MAX_TAGS_MSG = 'Cannot process more than 50 tags at a time.';
 
-    public const API_MAX_RECORD_TAGS_MSG = 'Cannot process more than 10 tags at a time.';
+    public const string API_MAX_RECORD_TAGS_MSG = 'Cannot process more than 10 tags at a time.';
 
-    public const INVALID_DATA = 'INVALID_DATA';
+    public const string INVALID_DATA = 'INVALID_DATA';
 
-    public const CODE_SUCCESS = 'SUCCESS';
+    public const string CODE_SUCCESS = 'SUCCESS';
 
-    public const STATUS_SUCCESS = 'success';
+    public const string STATUS_SUCCESS = 'success';
 
-    public const STATUS_ERROR = 'error';
+    public const string STATUS_ERROR = 'error';
 
-    public const SDK_ERROR = 'ZCRM_INTERNAL_ERROR';
+    public const string SDK_ERROR = 'ZCRM_INTERNAL_ERROR';
 
-    public const LEADS = 'Leads';
+    public const string LEADS = 'Leads';
 
-    public const ACCOUNTS = 'Accounts';
+    public const string ACCOUNTS = 'Accounts';
 
-    public const CONTACTS = 'Contacts';
+    public const string CONTACTS = 'Contacts';
 
-    public const DEALS = 'Deals';
+    public const string DEALS = 'Deals';
 
-    public const QUOTES = 'Quotes';
+    public const string QUOTES = 'Quotes';
 
-    public const SALESORDERS = 'SalesOrders';
+    public const string SALESORDERS = 'SalesOrders';
 
-    public const INVOICES = 'Invoices';
+    public const string INVOICES = 'Invoices';
 
-    public const PURCHASEORDERS = 'PurchaseOrders';
+    public const string PURCHASEORDERS = 'PurchaseOrders';
 
-    public const PER_PAGE = 'per_page';
+    public const string PER_PAGE = 'per_page';
 
-    public const PAGE = 'page';
+    public const string PAGE = 'page';
 
-    public const COUNT = 'count';
+    public const string COUNT = 'count';
 
-    public const MORE_RECORDS = 'more_records';
+    public const string MORE_RECORDS = 'more_records';
 
-    public const ALLOWED_COUNT = 'allowed_count';
+    public const string ALLOWED_COUNT = 'allowed_count';
 
-    public const MESSAGE = 'message';
+    public const string MESSAGE = 'message';
 
-    public const CODE = 'code';
+    public const string CODE = 'code';
 
-    public const STATUS = 'status';
+    public const string STATUS = 'status';
 
-    public const DATA = 'data';
+    public const string DATA = 'data';
 
-    public const DETAILS = 'details';
+    public const string DETAILS = 'details';
 
-    public const MODULES = 'modules';
+    public const string MODULES = 'modules';
 
-    public const CUSTOM_VIEWS = 'custom_views';
+    public const string CUSTOM_VIEWS = 'custom_views';
 
-    public const TAGS = 'tags';
+    public const string TAGS = 'tags';
 
-    public const TAXES = 'taxes';
+    public const string TAXES = 'taxes';
 
-    public const INFO = 'info';
+    public const string INFO = 'info';
 
-    public const ORG = 'org';
+    public const string ORG = 'org';
 
-    public const READ = 'read';
+    public const string READ = 'read';
 
-    public const RESULT = 'result';
+    public const string RESULT = 'result';
 
-    public const UPLOAD = 'upload';
+    public const string UPLOAD = 'upload';
 
-    public const WRITE = 'write';
+    public const string WRITE = 'write';
 
-    public const CALLBACK = 'callback';
+    public const string CALLBACK = 'callback';
 
-    public const FILETYPE = 'file_type';
+    public const string FILETYPE = 'file_type';
 
-    public const QUERY = 'query';
+    public const string QUERY = 'query';
 
-    public const USERS = 'users';
+    public const string USERS = 'users';
 
-    public const HTTP_CODE = 'http_code';
+    public const string HTTP_CODE = 'http_code';
 
-    public const VARIABLES = 'variables';
-    public const RESPONSECODE_OK = 200;
+    public const string VARIABLES = 'variables';
+    public const int RESPONSECODE_OK = 200;
 
-    public const RESPONSECODE_CREATED = 201;
+    public const int RESPONSECODE_CREATED = 201;
 
-    public const RESPONSECODE_ACCEPTED = 202;
+    public const int RESPONSECODE_ACCEPTED = 202;
 
-    public const RESPONSECODE_NO_CONTENT = 204;
+    public const int RESPONSECODE_NO_CONTENT = 204;
 
-    public const RESPONSECODE_MOVED_PERMANENTLY = 301;
+    public const int RESPONSECODE_MOVED_PERMANENTLY = 301;
 
-    public const RESPONSECODE_MOVED_TEMPORARILY = 302;
+    public const int RESPONSECODE_MOVED_TEMPORARILY = 302;
 
-    public const RESPONSECODE_NOT_MODIFIED = 304;
+    public const int RESPONSECODE_NOT_MODIFIED = 304;
 
-    public const RESPONSECODE_BAD_REQUEST = 400;
+    public const int RESPONSECODE_BAD_REQUEST = 400;
 
-    public const RESPONSECODE_AUTHORIZATION_ERROR = 401;
+    public const int RESPONSECODE_AUTHORIZATION_ERROR = 401;
 
-    public const RESPONSECODE_FORBIDDEN = 403;
+    public const int RESPONSECODE_FORBIDDEN = 403;
 
-    public const RESPONSECODE_NOT_FOUND = 404;
+    public const int RESPONSECODE_NOT_FOUND = 404;
 
-    public const RESPONSECODE_METHOD_NOT_ALLOWED = 405;
+    public const int RESPONSECODE_METHOD_NOT_ALLOWED = 405;
 
-    public const RESPONSECODE_REQUEST_ENTITY_TOO_LARGE = 413;
+    public const int RESPONSECODE_REQUEST_ENTITY_TOO_LARGE = 413;
 
-    public const RESPONSECODE_UNSUPPORTED_MEDIA_TYPE = 415;
+    public const int RESPONSECODE_UNSUPPORTED_MEDIA_TYPE = 415;
 
-    public const RESPONSECODE_TOO_MANY_REQUEST = 429;
+    public const int RESPONSECODE_TOO_MANY_REQUEST = 429;
 
-    public const RESPONSECODE_INTERNAL_SERVER_ERROR = 500;
+    public const int RESPONSECODE_INTERNAL_SERVER_ERROR = 500;
 
-    public const DOWNLOAD_FILE_PATH = '../../../../../../resources';
+    public const string ACTION = 'action';
 
-    public const USER_EMAIL_ID = 'user_email_id';
+    public const string DUPLICATE_FIELD = 'duplicate_field';
 
-    public const ACTION = 'action';
+    public const string ACCESS_TOKEN_EXPIRY = 'X-ACCESSTOKEN-RESET';
 
-    public const DUPLICATE_FIELD = 'duplicate_field';
+    public const string CURR_WINDOW_API_LIMIT = 'X-RATELIMIT-LIMIT';
 
-    public const ACCESS_TOKEN_EXPIRY = 'X-ACCESSTOKEN-RESET';
+    public const string CURR_WINDOW_REMAINING_API_COUNT = 'X-RATELIMIT-REMAINING';
 
-    public const CURR_WINDOW_API_LIMIT = 'X-RATELIMIT-LIMIT';
+    public const string CURR_WINDOW_RESET = 'X-RATELIMIT-RESET';
 
-    public const CURR_WINDOW_REMAINING_API_COUNT = 'X-RATELIMIT-REMAINING';
+    public const string API_COUNT_REMAINING_FOR_THE_DAY = 'X-RATELIMIT-DAY-REMAINING';
 
-    public const CURR_WINDOW_RESET = 'X-RATELIMIT-RESET';
+    public const string API_LIMIT_FOR_THE_DAY = 'X-RATELIMIT-DAY-LIMIT';
 
-    public const API_COUNT_REMAINING_FOR_THE_DAY = 'X-RATELIMIT-DAY-REMAINING';
+    public const string APPLICATION_LOGFILE_PATH = 'applicationLogFilePath';
 
-    public const API_LIMIT_FOR_THE_DAY = 'X-RATELIMIT-DAY-LIMIT';
+    public const string APPLICATION_LOGGER_INSTANCE = 'applicationLoggerInstance';
 
-    public const APPLICATION_LOGFILE_PATH = 'applicationLogFilePath';
+    public const string APPLICATION_LOG_RESPONSE_BODY = 'applicationLogResponseBody';
 
-    public const APPLICATION_LOGGER_INSTANCE = 'applicationLoggerInstance';
+    public const string APPLICATION_LOG_RESPONSE_INFO = 'applicationLogResponseInfo';
 
-    public const APPLICATION_LOG_RESPONSE_BODY = 'applicationLogResponseBody';
+    public const string APPLICATION_LOG_RESPONSE_HEADERS = 'applicationLogResponseHeaders';
 
-    public const APPLICATION_LOG_RESPONSE_INFO = 'applicationLogResponseInfo';
+    public const string APPLICATION_LOGFILE_NAME = '/ZCRMClientLibrary.log';
 
-    public const APPLICATION_LOG_RESPONSE_HEADERS = 'applicationLogResponseHeaders';
+    public const string CURRENT_USER_EMAIL = 'currentUserEmail';
 
-    public const APPLICATION_LOGFILE_NAME = '/ZCRMClientLibrary.log';
+    public const string FILE_UPLOAD_URL = 'fileUploadUrl';
 
-    public const CURRENT_USER_EMAIL = 'currentUserEmail';
+    public const string SANDBOX = 'sandbox';
 
-    public const FILE_UPLOAD_URL = 'fileUploadUrl';
+    public const string API_BASE_URL = 'apiBaseUrl';
 
-    public const SANDBOX = 'sandbox';
+    public const string API_VERSION = 'apiVersion';
 
-    public const API_BASE_URL = 'apiBaseUrl';
+    public const string BULK_WRITE_STATUS = 'STATUS';
 
-    public const API_VERSION = 'apiVersion';
+    public const array WRITE_STATUS = ['ADDED', 'UPDATED'];
 
-    public const BULK_WRITE_STATUS = 'STATUS';
-
-    public const WRITE_STATUS = ['ADDED', 'UPDATED'];
-
-    public const INVENTORY_MODULES = ['Invoices', 'Sales_Orders', 'Purchase_Orders', 'Quotes'];
+    public const array INVENTORY_MODULES = ['Invoices', 'Sales_Orders', 'Purchase_Orders', 'Quotes'];
 }
