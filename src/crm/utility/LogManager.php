@@ -6,7 +6,7 @@ use Psr\Log\LoggerInterface;
 
 class LogManager
 {
-    protected static null|LoggerInterface $logger = null;
+    protected static ?LoggerInterface $logger = null;
 
     public static function warn(string $msg, array $context = []): void
     {

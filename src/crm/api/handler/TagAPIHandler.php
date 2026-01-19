@@ -15,11 +15,11 @@ use zcrmsdk\crm\utility\APIConstants;
 
 class TagAPIHandler extends APIHandler
 {
-    private function __construct(protected null|ZCRMModule $module = null)
+    private function __construct(protected ?ZCRMModule $module = null)
     {
     }
 
-    public static function getInstance(null|ZCRMModule $module = null): TagAPIHandler
+    public static function getInstance(?ZCRMModule $module = null): TagAPIHandler
     {
         return new TagAPIHandler($module);
     }
@@ -86,7 +86,7 @@ class TagAPIHandler extends APIHandler
     /**
      * @throws ZCRMException
      */
-    public function createTags(null|array $tags): BulkAPIResponse
+    public function createTags(?array $tags): BulkAPIResponse
     {
         if (!$tags) {
             throw new ZCRMException('Tags List MUST be set to create the tags.', APIConstants::RESPONSECODE_BAD_REQUEST);

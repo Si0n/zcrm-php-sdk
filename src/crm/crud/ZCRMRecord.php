@@ -26,7 +26,7 @@ class ZCRMRecord
     /**
      * the lookup label.
      */
-    private ?string $lookupLabel= null;
+    private ?string $lookupLabel = null;
 
     /**
      * the owner of the record.
@@ -113,7 +113,7 @@ class ZCRMRecord
      */
     private ?int $rowNumber = null;
 
-    private function __construct(protected null|string $moduleApiName, protected null|string $entityId)
+    private function __construct(protected ?string $moduleApiName, protected ?string $entityId)
     {
     }
 
@@ -123,7 +123,7 @@ class ZCRMRecord
      * @param string $module   api name of the module
      * @param string $entityId the record id
      */
-    public static function getInstance(null|string $module, null|string $entityId): ZCRMRecord
+    public static function getInstance(?string $module, ?string $entityId): ZCRMRecord
     {
         return new ZCRMRecord($module, $entityId);
     }
@@ -177,7 +177,7 @@ class ZCRMRecord
      *
      * @param string $moduleApiName module api name of the record
      */
-    public function setModuleApiName(?string $moduleApiName) : void
+    public function setModuleApiName(?string $moduleApiName): void
     {
         $this->moduleApiName = $moduleApiName;
     }
@@ -383,7 +383,7 @@ class ZCRMRecord
      *
      * @return string creation time in ISO 8601 format
      */
-    public function getCreatedTime() :?string
+    public function getCreatedTime(): ?string
     {
         return $this->createdTime;
     }
@@ -413,7 +413,7 @@ class ZCRMRecord
      *
      * @param string $modifiedTime modification time in ISO 8601 format
      */
-    public function setModifiedTime(?string $modifiedTime) :void
+    public function setModifiedTime(?string $modifiedTime): void
     {
         $this->modifiedTime = $modifiedTime;
     }
@@ -453,7 +453,7 @@ class ZCRMRecord
      *
      * @param array $tagNames array of tag name of the record
      */
-    public function setTagNames(array $tagNames) :void
+    public function setTagNames(array $tagNames): void
     {
         $this->tagNames = $tagNames;
     }
@@ -471,7 +471,7 @@ class ZCRMRecord
      *
      * @return string status of the record
      */
-    public function getStatus():?string
+    public function getStatus(): ?string
     {
         return $this->status;
     }
@@ -515,9 +515,9 @@ class ZCRMRecord
      *
      * @param string $lar_id lead assignment rule id
      *
-     * @return APIResponse instance of the APIResponse class which holds the API response
-     *
      * @throws ZCRMException if Entity ID of the record is not NULL
+     *
+     * @return APIResponse instance of the APIResponse class which holds the API response
      */
     public function create(?array $trigger = null, ?string $lar_id = null, ?array $process = null): APIResponse
     {
@@ -535,9 +535,9 @@ class ZCRMRecord
      *
      ** @param string $trigger array of triggers
      *
-     * @return APIResponse instance of the APIResponse class which holds the API response
-     *
      * @throws ZCRMException if Entity ID of the record is NULL
+     *
+     * @return APIResponse instance of the APIResponse class which holds the API response
      */
     public function update(?array $trigger = null, ?array $process = null): APIResponse
     {
@@ -553,9 +553,9 @@ class ZCRMRecord
     /**
      * Method to delete the record.
      *
-     * @return APIResponse instance of the APIResponse class which holds the API response
-     *
      * @throws ZCRMException if Entity ID of the record is NULL
+     *
+     * @return APIResponse instance of the APIResponse class which holds the API response
      */
     public function delete(): APIResponse
     {
@@ -610,9 +610,9 @@ class ZCRMRecord
      *
      * @param ZCRMNote $zcrmNoteIns note instance
      *
-     * @return APIResponse instance of the APIResponse class which holds the API response
-     *
      * @throws ZCRMException if the note id of the note is null
+     *
+     * @return APIResponse instance of the APIResponse class which holds the API response
      */
     public function addNote($zcrmNoteIns)
     {
@@ -635,9 +635,9 @@ class ZCRMRecord
      *
      * @param ZCRMNote $zcrmNoteIns Notes instance
      *
-     * @return APIResponse instance of the APIResponse class which holds the API response
-     *
      * @throws ZCRMException if note instance is not valid
+     *
+     * @return APIResponse instance of the APIResponse class which holds the API response
      */
     public function updateNote($zcrmNoteIns)
     {
@@ -655,9 +655,9 @@ class ZCRMRecord
      *
      * @param ZCRMNote $zcrmNoteIns note instance
      *
-     * @return APIResponse instance of the APIResponse class which holds the API response
-     *
      * @throws ZCRMException if note id is not valid
+     *
+     * @return APIResponse instance of the APIResponse class which holds the API response
      */
     public function deleteNote($zcrmNoteIns)
     {
@@ -791,9 +791,9 @@ class ZCRMRecord
      *
      * @param string $tagNames tagnames to add(multiple tag names as comma separated values)
      *
-     * @return APIResponse APIResponse instance of the APIResponse class which holds the API response
-     *
      * @throws ZCRMException if the record or module or tag doesn't exist
+     *
+     * @return APIResponse APIResponse instance of the APIResponse class which holds the API response
      */
     public function addTags(array $tagNames): APIResponse
     {
@@ -815,9 +815,9 @@ class ZCRMRecord
      *
      * @param string $tagNames tag names to remove(multiple tag names as comma separated values)
      *
-     * @return APIResponse instance of the APIResponse class which holds the API response
-     *
      * @throws ZCRMException if the record or module or tag doesn't exist
+     *
+     * @return APIResponse instance of the APIResponse class which holds the API response
      */
     public function removeTags(array $tagNames): APIResponse
     {

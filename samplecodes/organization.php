@@ -2,17 +2,15 @@
 <?php
 
 require_once __DIR__ . '/../vendor/autoload.php';
+use zcrmsdk\crm\crud\ZCRMOrgTax;
 use zcrmsdk\crm\setup\org\ZCRMOrganization;
 use zcrmsdk\crm\setup\restclient\ZCRMRestClient;
 use zcrmsdk\crm\setup\users\ZCRMProfile;
 use zcrmsdk\crm\setup\users\ZCRMRole;
 use zcrmsdk\crm\setup\users\ZCRMUser;
-use zcrmsdk\crm\crud\ZCRMOrgTax;
-
 
 class Org
 {
-
     public function __construct()
     {
         $configuration = [];
@@ -21,8 +19,8 @@ class Org
 
     public function getUser()
     {
-        $orgIns = ZCRMOrganization::getInstance("{org_name}", "{org_id}"); // to get the organization instance
-        $responseIns = $orgIns->getUser("{user_id}"); // to get the user
+        $orgIns = ZCRMOrganization::getInstance('{org_name}', '{org_id}'); // to get the organization instance
+        $responseIns = $orgIns->getUser('{user_id}'); // to get the user
         $userInstance = $responseIns->getData(); // to get the user data in form ZCRMUser instance
 
         echo $userInstance->getId(); // to get the user id
@@ -31,7 +29,7 @@ class Org
         echo $roleInstance->getId(); // to get the role id
         echo $roleInstance->getName(); // to get the role name
         $customizeInstance = $userInstance->getCustomizeInfo(); // to get the customization information of the user in for of the ZCRMUserCustomizeInfo form
-        if ($customizeInstance != null) {
+        if (null != $customizeInstance) {
             echo $customizeInstance->getNotesDesc(); // to get the note description
             echo $customizeInstance->getUnpinRecentItem(); // to get the unpinned recent items
             echo $customizeInstance->isToShowRightPanel(); // to check whether the right panel is shown
@@ -49,7 +47,7 @@ class Org
         echo $userInstance->getAlias(); // to get the alias of the user
         echo $userInstance->getStreet(); // to get the street name of the user
         $themeInstance = $userInstance->getTheme(); // to get the theme of the user in form of the ZCRMUserTheme
-        if ($themeInstance != null) {
+        if (null != $themeInstance) {
             echo $themeInstance->getNormalTabFontColor(); // to get the normal tab font color
             echo $themeInstance->getNormalTabBackground(); // to get the normal tab background
             echo $themeInstance->getSelectedTabFontColor(); // to get the selected tab font color
@@ -77,18 +75,18 @@ class Org
         echo $userInstance->getDob(); // to get the date of birth of the user
         echo $userInstance->getDateFormat(); // to get the date format
         echo $userInstance->getStatus(); // to get the status of the user
-        echo "HTTP Status Code:" . $responseIns->getHttpStatusCode(); // To get http response code
-        echo "Status:" . $responseIns->getStatus(); // To get response status
-        echo "Message:" . $responseIns->getMessage(); // To get response message
-        echo "Code:" . $responseIns->getCode(); // To get status code
-        echo "Details:" . json_encode($responseIns->getDetails());
+        echo 'HTTP Status Code:' . $responseIns->getHttpStatusCode(); // To get http response code
+        echo 'Status:' . $responseIns->getStatus(); // To get response status
+        echo 'Message:' . $responseIns->getMessage(); // To get response message
+        echo 'Code:' . $responseIns->getCode(); // To get status code
+        echo 'Details:' . json_encode($responseIns->getDetails());
     }
 
     public function getAllUsers()
     {
         $orgIns = ZCRMOrganization::getInstance(); // to get the organization instance
-        $param_map=array("page"=>"20","per_page"=>"200"); // key-value pair containing all the parameters - optional
-        $header_map = array("if-modified-since"=>"2019-11-10T15:26:49+05:30"); // key-value pair containing all the headers - optional
+        $param_map = ['page' => '20', 'per_page' => '200']; // key-value pair containing all the parameters - optional
+        $header_map = ['if-modified-since' => '2019-11-10T15:26:49+05:30']; // key-value pair containing all the headers - optional
         $response = $orgIns->getAllUsers($param_map,$header_map); // to get all the user
         $userInstances = $response->getData(); // to get the array of users in form of ZCRMUser instances
         foreach ($userInstances as $userInstance) {
@@ -98,7 +96,7 @@ class Org
             echo $roleInstance->getId(); // to get the role id
             echo $roleInstance->getName(); // to get the role name
             $customizeInstance = $userInstance->getCustomizeInfo(); // to get the customization information of the user in for of the ZCRMUserCustomizeInfo form
-            if ($customizeInstance != null) {
+            if (null != $customizeInstance) {
                 echo $customizeInstance->getNotesDesc(); // to get the note description
                 echo $customizeInstance->getUnpinRecentItem(); // to get the unpinned recent items
                 echo $customizeInstance->isToShowRightPanel(); // to check whether the right panel is shown
@@ -116,7 +114,7 @@ class Org
             echo $userInstance->getAlias(); // to get the alias of the user
             echo $userInstance->getStreet(); // to get the street name of the user
             $themeInstance = $userInstance->getTheme(); // to get the theme of the user in form of the ZCRMUserTheme
-            if ($themeInstance != null) {
+            if (null != $themeInstance) {
                 echo $themeInstance->getNormalTabFontColor(); // to get the normal tab font color
                 echo $themeInstance->getNormalTabBackground(); // to get the normal tab background
                 echo $themeInstance->getSelectedTabFontColor(); // to get the selected tab font color
@@ -149,9 +147,9 @@ class Org
 
     public function getAllActiveUsers()
     {
-        $orgIns = ZCRMOrganization::getInstance("{org_name}", "{org_id}"); // to get the organization instance
-        $param_map=array("page"=>"20","per_page"=>"200"); // key-value pair containing all the parameters - optional
-        $header_map = array("if-modified-since"=>"2019-11-10T15:26:49+05:30"); // key-value pair containing all the headers - optional
+        $orgIns = ZCRMOrganization::getInstance('{org_name}', '{org_id}'); // to get the organization instance
+        $param_map = ['page' => '20', 'per_page' => '200']; // key-value pair containing all the parameters - optional
+        $header_map = ['if-modified-since' => '2019-11-10T15:26:49+05:30']; // key-value pair containing all the headers - optional
         $response = $orgIns->getAllActiveUsers($param_map,$header_map); // to get all the active users
         $userInstances = $response->getData(); // to get the array of users in form of ZCRMUser instances
         foreach ($userInstances as $userInstance) {
@@ -161,7 +159,7 @@ class Org
             echo $roleInstance->getId(); // to get the role id
             echo $roleInstance->getName(); // to get the role name
             $customizeInstance = $userInstance->getCustomizeInfo(); // to get the customization information of the user in for of the ZCRMUserCustomizeInfo form
-            if ($customizeInstance != null) {
+            if (null != $customizeInstance) {
                 echo $customizeInstance->getNotesDesc(); // to get the note description
                 echo $customizeInstance->getUnpinRecentItem(); // to get the unpinned recent items
                 echo $customizeInstance->isToShowRightPanel(); // to check whether the right panel is shown
@@ -179,7 +177,7 @@ class Org
             echo $userInstance->getAlias(); // to get the alias of the user
             echo $userInstance->getStreet(); // to get the street name of the user
             $themeInstance = $userInstance->getTheme(); // to get the theme of the user in form of the ZCRMUserTheme
-            if ($themeInstance != null) {
+            if (null != $themeInstance) {
                 echo $themeInstance->getNormalTabFontColor(); // to get the normal tab font color
                 echo $themeInstance->getNormalTabBackground(); // to get the normal tab background
                 echo $themeInstance->getSelectedTabFontColor(); // to get the selected tab font color
@@ -212,9 +210,9 @@ class Org
 
     public function getAllDeactiveUsers()
     {
-        $orgIns = ZCRMOrganization::getInstance("{org_name}", "{org_id}"); // to get the organization instance
-        $param_map=array("page"=>"20","per_page"=>"200"); // key-value pair containing all the parameters - optional
-        $header_map = array("if-modified-since"=>"2019-11-10T15:26:49+05:30"); // key-value pair containing all the headers - optional
+        $orgIns = ZCRMOrganization::getInstance('{org_name}', '{org_id}'); // to get the organization instance
+        $param_map = ['page' => '20', 'per_page' => '200']; // key-value pair containing all the parameters - optional
+        $header_map = ['if-modified-since' => '2019-11-10T15:26:49+05:30']; // key-value pair containing all the headers - optional
         $response = $orgIns->getAllDeactiveUsers($param_map,$header_map); // to get all the deactivated users
         $userInstances = $response->getData(); // to get the array of users in form of ZCRMUser instances
         foreach ($userInstances as $userInstance) {
@@ -224,7 +222,7 @@ class Org
             echo $roleInstance->getId(); // to get the role id
             echo $roleInstance->getName(); // to get the role name
             $customizeInstance = $userInstance->getCustomizeInfo(); // to get the customization information of the user in for of the ZCRMUserCustomizeInfo form
-            if ($customizeInstance != null) {
+            if (null != $customizeInstance) {
                 echo $customizeInstance->getNotesDesc(); // to get the note description
                 echo $customizeInstance->getUnpinRecentItem(); // to get the unpinned recent items
                 echo $customizeInstance->isToShowRightPanel(); // to check whether the right panel is shown
@@ -242,7 +240,7 @@ class Org
             echo $userInstance->getAlias(); // to get the alias of the user
             echo $userInstance->getStreet(); // to get the street name of the user
             $themeInstance = $userInstance->getTheme(); // to get the theme of the user in form of the ZCRMUserTheme
-            if ($themeInstance != null) {
+            if (null != $themeInstance) {
                 echo $themeInstance->getNormalTabFontColor(); // to get the normal tab font color
                 echo $themeInstance->getNormalTabBackground(); // to get the normal tab background
                 echo $themeInstance->getSelectedTabFontColor(); // to get the selected tab font color
@@ -275,9 +273,9 @@ class Org
 
     public function getAllConfirmedUsers()
     {
-        $orgIns = ZCRMOrganization::getInstance("{org_name}", "{org_id}"); // to get the organization instance
-        $param_map=array("page"=>"20","per_page"=>"200"); // key-value pair containing all the parameters - optional
-        $header_map = array("if-modified-since"=>"2019-11-10T15:26:49+05:30"); // key-value pair containing all the headers - optional
+        $orgIns = ZCRMOrganization::getInstance('{org_name}', '{org_id}'); // to get the organization instance
+        $param_map = ['page' => '20', 'per_page' => '200']; // key-value pair containing all the parameters - optional
+        $header_map = ['if-modified-since' => '2019-11-10T15:26:49+05:30']; // key-value pair containing all the headers - optional
         $response = $orgIns->getAllConfirmedUsers($param_map,$header_map); // to get all the confirmer users
         $userInstances = $response->getData(); // to get the array of users in form of ZCRMUser instances
         foreach ($userInstances as $userInstance) {
@@ -287,7 +285,7 @@ class Org
             echo $roleInstance->getId(); // to get the role id
             echo $roleInstance->getName(); // to get the role name
             $customizeInstance = $userInstance->getCustomizeInfo(); // to get the customization information of the user in for of the ZCRMUserCustomizeInfo form
-            if ($customizeInstance != null) {
+            if (null != $customizeInstance) {
                 echo $customizeInstance->getNotesDesc(); // to get the note description
                 echo $customizeInstance->getUnpinRecentItem(); // to get the unpinned recent items
                 echo $customizeInstance->isToShowRightPanel(); // to check whether the right panel is shown
@@ -305,7 +303,7 @@ class Org
             echo $userInstance->getAlias(); // to get the alias of the user
             echo $userInstance->getStreet(); // to get the street name of the user
             $themeInstance = $userInstance->getTheme(); // to get the theme of the user in form of the ZCRMUserTheme
-            if ($themeInstance != null) {
+            if (null != $themeInstance) {
                 echo $themeInstance->getNormalTabFontColor(); // to get the normal tab font color
                 echo $themeInstance->getNormalTabBackground(); // to get the normal tab background
                 echo $themeInstance->getSelectedTabFontColor(); // to get the selected tab font color
@@ -338,9 +336,9 @@ class Org
 
     public function getAllNotConfirmedUsers()
     {
-        $orgIns = ZCRMOrganization::getInstance("{org_name}", "{org_id}"); // to get the organization instance
-        $param_map=array("page"=>"20","per_page"=>"200"); // key-value pair containing all the parameters - optional
-        $header_map = array("if-modified-since"=>"2019-11-10T15:26:49+05:30"); // key-value pair containing all the headers - optional
+        $orgIns = ZCRMOrganization::getInstance('{org_name}', '{org_id}'); // to get the organization instance
+        $param_map = ['page' => '20', 'per_page' => '200']; // key-value pair containing all the parameters - optional
+        $header_map = ['if-modified-since' => '2019-11-10T15:26:49+05:30']; // key-value pair containing all the headers - optional
         $response = $orgIns->getAllNotConfirmedUsers($param_map,$header_map); // to get all the unconfirmed users
         $userInstances = $response->getData(); // to get the array of users in form of ZCRMUser instances
         foreach ($userInstances as $userInstance) {
@@ -350,7 +348,7 @@ class Org
             echo $roleInstance->getId(); // to get the role id
             echo $roleInstance->getName(); // to get the role name
             $customizeInstance = $userInstance->getCustomizeInfo(); // to get the customization information of the user in for of the ZCRMUserCustomizeInfo form
-            if ($customizeInstance != null) {
+            if (null != $customizeInstance) {
                 echo $customizeInstance->getNotesDesc(); // to get the note description
                 echo $customizeInstance->getUnpinRecentItem(); // to get the unpinned recent items
                 echo $customizeInstance->isToShowRightPanel(); // to check whether the right panel is shown
@@ -368,7 +366,7 @@ class Org
             echo $userInstance->getAlias(); // to get the alias of the user
             echo $userInstance->getStreet(); // to get the street name of the user
             $themeInstance = $userInstance->getTheme(); // to get the theme of the user in form of the ZCRMUserTheme
-            if ($themeInstance != null) {
+            if (null != $themeInstance) {
                 echo $themeInstance->getNormalTabFontColor(); // to get the normal tab font color
                 echo $themeInstance->getNormalTabBackground(); // to get the normal tab background
                 echo $themeInstance->getSelectedTabFontColor(); // to get the selected tab font color
@@ -401,9 +399,9 @@ class Org
 
     public function getAllDeletedUsers()
     {
-        $orgIns = ZCRMOrganization::getInstance("{org_name}", "{org_id}"); // to get the organization instance
-        $param_map=array("page"=>"20","per_page"=>"200"); // key-value pair containing all the parameters - optional
-        $header_map = array("if-modified-since"=>"2019-11-10T15:26:49+05:30"); // key-value pair containing all the headers - optional
+        $orgIns = ZCRMOrganization::getInstance('{org_name}', '{org_id}'); // to get the organization instance
+        $param_map = ['page' => '20', 'per_page' => '200']; // key-value pair containing all the parameters - optional
+        $header_map = ['if-modified-since' => '2019-11-10T15:26:49+05:30']; // key-value pair containing all the headers - optional
         $response = $orgIns->getAllDeletedUsers($param_map,$header_map); // to get all the deleted users
         $userInstances = $response->getData(); // to get the array of users in form of ZCRMUser instances
         foreach ($userInstances as $userInstance) {
@@ -413,7 +411,7 @@ class Org
             echo $roleInstance->getId(); // to get the role id
             echo $roleInstance->getName(); // to get the role name
             $customizeInstance = $userInstance->getCustomizeInfo(); // to get the customization information of the user in for of the ZCRMUserCustomizeInfo form
-            if ($customizeInstance != null) {
+            if (null != $customizeInstance) {
                 echo $customizeInstance->getNotesDesc(); // to get the note description
                 echo $customizeInstance->getUnpinRecentItem(); // to get the unpinned recent items
                 echo $customizeInstance->isToShowRightPanel(); // to check whether the right panel is shown
@@ -431,7 +429,7 @@ class Org
             echo $userInstance->getAlias(); // to get the alias of the user
             echo $userInstance->getStreet(); // to get the street name of the user
             $themeInstance = $userInstance->getTheme(); // to get the theme of the user in form of the ZCRMUserTheme
-            if ($themeInstance != null) {
+            if (null != $themeInstance) {
                 echo $themeInstance->getNormalTabFontColor(); // to get the normal tab font color
                 echo $themeInstance->getNormalTabBackground(); // to get the normal tab background
                 echo $themeInstance->getSelectedTabFontColor(); // to get the selected tab font color
@@ -464,9 +462,9 @@ class Org
 
     public function getAllActiveConfirmedUsers()
     {
-        $orgIns = ZCRMOrganization::getInstance("{org_name}", "{org_id}"); // to get the organization instance
-        $param_map=array("page"=>"20","per_page"=>"200"); // key-value pair containing all the parameters - optional
-        $header_map = array("if-modified-since"=>"2019-11-10T15:26:49+05:30"); // key-value pair containing all the headers - optional
+        $orgIns = ZCRMOrganization::getInstance('{org_name}', '{org_id}'); // to get the organization instance
+        $param_map = ['page' => '20', 'per_page' => '200']; // key-value pair containing all the parameters - optional
+        $header_map = ['if-modified-since' => '2019-11-10T15:26:49+05:30']; // key-value pair containing all the headers - optional
         $response = $orgIns->getAllActiveConfirmedUsers($param_map,$header_map); // to get all the active and confirmed users
         $userInstances = $response->getData(); // to get the array of users in form of ZCRMUser instances
         foreach ($userInstances as $userInstance) {
@@ -476,7 +474,7 @@ class Org
             echo $roleInstance->getId(); // to get the role id
             echo $roleInstance->getName(); // to get the role name
             $customizeInstance = $userInstance->getCustomizeInfo(); // to get the customization information of the user in for of the ZCRMUserCustomizeInfo form
-            if ($customizeInstance != null) {
+            if (null != $customizeInstance) {
                 echo $customizeInstance->getNotesDesc(); // to get the note description
                 echo $customizeInstance->getUnpinRecentItem(); // to get the unpinned recent items
                 echo $customizeInstance->isToShowRightPanel(); // to check whether the right panel is shown
@@ -494,7 +492,7 @@ class Org
             echo $userInstance->getAlias(); // to get the alias of the user
             echo $userInstance->getStreet(); // to get the street name of the user
             $themeInstance = $userInstance->getTheme(); // to get the theme of the user in form of the ZCRMUserTheme
-            if ($themeInstance != null) {
+            if (null != $themeInstance) {
                 echo $themeInstance->getNormalTabFontColor(); // to get the normal tab font color
                 echo $themeInstance->getNormalTabBackground(); // to get the normal tab background
                 echo $themeInstance->getSelectedTabFontColor(); // to get the selected tab font color
@@ -527,9 +525,9 @@ class Org
 
     public function getAllAdminUsers()
     {
-        $orgIns = ZCRMOrganization::getInstance("{org_name}", "{org_id}"); // to get the organization instance
-        $param_map=array("page"=>"20","per_page"=>"200"); // key-value pair containing all the parameters - optional
-        $header_map = array("if-modified-since"=>"2019-11-10T15:26:49+05:30"); // key-value pair containing all the headers - optional
+        $orgIns = ZCRMOrganization::getInstance('{org_name}', '{org_id}'); // to get the organization instance
+        $param_map = ['page' => '20', 'per_page' => '200']; // key-value pair containing all the parameters - optional
+        $header_map = ['if-modified-since' => '2019-11-10T15:26:49+05:30']; // key-value pair containing all the headers - optional
         $response = $orgIns->getAllAdminUsers($param_map,$header_map); // to get all the administrators
         $userInstances = $response->getData(); // to get the array of users in form of ZCRMUser instances
         foreach ($userInstances as $userInstance) {
@@ -539,7 +537,7 @@ class Org
             echo $roleInstance->getId(); // to get the role id
             echo $roleInstance->getName(); // to get the role name
             $customizeInstance = $userInstance->getCustomizeInfo(); // to get the customization information of the user in for of the ZCRMUserCustomizeInfo form
-            if ($customizeInstance != null) {
+            if (null != $customizeInstance) {
                 echo $customizeInstance->getNotesDesc(); // to get the note description
                 echo $customizeInstance->getUnpinRecentItem(); // to get the unpinned recent items
                 echo $customizeInstance->isToShowRightPanel(); // to check whether the right panel is shown
@@ -557,7 +555,7 @@ class Org
             echo $userInstance->getAlias(); // to get the alias of the user
             echo $userInstance->getStreet(); // to get the street name of the user
             $themeInstance = $userInstance->getTheme(); // to get the theme of the user in form of the ZCRMUserTheme
-            if ($themeInstance != null) {
+            if (null != $themeInstance) {
                 echo $themeInstance->getNormalTabFontColor(); // to get the normal tab font color
                 echo $themeInstance->getNormalTabBackground(); // to get the normal tab background
                 echo $themeInstance->getSelectedTabFontColor(); // to get the selected tab font color
@@ -590,9 +588,9 @@ class Org
 
     public function getAllActiveConfirmedAdmins()
     {
-        $orgIns = ZCRMOrganization::getInstance("{org_name}", "{org_id}"); // to get the organization instance
-        $param_map=array("page"=>"20","per_page"=>"200"); // key-value pair containing all the parameters - optional
-        $header_map = array("if-modified-since"=>"2019-11-10T15:26:49+05:30"); // key-value pair containing all the headers - optional
+        $orgIns = ZCRMOrganization::getInstance('{org_name}', '{org_id}'); // to get the organization instance
+        $param_map = ['page' => '20', 'per_page' => '200']; // key-value pair containing all the parameters - optional
+        $header_map = ['if-modified-since' => '2019-11-10T15:26:49+05:30']; // key-value pair containing all the headers - optional
         $response = $orgIns->getAllActiveConfirmedAdmins($param_map,$header_map); // to get all the confirmed administrators
         $userInstances = $response->getData(); // to get the array of users in form of ZCRMUser instances
         foreach ($userInstances as $userInstance) {
@@ -602,7 +600,7 @@ class Org
             echo $roleInstance->getId(); // to get the role id
             echo $roleInstance->getName(); // to get the role name
             $customizeInstance = $userInstance->getCustomizeInfo(); // to get the customization information of the user in for of the ZCRMUserCustomizeInfo form
-            if ($customizeInstance != null) {
+            if (null != $customizeInstance) {
                 echo $customizeInstance->getNotesDesc(); // to get the note description
                 echo $customizeInstance->getUnpinRecentItem(); // to get the unpinned recent items
                 echo $customizeInstance->isToShowRightPanel(); // to check whether the right panel is shown
@@ -620,7 +618,7 @@ class Org
             echo $userInstance->getAlias(); // to get the alias of the user
             echo $userInstance->getStreet(); // to get the street name of the user
             $themeInstance = $userInstance->getTheme(); // to get the theme of the user in form of the ZCRMUserTheme
-            if ($themeInstance != null) {
+            if (null != $themeInstance) {
                 echo $themeInstance->getNormalTabFontColor(); // to get the normal tab font color
                 echo $themeInstance->getNormalTabBackground(); // to get the normal tab background
                 echo $themeInstance->getSelectedTabFontColor(); // to get the selected tab font color
@@ -653,8 +651,8 @@ class Org
 
     public function getCurrentUser()
     {
-        $orgIns = ZCRMOrganization::getInstance("{org_name}", "{org_id}"); // to get the organization instance
-        
+        $orgIns = ZCRMOrganization::getInstance('{org_name}', '{org_id}'); // to get the organization instance
+
         $response = $orgIns->getCurrentUser(); // to get the current user
         $userInstance = $response->getData(); // to get the user in form of ZCRMUser instance
         echo $userInstance->getId(); // to get the user id
@@ -663,7 +661,7 @@ class Org
         echo $roleInstance->getId(); // to get the role id
         echo $roleInstance->getName(); // to get the role name
         $customizeInstance = $userInstance->getCustomizeInfo(); // to get the customization information of the user in for of the ZCRMUserCustomizeInfo form
-        if ($customizeInstance != null) {
+        if (null != $customizeInstance) {
             echo $customizeInstance->getNotesDesc(); // to get the note description
             echo $customizeInstance->getUnpinRecentItem(); // to get the unpinned recent items
             echo $customizeInstance->isToShowRightPanel(); // to check whether the right panel is shown
@@ -681,7 +679,7 @@ class Org
         echo $userInstance->getAlias(); // to get the alias of the user
         echo $userInstance->getStreet(); // to get the street name of the user
         $themeInstance = $userInstance->getTheme(); // to get the theme of the user in form of the ZCRMUserTheme
-        if ($themeInstance != null) {
+        if (null != $themeInstance) {
             echo $themeInstance->getNormalTabFontColor(); // to get the normal tab font color
             echo $themeInstance->getNormalTabBackground(); // to get the normal tab background
             echo $themeInstance->getSelectedTabFontColor(); // to get the selected tab font color
@@ -713,55 +711,55 @@ class Org
 
     public function deleteUser()
     {
-        $orgIns = ZCRMOrganization::getInstance("{org_name}", "{org_id}"); // to get the organization instance
-        $orgIns->deleteUser("{user_id}"); // to delete the user
+        $orgIns = ZCRMOrganization::getInstance('{org_name}', '{org_id}'); // to get the organization instance
+        $orgIns->deleteUser('{user_id}'); // to delete the user
     }
 
     public function createUser()
     {
-        $orgIns = ZCRMOrganization::getInstance("{org_name}", "{org_id}"); // to get the organization instance
+        $orgIns = ZCRMOrganization::getInstance('{org_name}', '{org_id}'); // to get the organization instance
         $user = ZCRMUser::getInstance(NULL, NULL); // to get the user instance
-        $user->setLastName("subject"); // to set the last name of the user
-        $user->setFirstName("test"); // to set the first name of the user
-        $user->setEmail("test1@gmail.com"); // to set the email id of the user
-        $role = ZCRMRole::getInstance("{role_id}", "{role_name}"); // to get the role
+        $user->setLastName('subject'); // to set the last name of the user
+        $user->setFirstName('test'); // to set the first name of the user
+        $user->setEmail('test1@gmail.com'); // to set the email id of the user
+        $role = ZCRMRole::getInstance('{role_id}', '{role_name}'); // to get the role
         $user->setRole($role); // to get the role of the user
-        $profile = ZCRMProfile::getInstance("{profile_id}", "{profile_name}"); // to get the profile
+        $profile = ZCRMProfile::getInstance('{profile_id}', '{profile_name}'); // to get the profile
         $user->setProfile($profile); // to set the profile of the user
         $responseIns = $orgIns->createUser($user); // to create the user
-        echo "HTTP Status Code:" . $responseIns->getHttpStatusCode(); // To get http response code
-        echo "Status:" . $responseIns->getStatus(); // To get response status
-        echo "Message:" . $responseIns->getMessage(); // To get response message
-        echo "Code:" . $responseIns->getCode(); // To get status code
-        echo "Details:" . json_encode($responseIns->getDetails());
+        echo 'HTTP Status Code:' . $responseIns->getHttpStatusCode(); // To get http response code
+        echo 'Status:' . $responseIns->getStatus(); // To get response status
+        echo 'Message:' . $responseIns->getMessage(); // To get response message
+        echo 'Code:' . $responseIns->getCode(); // To get status code
+        echo 'Details:' . json_encode($responseIns->getDetails());
     }
 
     public function updateUser()
     {
-        $orgIns = ZCRMOrganization::getInstance("{org_name}", "{org_id}"); // to get the organization instance
-        $user = ZCRMUser::getInstance("{user_id}", "{user_name}"); // to get the user
-        $user->setId("{user_id}"); // to set the id of the user
-        $user->setFax("321432423423"); // to set the fax number of the user
-        $user->setMobile("4234234232"); // to set the mobile number of the user
-        $user->setPhone("2342342342"); // to set the phone number of the user
-        $user->setStreet("sddsfdsfd"); // to set the street name of the user
-        $user->setAlias("test"); // to set the alias of the user
-        $user->setWebsite("www.zoho.com"); // to set the website of the user
-        $user->setCity("chennai"); // to set the city of the user
-        $user->setCountry("India"); // to set the country of the user
-        $user->setState("Tamil nadu"); // to set the state of the user
-        $user->setZip("6000010"); // to set the zip code of the user
+        $orgIns = ZCRMOrganization::getInstance('{org_name}', '{org_id}'); // to get the organization instance
+        $user = ZCRMUser::getInstance('{user_id}', '{user_name}'); // to get the user
+        $user->setId('{user_id}'); // to set the id of the user
+        $user->setFax('321432423423'); // to set the fax number of the user
+        $user->setMobile('4234234232'); // to set the mobile number of the user
+        $user->setPhone('2342342342'); // to set the phone number of the user
+        $user->setStreet('sddsfdsfd'); // to set the street name of the user
+        $user->setAlias('test'); // to set the alias of the user
+        $user->setWebsite('www.zoho.com'); // to set the website of the user
+        $user->setCity('chennai'); // to set the city of the user
+        $user->setCountry('India'); // to set the country of the user
+        $user->setState('Tamil nadu'); // to set the state of the user
+        $user->setZip('6000010'); // to set the zip code of the user
         $responseIns = $orgIns->updateUser($user); // to update the user
-        echo "HTTP Status Code:" . $responseIns->getHttpStatusCode(); // To get http response code
-        echo "Status:" . $responseIns->getStatus(); // To get response status
-        echo "Message:" . $responseIns->getMessage(); // To get response message
-        echo "Code:" . $responseIns->getCode(); // To get status code
-        echo "Details:" . json_encode($responseIns->getDetails());
+        echo 'HTTP Status Code:' . $responseIns->getHttpStatusCode(); // To get http response code
+        echo 'Status:' . $responseIns->getStatus(); // To get response status
+        echo 'Message:' . $responseIns->getMessage(); // To get response message
+        echo 'Code:' . $responseIns->getCode(); // To get status code
+        echo 'Details:' . json_encode($responseIns->getDetails());
     }
 
     public function getorgtaxes()
     {
-        $orgIns = ZCRMOrganization::getInstance("{org_name}", "{org_id}"); // to get the organization instance
+        $orgIns = ZCRMOrganization::getInstance('{org_name}', '{org_id}'); // to get the organization instance
         $orgTaxes = $orgIns->getOrganizationTaxes()->getData();
         foreach ($orgTaxes as $orgTax) {
             echo $orgTax->getId() . "\n";
@@ -773,8 +771,8 @@ class Org
 
     public function getorgtax()
     {
-        $orgIns = ZCRMOrganization::getInstance("{org_name}", "{org_id}");// to get the organization instance
-        $orgTax = $orgIns->getOrganizationTax( "{orgTax_id}")->getData();
+        $orgIns = ZCRMOrganization::getInstance('{org_name}', '{org_id}'); // to get the organization instance
+        $orgTax = $orgIns->getOrganizationTax( '{orgTax_id}')->getData();
         echo $orgTax->getId() . "\n";
         echo $orgTax->getName() . "\n";
         echo $orgTax->getDisplayName() . "\n";
@@ -783,68 +781,68 @@ class Org
 
     public function createorgtaxes()
     {
-        $orgIns = ZCRMOrganization::getInstance("{org_name}", "{org_id}");// to get the organization instance
-        $orgTax = ZCRMOrgTax::getInstance("{orgTax_name}", NULL);
-        $orgTax->setValue("3");
-        $orgTaxInstances = array();
+        $orgIns = ZCRMOrganization::getInstance('{org_name}', '{org_id}'); // to get the organization instance
+        $orgTax = ZCRMOrgTax::getInstance('{orgTax_name}', NULL);
+        $orgTax->setValue('3');
+        $orgTaxInstances = [];
         array_push($orgTaxInstances, $orgTax);
         $responseIns = $orgIns->createOrganizationTaxes($orgTaxInstances);
         foreach ($responseIns->getEntityResponses() as $responseIn) {
-            echo "HTTP Status Code:" . $responseIns->getHttpStatusCode(); // To get http response code
-            echo "Status:" . $responseIn->getStatus(); // To get response status
-            echo "Message:" . $responseIn->getMessage(); // To get response message
-            echo "Code:" . $responseIn->getCode(); // To get status code
-            echo "Details:" . json_encode($responseIn->getDetails());
+            echo 'HTTP Status Code:' . $responseIns->getHttpStatusCode(); // To get http response code
+            echo 'Status:' . $responseIn->getStatus(); // To get response status
+            echo 'Message:' . $responseIn->getMessage(); // To get response message
+            echo 'Code:' . $responseIn->getCode(); // To get status code
+            echo 'Details:' . json_encode($responseIn->getDetails());
         }
     }
 
     public function updateorgtaxes()
     {
-        $orgIns = ZCRMOrganization::getInstance("{org_name}", "{org_id}"); // to get the organization instance
-        $orgTax = ZCRMOrgTax::getInstance("{orgTax_name}","{orgTax_id}");
-        $orgTax->setValue("3");
-        $orgTaxInstances = array();
+        $orgIns = ZCRMOrganization::getInstance('{org_name}', '{org_id}'); // to get the organization instance
+        $orgTax = ZCRMOrgTax::getInstance('{orgTax_name}','{orgTax_id}');
+        $orgTax->setValue('3');
+        $orgTaxInstances = [];
         array_push($orgTaxInstances, $orgTax);
         $responseIns = $orgIns->updateOrganizationTaxes($orgTaxInstances);
         foreach ($responseIns->getEntityResponses() as $responseIn) {
-            echo "HTTP Status Code:" . $responseIns->getHttpStatusCode(); // To get http response code
-            echo "Status:" . $responseIn->getStatus(); // To get response status
-            echo "Message:" . $responseIn->getMessage(); // To get response message
-            echo "Code:" . $responseIn->getCode(); // To get status code
-            echo "Details:" . json_encode($responseIn->getDetails());
+            echo 'HTTP Status Code:' . $responseIns->getHttpStatusCode(); // To get http response code
+            echo 'Status:' . $responseIn->getStatus(); // To get response status
+            echo 'Message:' . $responseIn->getMessage(); // To get response message
+            echo 'Code:' . $responseIn->getCode(); // To get status code
+            echo 'Details:' . json_encode($responseIn->getDetails());
         }
     }
 
     public function deleteorgtax()
     {
-        $orgIns = ZCRMOrganization::getInstance("{org_name}", "{org_id}"); // to get the organization instance
-        $responseIn = $orgIns->deleteOrganizationTax("{orgTax_id}");
-        echo "HTTP Status Code:" . $responseIn->getHttpStatusCode(); // To get http response code
-        echo "Status:" . $responseIn->getStatus(); // To get response status
-        echo "Message:" . $responseIn->getMessage(); // To get response message
-        echo "Code:" . $responseIn->getCode(); // To get status code
-        echo "Details:" . json_encode($responseIn->getDetails());
+        $orgIns = ZCRMOrganization::getInstance('{org_name}', '{org_id}'); // to get the organization instance
+        $responseIn = $orgIns->deleteOrganizationTax('{orgTax_id}');
+        echo 'HTTP Status Code:' . $responseIn->getHttpStatusCode(); // To get http response code
+        echo 'Status:' . $responseIn->getStatus(); // To get response status
+        echo 'Message:' . $responseIn->getMessage(); // To get response message
+        echo 'Code:' . $responseIn->getCode(); // To get status code
+        echo 'Details:' . json_encode($responseIn->getDetails());
     }
 
     public function deleteorgtaxes()
     {
-        $orgIns = ZCRMOrganization::getInstance("{org_name}", "{org_id}");// to get the organization instance
-        $orgTaxids = array(
-            "{orgTax_id}","{orgTax_id}","{orgTax_id}"
-        );
+        $orgIns = ZCRMOrganization::getInstance('{org_name}', '{org_id}'); // to get the organization instance
+        $orgTaxids = [
+            '{orgTax_id}', '{orgTax_id}', '{orgTax_id}',
+        ];
         $responseIns = $orgIns->deleteOrganizationTaxes($orgTaxids);
         foreach ($responseIns->getEntityResponses() as $responseIn) {
-            echo "HTTP Status Code:" . $responseIns->getHttpStatusCode(); // To get http response code
-            echo "Status:" . $responseIn->getStatus(); // To get response status
-            echo "Message:" . $responseIn->getMessage(); // To get response message
-            echo "Code:" . $responseIn->getCode(); // To get status code
-            echo "Details:" . json_encode($responseIn->getDetails());
+            echo 'HTTP Status Code:' . $responseIns->getHttpStatusCode(); // To get http response code
+            echo 'Status:' . $responseIn->getStatus(); // To get response status
+            echo 'Message:' . $responseIn->getMessage(); // To get response message
+            echo 'Code:' . $responseIn->getCode(); // To get status code
+            echo 'Details:' . json_encode($responseIn->getDetails());
         }
     }
 
     public function getAllProfiles()
     {
-        $orgIns = ZCRMOrganization::getInstance("{org_name}", "{org_id}"); // to get the organization instance
+        $orgIns = ZCRMOrganization::getInstance('{org_name}', '{org_id}'); // to get the organization instance
         $response = $orgIns->getAllProfiles(); // to get the profiles
         $profiles = $response->getData(); // to get the profiles in form of array of ZCRMProfile
         foreach ($profiles as $profile) {
@@ -854,13 +852,13 @@ class Org
             echo $profile->getCreatedTime(); // to get the created time of the profile
             echo $profile->getModifiedTime(); // to get the modified time of the profile
             $userInstance = $profile->getModifiedBy(); // to get the user who modified the profile
-            if ($userInstance != NULL) {
+            if (NULL != $userInstance) {
                 echo $userInstance->getId(); // to get the user id
                 echo $userInstance->getName(); // to get the user name
             }
             echo $profile->getDescription(); // to get the profile description
             $userInstance = $profile->getCreatedBy(); // to get the user who created the profile
-            if ($userInstance != NULL) {
+            if (NULL != $userInstance) {
                 echo $userInstance->getId(); // to get the profile id
                 echo $userInstance->getName(); // to get the profile name
             }
@@ -892,8 +890,8 @@ class Org
 
     public function getProfile()
     {
-        $orgIns = ZCRMOrganization::getInstance("{org_name}", "{org_id}"); // to get the organization instance
-        $response = $orgIns->getProfile("{profile_id}"); // to get the profile
+        $orgIns = ZCRMOrganization::getInstance('{org_name}', '{org_id}'); // to get the organization instance
+        $response = $orgIns->getProfile('{profile_id}'); // to get the profile
         $profile = $response->getData(); // to get the profile in form of the ZCRMProfile instance
         echo $profile->getId(); // to get the id of the profile
         echo $profile->getName(); // to get the name of the profile
@@ -901,13 +899,13 @@ class Org
         echo $profile->getCreatedTime(); // to get the created time of the profile
         echo $profile->getModifiedTime(); // to get the modified time of the profile
         $userInstance = $profile->getModifiedBy(); // to get the user who modified the profile
-        if ($userInstance != NULL) {
+        if (NULL != $userInstance) {
             echo $userInstance->getId(); // to get the user id
             echo $userInstance->getName(); // to get the user name
         }
         echo $profile->getDescription(); // to get the profile description
         $userInstance = $profile->getCreatedBy(); // to get the user who created the profile
-        if ($userInstance != NULL) {
+        if (NULL != $userInstance) {
             echo $userInstance->getId(); // to get the profile id
             echo $userInstance->getName(); // to get the profile name
         }
@@ -938,14 +936,14 @@ class Org
 
     public function getAllRoles()
     {
-        $orgIns = ZCRMOrganization::getInstance("{org_name}", "{org_id}"); // to get the organization instance
+        $orgIns = ZCRMOrganization::getInstance('{org_name}', '{org_id}'); // to get the organization instance
         $response = $orgIns->getAllRoles(); // to get the roles of the organization
         $roles = $response->getData(); // to get the roles in form of array of ZCRMRole instances
         foreach ($roles as $role) {
             echo $role->getName(); // to get the role name
             echo $role->getId(); // to get the role id
             $reportingrole = $role->getReportingTo(); // to get the role id and name to whom user of this role will report to
-            if ($reportingrole != null) {
+            if (null != $reportingrole) {
                 echo $reportingrole->getId();
                 echo $reportingrole->getName();
             }
@@ -956,13 +954,13 @@ class Org
 
     public function getRole()
     {
-        $orgIns = ZCRMOrganization::getInstance("{org_name}", "{org_id}"); // to get the organization instance
-        $response = $orgIns->getRole("{role_id}"); // to get the role of the organization
+        $orgIns = ZCRMOrganization::getInstance('{org_name}', '{org_id}'); // to get the organization instance
+        $response = $orgIns->getRole('{role_id}'); // to get the role of the organization
         $role = $response->getData(); // to get the role in form ZCRMRole instance
         echo $role->getName(); // to get the role name
         echo $role->getId(); // to get the role id
         $reportingrole = $role->getReportingTo(); // to get the role id and name to whom user of this role will report to
-        if ($reportingrole != null) {
+        if (null != $reportingrole) {
             echo $reportingrole->getId();
             echo $reportingrole->getName();
         }
@@ -972,9 +970,9 @@ class Org
 
     public function searchUsersByCriteria()
     {
-        $orgIns = ZCRMOrganization::getInstance("{org_name}", "{org_id}"); // to get the organization instance
-        $param_map=array("page"=>"1","per_page"=>"200"); // key-value pair containing all the parameters - optional
-        $userInstances = $orgIns->searchUsersByCriteria("{criteria}", $param_map)->getData(); // to get the users of the organization based on criteria 
+        $orgIns = ZCRMOrganization::getInstance('{org_name}', '{org_id}'); // to get the organization instance
+        $param_map = ['page' => '1', 'per_page' => '200']; // key-value pair containing all the parameters - optional
+        $userInstances = $orgIns->searchUsersByCriteria('{criteria}', $param_map)->getData(); // to get the users of the organization based on criteria 
         foreach ($userInstances as $userInstance) {
             echo $userInstance->getId(); // to get the user id
             echo $userInstance->getCountry(); // to get the country of the user
@@ -982,7 +980,7 @@ class Org
             echo $roleInstance->getId(); // to get the role id
             echo $roleInstance->getName(); // to get the role name
             $customizeInstance = $userInstance->getCustomizeInfo(); // to get the customization information of the user in for of the ZCRMUserCustomizeInfo form
-            if ($customizeInstance != null) {
+            if (null != $customizeInstance) {
                 echo $customizeInstance->getNotesDesc(); // to get the note description
                 echo $customizeInstance->getUnpinRecentItem(); // to get the unpinned recent items
                 echo $customizeInstance->isToShowRightPanel(); // to check whether the right panel is shown
@@ -1000,7 +998,7 @@ class Org
             echo $userInstance->getAlias(); // to get the alias of the user
             echo $userInstance->getStreet(); // to get the street name of the user
             $themeInstance = $userInstance->getTheme(); // to get the theme of the user in form of the ZCRMUserTheme
-            if ($themeInstance != null) {
+            if (null != $themeInstance) {
                 echo $themeInstance->getNormalTabFontColor(); // to get the normal tab font color
                 echo $themeInstance->getNormalTabBackground(); // to get the normal tab background
                 echo $themeInstance->getSelectedTabFontColor(); // to get the selected tab font color

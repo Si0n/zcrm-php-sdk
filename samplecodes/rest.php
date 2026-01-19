@@ -1,16 +1,16 @@
 <?php
+
 use zcrmsdk\crm\setup\restclient\ZCRMRestClient;
 require_once __DIR__ . '/../vendor/autoload.php';
 
 class RestC
 {
-    
     public function __construct()
     {
         $configuration = [];
         ZCRMRestClient::initialize($configuration);
     }
-    
+
     public function getAllModules()
     {
         $rest = ZCRMRestClient::getInstance(); // to get the rest client
@@ -27,7 +27,7 @@ class RestC
             echo $module->isDeletable(); // to check wther the module is deletable
             echo $module->getWebLink(); // to get the weblink
             $user = $module->getModifiedBy(); // to get the user who modified the module in form of ZCRMUser instance
-            if ($user != null) {
+            if (null != $user) {
                 $user->getId(); // to get the user id
                 $user->getName(); // to get the user name
             }
@@ -50,11 +50,11 @@ class RestC
             echo $module->getSequenceNumber(); // to get the sequence number of the module
         }
     }
-    
+
     public function getModule()
     {
         $rest = ZCRMRestClient::getInstance(); // to get the rest client
-        $module = $rest->getModule("{module_api_name}")->getData(); // to get the module in form of ZCRMModule instance
+        $module = $rest->getModule('{module_api_name}')->getData(); // to get the module in form of ZCRMModule instance
         echo $module->getModuleName(); // to get the name of the module
         echo $module->getSingularLabel(); // to get the singular label of the module
         echo $module->getPluralLabel(); // to get the plural label of the module
@@ -66,7 +66,7 @@ class RestC
         echo $module->isDeletable(); // to check wther the module is deletable
         echo $module->getWebLink(); // to get the weblink
         $user = $module->getModifiedBy(); // to get the user who modified the module in form of ZCRMUser instance
-        if ($user != null) {
+        if (null != $user) {
             $user->getId(); // to get the user id
             $user->getName(); // to get the user name
         }
@@ -88,7 +88,7 @@ class RestC
         echo $module->getDisplayFieldName(); // to get the display field name
         echo $module->getDisplayFieldId(); // to get the display field id
         $relatedlists = $module->getRelatedLists(); // to get the related list of the module in form of ZCRMModuleRelatedList
-        if ($relatedlists != null) {
+        if (null != $relatedlists) {
             foreach ($relatedlists as $relatedlist) {
                 echo $relatedlist->getApiName(); // to get the api name of the related list
                 echo $relatedlist->getModule(); // to get the module api name of the related list
@@ -101,8 +101,8 @@ class RestC
             }
         }
         $RelatedListProperties = $module->getRelatedListProperties(); // to get the related list properties in form of ZCRMRelatedListProperties instance array
-        
-        if ($RelatedListProperties != null) {
+
+        if (null != $RelatedListProperties) {
             echo $RelatedListProperties->getSortBy(); // to get the sort by field of the related list
             echo $RelatedListProperties->getSortOrder(); // to get the sort order of the related list
             $fields = $RelatedListProperties->getFields(); // to get the fields of the related list
@@ -111,14 +111,14 @@ class RestC
             }
         }
         $properties = $module->getProperties(); // to get the properties of the module
-        if ($properties != null) {
+        if (null != $properties) {
             foreach ($properties as $property) {
                 echo $property;
             }
         }
         echo $module->getPerPage(); // to get the records per page for the module
         $fields = $module->getSearchLayoutFields(); // to get the search layout fields
-        if ($fields != null) {
+        if (null != $fields) {
             foreach ($fields as $field) {
                 echo $field;
             }
@@ -126,15 +126,15 @@ class RestC
         echo $module->getDefaultTerritoryName(); // to get the default territory name
         echo $module->getDefaultTerritoryId(); // to get the default territory id
         $customview = $module->getDefaultCustomView(); // to get the default custom view of the module in form of ZCRMCustomView instance
-        
-        if ($customview != null) {
+
+        if (null != $customview) {
             echo $customview->getDisplayValue(); // to get the display value of the custom view
             echo $customview->isDefault(); // to check whether the custom view is default
             echo $customview->getId(); // to get the id of the custom view
             echo $customview->getName(); // to get the name of the custom view
             echo $customview->getSystemName(); // to get the system name
             echo $customview->getSortBy(); // to get the sort by field of the custom view
-            
+
             $fields = $customview->getFields(); // to get the field names of the custom view
             foreach ($fields as $field) {
                 echo $field;
@@ -160,28 +160,31 @@ class RestC
         echo $module->getSequenceNumber(); // to get the sequence number of the module
         echo $module->getDefaultCustomViewId(); // to get the default custom view id
     }
-    
+
     public static function getRecordInstance()
     {
         $rest = ZCRMRestClient::getInstance(); // to get the rest client
-        $record_Instance = $rest->getRecordInstance("{module_API_Name}", "record_id"); // to get dummy record object
+        $record_Instance = $rest->getRecordInstance('{module_API_Name}', 'record_id'); // to get dummy record object
+
         return $record_Instance;
     }
-    
+
     public static function getModuleInstance()
     {
         $rest = ZCRMRestClient::getInstance(); // to get the rest client
-        $module_Instance = $rest->getModuleInstance("{module_API_Name}"); // to get dummy module object
+        $module_Instance = $rest->getModuleInstance('{module_API_Name}'); // to get dummy module object
+
         return $module_Instance;
     }
-    
+
     public static function getOrganizationInstance()
     {
         $rest = ZCRMRestClient::getInstance(); // to get the rest client
         $organization_Instance = $rest->getOrganizationInstance(); // to get dummy organization object
+
         return $organization_Instance;
     }
-    
+
     public function getCurrentUser()
     {
         $rest = ZCRMRestClient::getInstance(); // to get the rest client
@@ -193,7 +196,7 @@ class RestC
             echo $roleInstance->getId(); // to get the role id
             echo $roleInstance->getName(); // to get the role name
             $customizeInstance = $userInstance->getCustomizeInfo(); // to get the customization information of the user in for of the ZCRMUserCustomizeInfo form
-            if ($customizeInstance != null) {
+            if (null != $customizeInstance) {
                 echo $customizeInstance->getNotesDesc(); // to get the note description
                 echo $customizeInstance->getUnpinRecentItem(); // to get the unpinned recent items
                 echo $customizeInstance->isToShowRightPanel(); // to check whether the right panel is shown
@@ -211,7 +214,7 @@ class RestC
             echo $userInstance->getAlias(); // to get the alias of the user
             echo $userInstance->getStreet(); // to get the street name of the user
             $themeInstance = $userInstance->getTheme(); // to get the theme of the user in form of the ZCRMUserTheme
-            if ($themeInstance != null) {
+            if (null != $themeInstance) {
                 echo $themeInstance->getNormalTabFontColor(); // to get the normal tab font color
                 echo $themeInstance->getNormalTabBackground(); // to get the normal tab background
                 echo $themeInstance->getSelectedTabFontColor(); // to get the selected tab font color
@@ -241,41 +244,41 @@ class RestC
             echo $userInstance->getStatus(); // to get the status of the user
         }
     }
-    
+
     public static function getOrganizationDetails(){
-        $rest=ZCRMRestClient::getInstance();//to get the rest client
-        $orgIns=$rest->getOrganizationDetails()->getData();//to get the organization in form of ZCRMOrganization instance
-        echo $orgIns->getCompanyName();//to get the company name of the organization
-        echo $orgIns->getOrgId();//to get the organization id of the organization
-        echo $orgIns->getCountryCode();//to get the country code of the organization
-        echo $orgIns->getCountry();//to get the the country of the organization
-        echo $orgIns->getCurrencyLocale();//to get the country locale of the organization
-        echo $orgIns->getFax();//to get the fax number of the organization
-        echo $orgIns->getAlias();//to get the alias  of the organization
-        echo $orgIns->getDescription();//to get the description of the organization
-        echo $orgIns->getStreet();//to get the street name of the organization
-        echo $orgIns->getCity();//to get the city name  of the organization
-        echo $orgIns->getState();//to get the state  of the organization
-        echo $orgIns->getZgid();//to get the zoho group id of the organization
-        echo $orgIns->getWebSite();//to get the website  of the organization
-        echo $orgIns->getPrimaryEmail();//to get the primary email of the organization
-        echo $orgIns->getPrimaryZuid();//to get the primary zoho user id of the organization
-        echo $orgIns->getIsoCode();//to get the iso code of the organization
-        echo $orgIns->getPhone();//to get the phone number of the organization
-        echo $orgIns->getMobile();//to get the mobile number of the organization
-        echo $orgIns->getEmployeeCount();//to get the employee count of the organization
-        echo $orgIns->getCurrencySymbol();//to get the currency symbol of the organization
-        echo $orgIns->getTimeZone();//to get the time zone of the organization
-        echo $orgIns->getMcStatus();//to get the multicurrency status of the organization
-        echo $orgIns->isGappsEnabled();//to check whether the google apps is enabled
-        echo $orgIns->isPaidAccount();//to check whether the account is paid account
-        echo $orgIns->getPaidExpiry();//to get the paid expiration
-        echo $orgIns->getPaidType();//to get the paid type
-        echo $orgIns->getTrialType();//to get the trial type
-        echo $orgIns->getTrialExpiry();//to get the trial expiration
-        echo $orgIns->getZipCode();//to get the zip code of the organization
+        $rest = ZCRMRestClient::getInstance(); // to get the rest client
+        $orgIns = $rest->getOrganizationDetails()->getData(); // to get the organization in form of ZCRMOrganization instance
+        echo $orgIns->getCompanyName(); // to get the company name of the organization
+        echo $orgIns->getOrgId(); // to get the organization id of the organization
+        echo $orgIns->getCountryCode(); // to get the country code of the organization
+        echo $orgIns->getCountry(); // to get the the country of the organization
+        echo $orgIns->getCurrencyLocale(); // to get the country locale of the organization
+        echo $orgIns->getFax(); // to get the fax number of the organization
+        echo $orgIns->getAlias(); // to get the alias  of the organization
+        echo $orgIns->getDescription(); // to get the description of the organization
+        echo $orgIns->getStreet(); // to get the street name of the organization
+        echo $orgIns->getCity(); // to get the city name  of the organization
+        echo $orgIns->getState(); // to get the state  of the organization
+        echo $orgIns->getZgid(); // to get the zoho group id of the organization
+        echo $orgIns->getWebSite(); // to get the website  of the organization
+        echo $orgIns->getPrimaryEmail(); // to get the primary email of the organization
+        echo $orgIns->getPrimaryZuid(); // to get the primary zoho user id of the organization
+        echo $orgIns->getIsoCode(); // to get the iso code of the organization
+        echo $orgIns->getPhone(); // to get the phone number of the organization
+        echo $orgIns->getMobile(); // to get the mobile number of the organization
+        echo $orgIns->getEmployeeCount(); // to get the employee count of the organization
+        echo $orgIns->getCurrencySymbol(); // to get the currency symbol of the organization
+        echo $orgIns->getTimeZone(); // to get the time zone of the organization
+        echo $orgIns->getMcStatus(); // to get the multicurrency status of the organization
+        echo $orgIns->isGappsEnabled(); // to check whether the google apps is enabled
+        echo $orgIns->isPaidAccount(); // to check whether the account is paid account
+        echo $orgIns->getPaidExpiry(); // to get the paid expiration
+        echo $orgIns->getPaidType(); // to get the paid type
+        echo $orgIns->getTrialType(); // to get the trial type
+        echo $orgIns->getTrialExpiry(); // to get the trial expiration
+        echo $orgIns->getZipCode(); // to get the zip code of the organization
     }
 }
-$obj = new RestC();//object of the class
+$obj = new RestC(); // object of the class
 
-$obj->getOrganizationDetails();//function call
+$obj->getOrganizationDetails(); // function call

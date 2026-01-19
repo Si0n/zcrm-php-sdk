@@ -15,80 +15,77 @@ use zcrmsdk\crm\utility\APIConstants;
 
 class BulkAPIHandler
 {
-    protected $bulkReadRecordIns;
-    protected $bulkWriteRecordIns;
-    protected $recordIns;
-    protected $fileName;
+    protected ?ZCRMRecord $recordIns = null;
+    protected ?string $fileName = null;
 
-    private function __construct(ZCRMBulkRead $zcrmReadRecord, ZCRMBulkWrite $zcrmWriteRecord)
-    {
-        $this->bulkReadRecordIns = $zcrmReadRecord;
-        $this->bulkWriteRecordIns = $zcrmWriteRecord;
+    private function __construct(
+        protected ZCRMBulkRead $zcrmReadRecord,
+        protected ZCRMBulkWrite $zcrmWriteRecord
+    ) {
     }
 
-    public static function getInstance(ZCRMBulkRead $zcrmReadRecord, ZCRMBulkWrite $zcrmWriteRecord)
+    public static function getInstance(ZCRMBulkRead $zcrmReadRecord, ZCRMBulkWrite $zcrmWriteRecord): BulkAPIHandler
     {
         return new BulkAPIHandler($zcrmReadRecord, $zcrmWriteRecord);
     }
 
-    public function processZip($filePath, $download, $fileName, $operationType, $fileURL, $checkFailed)
+    public function processZip(string $filePath, bool $download, ?string $fileName, string $operationType, ?string $fileURL, ?bool $checkFailed = false): BulkResponse
     {
         $fieldAPINames = [];
         $fileType = null;
         $csvFilePointer = null;
-        $moduleAPIName = null;
         $eventsData = [];
         try {
             if (APIConstants::READ == $operationType) {
                 if ($download && null == $fileName) {
-                    $fileResponse = BulkReadAPIHandler::getInstance($this->bulkReadRecordIns)->downloadBulkReadResult();
+                    $fileResponse = BulkReadAPIHandler::getInstance($this->zcrmReadRecord)->downloadBulkReadResult();
                     if (200 != $fileResponse->getHttpStatusCode()) {
                         throw new ZCRMException('zip file not downloaded');
-                    } else {
+                    }  
                         if (!self::writeStreamtoZipFile($fileResponse, $filePath . '/')) {
                             throw new ZCRMException('Error while writing file in the file path specified: ' . $filePath . '/', APIConstants::RESPONSECODE_BAD_REQUEST);
                         }
                         if (!self::unzip($filePath . '/' . $fileResponse->getFileName(), $filePath . '/')) {
                             throw new ZCRMException('Error occurred while unzipping the file: ' . $filePath . '/' . $fileResponse->getFileName(), APIConstants::RESPONSECODE_BAD_REQUEST);
                         }
-                        if (($csvFilePointer = fopen($filePath . '/' . $this->fileName, 'r')) == false) {
-                            throw new ZCRMException("csvreader: Could not read CSV \"$filePath . " / " . $this->fileName . \"", APIConstants::RESPONSECODE_BAD_REQUEST);
+                        if (!($csvFilePointer = fopen($filePath . '/' . $this->fileName, 'r'))) {
+                            throw new ZCRMException(sprintf('csv-reader: Could not read CSV "%s" / %s', $filePath, $this->fileName), APIConstants::RESPONSECODE_BAD_REQUEST);
                         }
-                    }
+
                     $fileResponse = null;
                 }
-                $moduleAPIName = $this->bulkReadRecordIns->getModuleAPIName();
+                $moduleAPIName = $this->zcrmReadRecord->getModuleAPIName();
             } else {
-                if ($download && null == $fileName && null != $fileURL) {
-                    $fileResponse = BulkWriteAPIHandler::getInstance($this->bulkWriteRecordIns)->downloadBulkWriteResult($fileURL);
+                if ($download && null == $fileName && null !== $fileURL) {
+                    $fileResponse = BulkWriteAPIHandler::getInstance($this->zcrmWriteRecord)->downloadBulkWriteResult($fileURL);
                     if (200 != $fileResponse->getHttpStatusCode()) {
                         throw new ZCRMException('zip file not downloaded', $fileResponse->getHttpStatusCode());
-                    } else {
+                    }  
                         if (!self::writeStreamtoZipFile($fileResponse, $filePath . '/')) {
                             throw new ZCRMException('Error while writing file in the file path specified: ' . $filePath . '/', APIConstants::RESPONSECODE_BAD_REQUEST);
                         }
                         if (!self::unzip($filePath . '/' . $fileResponse->getFileName(), $filePath . '/')) {
                             throw new ZCRMException('Error occurred while unzipping the file: ' . $filePath . '/' . $fileResponse->getFileName(), APIConstants::RESPONSECODE_BAD_REQUEST);
                         }
-                        if (($csvFilePointer = fopen($filePath . '/' . $this->fileName, 'r')) == false) {
-                            throw new ZCRMException("csvreader: Could not read \".$filePath." / ".$this->fileName.\"", APIConstants::RESPONSECODE_BAD_REQUEST);
+                        if (!($csvFilePointer = fopen($filePath . '/' . $this->fileName, 'r'))) {
+                            throw new ZCRMException(sprintf('csv-reader: Could not read CSV "%s" / %s', $filePath, $this->fileName), APIConstants::RESPONSECODE_BAD_REQUEST);
                         }
-                    }
+
                     $fileResponse = null;
                 }
-                $moduleAPIName = $this->bulkWriteRecordIns->getModuleAPIName();
+                $moduleAPIName = $this->zcrmWriteRecord->getModuleAPIName();
             }
             if (null == $csvFilePointer) {
                 if (!self::unzip($filePath . '/' . $fileName, $filePath . '/')) {
                     throw new ZCRMException('Error occurred while unzipping the file: ' . $filePath . '/' . $fileName, APIConstants::RESPONSECODE_BAD_REQUEST);
                 }
-                if (($csvFilePointer = fopen($filePath . '/' . $this->fileName, 'r')) == false) {
-                    throw new ZCRMException("csvreader: Could not read \".$filePath . " / " . $this->fileName.\"", APIConstants::RESPONSECODE_BAD_REQUEST);
+                if (!($csvFilePointer = fopen($filePath . '/' . $this->fileName, 'r'))) {
+                    throw new ZCRMException(sprintf('csv-reader: Could not read CSV "%s" / %s', $filePath, $this->fileName), APIConstants::RESPONSECODE_BAD_REQUEST);
                 }
             }
             if (strpos($this->fileName, '.ics')) {
                 $fileType = 'ics';
-                if (($value = fgetcsv($csvFilePointer)) == false) {
+                if (!($value = fgetcsv($csvFilePointer))) {
                     throw new ZCRMException('The file is empty', APIConstants::RESPONSECODE_BAD_REQUEST);
                 }
                 $len = 0;
@@ -102,10 +99,8 @@ class BulkAPIHandler
                         break;
                     }
                 } while (($value = fgetcsv($csvFilePointer)) !== false);
-            } else {
-                if (($fieldAPINames = fgetcsv($csvFilePointer)) == false) {
-                    throw new ZCRMException('The file is empty', APIConstants::RESPONSECODE_BAD_REQUEST);
-                }
+            } elseif (!($fieldAPINames = fgetcsv($csvFilePointer))) {
+                throw new ZCRMException('The file is empty', APIConstants::RESPONSECODE_BAD_REQUEST);
             }
         } catch (ZCRMException $exception) {
             APIExceptionHandler::logException($exception);
@@ -132,7 +127,7 @@ class BulkAPIHandler
                 $stream = $fileResponse->getFileContent();
                 fputs($filePointer, $stream);
                 fclose($filePointer);
-            } catch (Exception $ex) {
+            } catch (exception $ex) {
                 throw new ZCRMException($ex);
             }
         } catch (ZCRMException $exception) {
@@ -144,83 +139,80 @@ class BulkAPIHandler
         return true;
     }
 
-    public function setRecordProperties($moduleAPIName, $fieldvsValues, $rowNumber)
+    public function setRecordProperties(string $moduleAPIName, array $fieldVsValues, int $rowNumber): ZCRMRecord
     {
-        unset($this->recordIns);
         $this->recordIns = ZCRMRecord::getInstance($moduleAPIName, null);
         $this->recordIns->setRecordRowNumber($rowNumber);
-        foreach ($fieldvsValues as $key => $value) {
-            if (('Id' == $key || 'RECORD_ID' == $key) && null != $value) {
+        foreach ($fieldVsValues as $key => $value) {
+            if (('Id' == $key || 'RECORD_ID' == $key) && null !== $value) {
                 $this->recordIns->setEntityId($value);
-            } elseif ('Created_By' == $key && null != $value) {
-                $createdBy = null != $this->recordIns->getCreatedBy() ? $this->recordIns->getCreatedBy() : ZCRMUser::getInstance();
+            } elseif ('Created_By' == $key && null !== $value) {
+                $createdBy = null !== $this->recordIns->getCreatedBy() ? $this->recordIns->getCreatedBy() : ZCRMUser::getInstance();
                 $createdBy->setId($value);
                 $this->recordIns->setCreatedBy($createdBy);
-            } elseif ('Modified_By' == $key && null != $value) {
-                $modifiedBy = null != $this->recordIns->getModifiedBy() ? $this->recordIns->getModifiedBy() : ZCRMUser::getInstance();
+            } elseif ('Modified_By' == $key && null !== $value) {
+                $modifiedBy = null !== $this->recordIns->getModifiedBy() ? $this->recordIns->getModifiedBy() : ZCRMUser::getInstance();
                 $modifiedBy->setId($value);
                 $this->recordIns->setModifiedBy($modifiedBy);
-            } elseif ('Created_Time' == $key && null != $value) {
+            } elseif ('Created_Time' == $key && null !== $value) {
                 $this->recordIns->setCreatedTime('' . $value);
-            } elseif ('Modified_Time' == $key && null != $value) {
+            } elseif ('Modified_Time' == $key && null !== $value) {
                 $this->recordIns->setModifiedTime('' . $value);
-            } elseif ('Owner' == $key && null != $value) {
-                $owner = null != $this->recordIns->getOwner() ? $this->recordIns->getModifiedBy() : ZCRMUser::getInstance();
+            } elseif ('Owner' == $key && null !== $value) {
+                $owner = null !== $this->recordIns->getOwner() ? $this->recordIns->getModifiedBy() : ZCRMUser::getInstance();
                 $owner->setId($value);
                 $this->recordIns->setOwner($owner);
-            } elseif ('$' == substr($key, 0, 1) && null != $value) {
+            } elseif (str_starts_with($key, '$') && null !== $value) {
                 $this->recordIns->setProperty(str_replace('$', '', $key), $value);
-            } elseif ('STATUS' == $key && null != $value) {
+            } elseif ('STATUS' == $key && null !== $value) {
                 $this->recordIns->setStatus($value);
-            } elseif ('ERRORS' == $key && null != $value) {
+            } elseif ('ERRORS' == $key && null !== $value) {
                 $this->recordIns->setErrorMessage($value);
-            } else {
-                if (null != $value && '0' != $value) {
-                    $this->recordIns->setFieldValue($key, $value);
-                }
+            } elseif (null !== $value && '0' !== $value) {
+                $this->recordIns->setFieldValue($key, $value);
             }
         }
 
         return $this->recordIns;
     }
 
-    private function unzip($zipFilePath, $destDir)
+    private function unzip(string $zipFilePath, string $destDir): bool
     {
         try {
-            if (file_exists($zipFilePath . '.zip') || file_exists($zipFilePath) || file_exists($zipFilePath . '.csv')) {
-                $zipFilePath = file_exists($zipFilePath . '.zip') ? $zipFilePath . '.zip' : $zipFilePath;
-                if (false !== strpos($zipFilePath, 'zip')) {
-                    $zip = new \ZipArchive();
-                    if (true === $zip->open($zipFilePath)) {
-                        for ($i = 0; $i < $zip->numFiles; ++$i) {
-                            $stat = $zip->statIndex($i);
-                            $this->fileName = trim(basename($stat['name']) . PHP_EOL);
-                        }
-                        $zip->extractTo($destDir);
-                        $zip->close();
-                    } else {
-                        return false;
-                    }
-                } else {
-                    $this->fileName = file_exists($zipFilePath . '.csv') ? basename($zipFilePath . '.csv') : basename($zipFilePath);
-                }
-            } else {
+            if (!file_exists($zipFilePath . '.zip') && !file_exists($zipFilePath) && !file_exists($zipFilePath . '.csv')) {
                 return false;
             }
-        } catch (Exception $e) {
+
+            $zipFilePath = file_exists($zipFilePath . '.zip') ? $zipFilePath . '.zip' : $zipFilePath;
+            if (!str_contains($zipFilePath, 'zip')) {
+                $this->fileName = file_exists($zipFilePath . '.csv') ? basename($zipFilePath . '.csv') : basename($zipFilePath);
+
+                return true;
+            }
+            $zip = new \ZipArchive();
+            if (true !== $zip->open($zipFilePath)) {
+                return false;
+            }
+            for ($i = 0; $i < $zip->numFiles; ++$i) {
+                $stat = $zip->statIndex($i);
+                $this->fileName = trim(basename($stat['name']) . PHP_EOL);
+            }
+            $zip->extractTo($destDir);
+            $zip->close();
+        } catch (\Exception) {
             return false;
         }
 
         return true;
     }
 
-    public function next($moduleAPIName, $fieldvsValues, $rowNumber)
+    public function next(string $moduleAPIName, ?array $fieldVsValues, int $rowNumber): ZCRMRecord
     {
-        if (null != $fieldvsValues && sizeof($fieldvsValues) > 0) {
-            return self::setRecordProperties($moduleAPIName, $fieldvsValues, $rowNumber);
-        } else {
-            return ZCRMRecord::getInstance(null, null);
+        if (null !== $fieldVsValues && sizeof($fieldVsValues) > 0) {
+            return self::setRecordProperties($moduleAPIName, $fieldVsValues, $rowNumber);
         }
+
+        return ZCRMRecord::getInstance(null, null);
     }
 
     public function __destruct()

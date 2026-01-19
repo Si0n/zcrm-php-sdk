@@ -73,27 +73,27 @@ class ZCRMConfigUtil
         }
     }
 
-    public static function getConfigValue(int|string $key): mixed
+    public static function getConfigValue(int | string $key): mixed
     {
         return self::$configProperties[$key] ?? '';
     }
 
-    public static function setConfigValue(int|string $key, mixed $value): void
+    public static function setConfigValue(int | string $key, mixed $value): void
     {
         self::$configProperties[$key] = $value;
     }
 
-    public static function getAPIBaseUrl()
+    public static function getAPIBaseUrl(): mixed
     {
         return self::getConfigValue(APIConstants::API_BASE_URL);
     }
 
-    public static function getFileUploadURL()
+    public static function getFileUploadURL(): mixed
     {
         return self::getConfigValue(APIConstants::FILE_UPLOAD_URL);
     }
 
-    public static function getAPIVersion()
+    public static function getAPIVersion(): mixed
     {
         return self::getConfigValue(APIConstants::API_VERSION);
     }
@@ -102,7 +102,7 @@ class ZCRMConfigUtil
      * @throws ZCRMException
      * @throws ZohoOAuthException
      */
-    public static function getAccessToken()
+    public static function getAccessToken(): ?string
     {
         $currentUserEmail = ZCRMRestClient::getCurrentUserEmailID();
 

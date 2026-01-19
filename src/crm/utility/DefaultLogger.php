@@ -6,7 +6,7 @@ use Psr\Log\LoggerInterface;
 
 class DefaultLogger implements LoggerInterface
 {
-    protected null|string $logPath = null;
+    protected ?string $logPath = null;
 
     public function __construct()
     {
@@ -21,47 +21,47 @@ class DefaultLogger implements LoggerInterface
         }
     }
 
-    public function emergency(\Stringable|string $message, array $context = []): void
+    public function emergency(\Stringable | string $message, array $context = []): void
     {
         $this->writeToFile("EMERGENCY: $message", $context);
     }
 
-    public function alert(\Stringable|string $message, array $context = []): void
+    public function alert(\Stringable | string $message, array $context = []): void
     {
         $this->writeToFile("ALERT: $message", $context);
     }
 
-    public function critical(\Stringable|string $message, array $context = []): void
+    public function critical(\Stringable | string $message, array $context = []): void
     {
         $this->writeToFile("CRITICAL: $message", $context);
     }
 
-    public function error(\Stringable|string $message, array $context = []): void
+    public function error(\Stringable | string $message, array $context = []): void
     {
         $this->writeToFile("ERROR: $message", $context);
     }
 
-    public function warning(\Stringable|string $message, array $context = []): void
+    public function warning(\Stringable | string $message, array $context = []): void
     {
         $this->writeToFile("WARNING: $message", $context);
     }
 
-    public function notice(\Stringable|string $message, array $context = []): void
+    public function notice(\Stringable | string $message, array $context = []): void
     {
         $this->writeToFile("NOTICE: $message", $context);
     }
 
-    public function info(\Stringable|string $message, array $context = []): void
+    public function info(\Stringable | string $message, array $context = []): void
     {
         $this->writeToFile("INFO: $message", $context);
     }
 
-    public function debug(\Stringable|string $message, array $context = []): void
+    public function debug(\Stringable | string $message, array $context = []): void
     {
         $this->writeToFile("DEBUG: $message", $context);
     }
 
-    public function log($level, \Stringable|string $message, array $context = []): void
+    public function log($level, \Stringable | string $message, array $context = []): void
     {
         $this->writeToFile("$level: $message", $context);
     }

@@ -19,7 +19,6 @@ use zcrmsdk\crm\utility\APIConstants;
 
 class EntityAPIHandler extends APIHandler
 {
-
     private function __construct(protected ZCRMRecord $record)
     {
     }

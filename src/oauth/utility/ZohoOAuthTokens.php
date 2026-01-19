@@ -10,7 +10,7 @@ class ZohoOAuthTokens
 
     private ?string $accessToken = null;
 
-    private null|float|int $expiryTime = null;
+    private float | int | null $expiryTime = null;
 
     private ?string $userEmailId = null;
 
@@ -43,7 +43,7 @@ class ZohoOAuthTokens
         return $this->expiryTime;
     }
 
-    public function setExpiryTime(null|float|int $expiryTime): void
+    public function setExpiryTime(float | int | null $expiryTime): void
     {
         $this->expiryTime = $expiryTime;
     }

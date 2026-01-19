@@ -2,8 +2,6 @@
 
 namespace zcrmsdk\oauth\exception;
 
-use JetBrains\PhpStorm\Pure;
-
 class ZohoOAuthException extends \Exception
 {
     protected $message = 'Unknown exception';
@@ -11,17 +9,17 @@ class ZohoOAuthException extends \Exception
     protected string $file;
     protected int $line;
 
-    public function __construct($message = null, $code = 0)
+    public function __construct(string | \Throwable $message = 'Unknown exception', int $code = 0, ?\Throwable $previous = null)
     {
-        if (!$message) {
-            throw new $this('Unknown ' . get_class($this));
+        if ($message instanceof \Throwable) {
+            parent::__construct($message->getMessage(), $message->getCode(), $message);
+        } else {
+            parent::__construct($message, $code, $previous);
         }
-        parent::__construct($message, $code);
     }
 
-    #[Pure]
     public function __toString(): string
     {
-        return get_class($this) . " Caused by:'{$this->message}' in {$this->file}({$this->line})\n{$this->getTraceAsString()}";
+        return static::class . " Caused by:'{$this->message}' in {$this->file}({$this->line})\n{$this->getTraceAsString()}";
     }
 }

@@ -952,7 +952,7 @@ class ZCRMOrganization
         return OrganizationAPIHandler::getInstance()->getAllActiveConfirmedAdmins($param_map, $header_map);
     }
 
-    public function getCurrentUser(): APIResponse|BulkAPIResponse
+    public function getCurrentUser(): APIResponse | BulkAPIResponse
     {
         return OrganizationAPIHandler::getInstance()->getCurrentUser();
     }
@@ -960,9 +960,9 @@ class ZCRMOrganization
     /**
      * method to get the profiles of the organization.
      *
-     * @return BulkAPIResponse instance of the BulkAPIResponse class containing the bulk api response
-     *
      * @throws ZCRMException
+     *
+     * @return BulkAPIResponse instance of the BulkAPIResponse class containing the bulk api response
      */
     public function getAllProfiles(): BulkAPIResponse
     {
@@ -974,9 +974,9 @@ class ZCRMOrganization
      *
      * @param string $profileId the profile id of the organization
      *
-     * @return APIResponse instance of the APIResponse class containing the api response
-     *
      * @throws ZCRMException
+     *
+     * @return APIResponse instance of the APIResponse class containing the api response
      */
     public function getProfile(string $profileId): APIResponse
     {
@@ -986,9 +986,9 @@ class ZCRMOrganization
     /**
      * method to get the roles of the organization.
      *
-     * @return BulkAPIResponse instance of the BulkAPIResponse class containing the bulk api response
-     *
      * @throws ZCRMException
+     *
+     * @return BulkAPIResponse instance of the BulkAPIResponse class containing the bulk api response
      */
     public function getAllRoles(): BulkAPIResponse
     {
@@ -1000,9 +1000,9 @@ class ZCRMOrganization
      *
      * @param string $roleId the role id of the organization
      *
-     * @return APIResponse instance of the APIResponse class containing the api response
-     *
      * @throws ZCRMException
+     *
+     * @return APIResponse instance of the APIResponse class containing the api response
      */
     public function getRole(string $roleId): APIResponse
     {

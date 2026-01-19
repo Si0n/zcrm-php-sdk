@@ -4,19 +4,19 @@ namespace zcrmsdk\crm\api\handler;
 
 class APIHandler implements APIHandlerInterface
 {
-    protected null|string $requestMethod = null;
+    protected ?string $requestMethod = null;
 
-    protected null|string $urlPath = null;
+    protected ?string $urlPath = null;
 
-    protected null|array $requestHeaders = null;
+    protected ?array $requestHeaders = null;
 
-    protected null|array $requestParams = [];
+    protected ?array $requestParams = [];
 
     protected mixed $requestBody = null;
 
-    protected null|string $apiKey = null;
+    protected ?string $apiKey = null;
 
-    protected null|bool $isBulk = false;
+    protected ?bool $isBulk = false;
 
     public function getRequestMethod(): ?string
     {
@@ -43,7 +43,7 @@ class APIHandler implements APIHandlerInterface
         return $this->requestParams;
     }
 
-    public function addParam(int|string $key, mixed $value): void
+    public function addParam(int | string $key, mixed $value): void
     {
         if (!isset($this->requestParams[$key])) {
             $this->requestParams[$key] = [
@@ -79,7 +79,7 @@ class APIHandler implements APIHandlerInterface
     /**
      * Set the request method.
      */
-    public function setRequestMethod(null|string $requestMethod): void
+    public function setRequestMethod(?string $requestMethod): void
     {
         $this->requestMethod = $requestMethod;
     }
@@ -87,7 +87,7 @@ class APIHandler implements APIHandlerInterface
     /**
      * Set the request urlPath.
      */
-    public function setUrlPath(null|string $urlPath): void
+    public function setUrlPath(?string $urlPath): void
     {
         $this->urlPath = $urlPath;
     }
@@ -95,7 +95,7 @@ class APIHandler implements APIHandlerInterface
     /**
      * set the request Headers.
      */
-    public function setRequestHeaders(null|array $requestHeaders): void
+    public function setRequestHeaders(?array $requestHeaders): void
     {
         $this->requestHeaders = $requestHeaders;
     }
@@ -103,7 +103,7 @@ class APIHandler implements APIHandlerInterface
     /**
      * Set the request parameters.
      */
-    public function setRequestParams(null|array $requestParams): void
+    public function setRequestParams(?array $requestParams): void
     {
         $this->requestParams = $requestParams;
     }
@@ -127,7 +127,7 @@ class APIHandler implements APIHandlerInterface
     /**
      * Set the API Key used in the input json data(like 'modules', 'data','layouts',..etc).
      */
-    public function setApiKey(null|string $apiKey): void
+    public function setApiKey(?string $apiKey): void
     {
         $this->apiKey = $apiKey;
     }

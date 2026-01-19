@@ -16,87 +16,87 @@ class ZCRMModule
     /**
      * convertable module.
      */
-    private null|bool $convertable = null;
+    private ?bool $convertable = null;
 
     /**
      * creatable module.
      */
-    private null|bool $creatable = null;
+    private ?bool $creatable = null;
 
     /**
      * editable module.
      */
-    private null|bool $editable = null;
+    private ?bool $editable = null;
 
     /**
      * deletable module.
      */
-    private null|bool $deletable = null;
+    private ?bool $deletable = null;
 
     /**
      * weblink of the webtab.
      */
-    private null|string $webLink = null;
+    private ?string $webLink = null;
 
     /**
      * singular label name of the module.
      */
-    private null|string $singularLabel = null;
+    private ?string $singularLabel = null;
 
     /**
      * plural label name of the module.
      */
-    private null|string $pluralLabel = null;
+    private ?string $pluralLabel = null;
 
     /**
      * the user who modified the module.
      */
-    private null|ZCRMUser $modifiedBy = null;
+    private ?ZCRMUser $modifiedBy = null;
 
     /**
      * modification time of the moduel.
      */
-    private null|string $modifiedTime = null;
+    private ?string $modifiedTime = null;
 
     /**
      * viewable module.
      */
-    private null|bool $viewable = null;
+    private ?bool $viewable = null;
 
     /**
      * api supported module.
      */
-    private null|bool $apiSupported = null;
+    private ?bool $apiSupported = null;
 
     /**
      * custom module.
      */
-    private null|bool $customModule = null;
+    private ?bool $customModule = null;
 
     /**
      * scoring supported module.
      */
-    private null|bool $scoringSupported = null;
+    private ?bool $scoringSupported = null;
 
     /**
      * module id.
      */
-    private null|string $id = null;
+    private ?string $id = null;
 
     /**
      * module display name.
      */
-    private null|string $moduleName = null;
+    private ?string $moduleName = null;
 
     /**
      * business card field limit.
      */
-    private null|int $businessCardFieldLimit = null;
+    private ?int $businessCardFieldLimit = null;
 
     /**
      * module api name.
      */
-    private null|string $apiName = null;
+    private ?string $apiName = null;
 
     /**
      * api names of the fields supported.
@@ -113,12 +113,12 @@ class ZCRMModule
     /**
      * display field name of the module.
      */
-    private null|string $displayFieldName = null;
+    private ?string $displayFieldName = null;
 
     /**
      * id of the display field of the module.
      */
-    private null|string $displayFieldId = null;
+    private ?string $displayFieldId = null;
 
     /**
      * related list of the module.
@@ -1211,9 +1211,9 @@ class ZCRMModule
     /**
      * method to get the tags of the module.
      *
-     * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
-     *
      * @throws ZCRMException ifthe module api name is invalid
+     *
+     * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
      */
     public function getTags()
     {
@@ -1229,9 +1229,9 @@ class ZCRMModule
      *
      * @param string $tagid tag id of the tag
      *
-     * @return APIResponse instance of the APIResponse class which holds the API response
-     *
      * @throws ZCRMException if the tag id and the module api name is invalid
+     *
+     * @return APIResponse instance of the APIResponse class which holds the API response
      */
     public function getTagCount($tagid)
     {
@@ -1250,9 +1250,9 @@ class ZCRMModule
      *
      * @param array $tags array of ZCRMTag instances
      *
-     * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
-     *
      * @throws ZCRMException if the tag object array or the module api name is invalid
+     *
+     * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
      */
     public function createTags($tags)
     {
@@ -1271,9 +1271,9 @@ class ZCRMModule
      *
      * @param array $tags array of ZCRMTag instances
      *
-     * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
-     *
      * @throws ZCRMException if the tag object array or the module api name is invalid
+     *
+     * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
      */
     public function updateTags($tags)
     {
@@ -1293,9 +1293,9 @@ class ZCRMModule
      * @param array $recordIds array of record ids of the records in the module
      * @param array $tagNames  array of tag names
      *
-     * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
-     *
      * @throws ZCRMException if the module api name or tag name list or record ID list is invalid
+     *
+     * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
      */
     public function addTagsToRecords($recordIds, $tagNames)
     {
@@ -1318,9 +1318,9 @@ class ZCRMModule
      * @param array $recordIds array of record ids of the records in the module
      * @param array $tagNames  array of tag names
      *
-     * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
-     *
      * @throws ZCRMException if the module api name or tag name list or record ID list is invalid
+     *
+     * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
      */
     public function removeTagsFromRecords($recordIds, $tagNames)
     {

@@ -51,7 +51,7 @@ class ZCRMProfileSection
      *
      * @param array $name the name of the profile section
      */
-    public function setName(null|string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
@@ -71,7 +71,7 @@ class ZCRMProfileSection
      *
      * @param array $categoryIns ZCRMProfileCategory class instance
      */
-    public function addCategory(null|ZCRMProfileCategory $categoryIns): void
+    public function addCategory(?ZCRMProfileCategory $categoryIns): void
     {
         $this->categories[] = $categoryIns;
     }

@@ -8,7 +8,7 @@ use zcrmsdk\oauth\ZohoOAuth;
 
 class ZohoOAuthPersistenceByFile implements ZohoOAuthPersistenceInterface
 {
-    private const DEFAULT_FILENAME = 'zcrm_oauthtokens.txt';
+    private const string DEFAULT_FILENAME = 'zcrm_oauthtokens.txt';
 
     public function getTokenPersistencePath(): string
     {

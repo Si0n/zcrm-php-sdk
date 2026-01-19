@@ -11,7 +11,7 @@ class FileAPIResponse
     /**
      * response.
      */
-    private null|string $response = null;
+    private ?string $response = null;
 
     /**
      * Json response.
@@ -23,7 +23,7 @@ class FileAPIResponse
     /**
      * http status code.
      */
-    private null|string $httpStatusCode = null;
+    private ?int $httpStatusCode = null;
 
     /**
      * response headers.
@@ -33,12 +33,12 @@ class FileAPIResponse
     /**
      * code.
      */
-    private null|string $code = null;
+    private ?string $code = null;
 
     /**
      * message.
      */
-    private null|string $message = null;
+    private ?string $message = null;
 
     /**
      * details.
@@ -48,7 +48,7 @@ class FileAPIResponse
     /**
      * response status.
      */
-    private null|string $status = null;
+    private ?string $status = null;
 
     /**
      * method to set the content of the file.
@@ -56,9 +56,9 @@ class FileAPIResponse
      * @param string $httpResponse   http response
      * @param int    $httpStatusCode status code
      *
-     * @return FileAPIResponse instance of the FileAPIResponse class containing the file api response
-     *
      * @throws ZCRMException exception is thrown if the response is faulty
+     *
+     * @return FileAPIResponse instance of the FileAPIResponse class containing the file api response
      */
     public function setFileContent(string $httpResponse, int $httpStatusCode): self
     {
@@ -141,7 +141,7 @@ class FileAPIResponse
      *
      * @param string $response the reponse to be set
      */
-    public function setResponse(null|string $response): void
+    public function setResponse(?string $response): void
     {
         $this->response = $response;
     }
@@ -171,7 +171,7 @@ class FileAPIResponse
      *
      * @return string the http Status Code
      */
-    public function getHttpStatusCode(): null|string
+    public function getHttpStatusCode(): ?int
     {
         return $this->httpStatusCode;
     }
@@ -181,7 +181,7 @@ class FileAPIResponse
      *
      * @param string $httpStatusCode the http Status Code
      */
-    public function setHttpStatusCode(null|string $httpStatusCode): void
+    public function setHttpStatusCode(?int $httpStatusCode): void
     {
         $this->httpStatusCode = $httpStatusCode;
     }
@@ -221,7 +221,7 @@ class FileAPIResponse
      *
      * @param string $code the code to be set
      */
-    public function setCode(null|string $code): void
+    public function setCode(?string $code): void
     {
         $this->code = $code;
     }
@@ -241,7 +241,7 @@ class FileAPIResponse
      *
      * @param string $message the message
      */
-    public function setMessage(null|string $message): void
+    public function setMessage(?string $message): void
     {
         $this->message = $message;
     }

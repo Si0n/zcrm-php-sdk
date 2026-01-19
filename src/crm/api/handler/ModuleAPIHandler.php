@@ -278,7 +278,7 @@ class ModuleAPIHandler extends APIHandler
      *
      * @throws ZCRMException
      */
-    public function getRelatedListDetails(int|string $relatedListId): APIResponse
+    public function getRelatedListDetails(int | string $relatedListId): APIResponse
     {
         try {
             $this->urlPath = 'settings/related_lists/' . $relatedListId;
@@ -576,7 +576,7 @@ class ModuleAPIHandler extends APIHandler
         return $layoutInstance;
     }
 
-    public function constructJSONForCustomView($customViewInstance): bool|string
+    public function constructJSONForCustomView($customViewInstance): bool | string
     {
         $customViewDetails = [];
         if (null !== $customViewInstance->getSortBy()) {
@@ -620,7 +620,7 @@ class ModuleAPIHandler extends APIHandler
         return json_encode($customViewJSON);
     }
 
-    public function constructJSONForModuleUpdate($moduleInstance): bool|string
+    public function constructJSONForModuleUpdate($moduleInstance): bool | string
     {
         $moduleSettings = [];
         if (null != $moduleInstance->getPerPage()) {

@@ -1,4 +1,5 @@
 <?php
+
 use zcrmsdk\crm\crud\ZCRMCustomView;
 use zcrmsdk\crm\crud\ZCRMInventoryLineItem;
 use zcrmsdk\crm\crud\ZCRMRecord;
@@ -9,17 +10,16 @@ use zcrmsdk\crm\setup\restclient\ZCRMRestClient;
 require_once __DIR__ . '/../vendor/autoload.php';
 class Module
 {
-
     public function __construct()
     {
-        $configuration=[];
+        $configuration = [];
         ZCRMRestClient::initialize($configuration);
     }
 
     public function getFieldDetails()
     {
-        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance("{module_api_name}"); // To get module instance
-        $response = $moduleIns->getFieldDetails("{field_id}"); // to get the field
+        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance('{module_api_name}'); // To get module instance
+        $response = $moduleIns->getFieldDetails('{field_id}'); // to get the field
         $field = $response->getData(); // to get the field data in form of ZCRMField instance.
         echo $field->getApiName(); // to get the field api name
         echo $field->getLength(); // to get the length of the field value
@@ -39,7 +39,7 @@ class Module
             echo $permission;
         }
         $lookupfield = $field->getLookupField(); // to get the field lookup information
-        if ($field->getDataType() == "Lookup") {
+        if ('Lookup' == $field->getDataType()) {
             echo $lookupfield->getModule(); // to get the module name of lookupfield
             echo $lookupfield->getDisplayLabel(); // to get the display label of the lookup field
             echo $lookupfield->getId(); // to get the id of the lookup field
@@ -73,7 +73,7 @@ class Module
 
     public function getAllFields()
     {
-        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance("{module_api_name}"); // To get module instance
+        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance('{module_api_name}'); // To get module instance
         $response = $moduleIns->getAllFields(); // to get the field
         $fields = $response->getData(); // to get the array of ZCRMField instances
         foreach ($fields as $field) { // each field
@@ -95,7 +95,7 @@ class Module
                 echo $permission;
             }
             $lookupfield = $field->getLookupField(); // to get the field lookup information
-            if ($field->getDataType() == "Lookup") {
+            if ('Lookup' == $field->getDataType()) {
                 echo $lookupfield->getModule(); // to get the module name of lookupfield
                 echo $lookupfield->getDisplayLabel(); // to get the display label of the lookup field
                 echo $lookupfield->getId(); // to get the id of the lookup field
@@ -130,8 +130,8 @@ class Module
 
     public function getLayoutDetails()
     {
-        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance("{module_api_name}"); // To get module instance
-        $response = $moduleIns->getLayoutDetails("{layout_id}"); // to get the layout
+        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance('{module_api_name}'); // To get module instance
+        $response = $moduleIns->getLayoutDetails('{layout_id}'); // to get the layout
         $layout = $response->getData(); // to get the layout data in form of ZCRMLayout instances
         echo $layout->getId(); // to get the layout id
         echo $layout->getName(); // to get layout name
@@ -139,12 +139,12 @@ class Module
         echo $layout->getModifiedTime(); // to get the modification time of the layout in iso 8601 format
         echo $layout->isVisible(); // to check if the layout is visible
         $user = $layout->getModifiedBy(); // to get the user details as ZCRMUser instance
-        if ($user != null) {
+        if (null != $user) {
             echo $user->getId(); // to get the id of the user
             echo $user->getName(); // to get the name of the user
         }
         $user = $layout->getCreatedBy(); // to get the user details as ZCRMUser instance
-        if ($user != null) {
+        if (null != $user) {
             echo $user->getId(); // to get the id of the user
             echo $user->getName(); // to get the name of the user
         }
@@ -180,7 +180,7 @@ class Module
                     echo $permission;
                 }
                 $lookupfield = $field->getLookupField(); // to get the field lookup information
-                if ($field->getDataType() == "Lookup") {
+                if ('Lookup' == $field->getDataType()) {
                     echo $lookupfield->getModule(); // to get the module name of lookupfield
                     echo $lookupfield->getDisplayLabel(); // to get the display label of the lookup field
                     echo $lookupfield->getId(); // to get the id of the lookup field
@@ -212,7 +212,7 @@ class Module
                 echo $field->getJsonType(); // to get the json type of the field
                 $convertmaps = $field->getConvertMapping();
                 foreach ($convertmaps as $key => $value) {
-                    echo $key . ":" . $value;
+                    echo $key . ':' . $value;
                 }
             }
         }
@@ -234,7 +234,7 @@ class Module
 
     public function getAllLayouts()
     {
-        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance("{module_api_name}"); // To get module instance
+        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance('{module_api_name}'); // To get module instance
         $response = $moduleIns->getAllLayouts(); // to get all the layout
         $layouts = $response->getData(); // to get the layout data in form of ZCRMLayout instances
         foreach ($layouts as $layout) {
@@ -244,12 +244,12 @@ class Module
             echo $layout->getModifiedTime(); // to get the modification time of the layout in iso 8601 format
             echo $layout->isVisible(); // to check if the layout is visible
             $user = $layout->getModifiedBy(); // to get the user details as ZCRMUser instance
-            if ($user != NULL) {
+            if (NULL != $user) {
                 echo $user->getId(); // to get the id of the user
                 echo $user->getName(); // to get the name of the user
             }
             $user = $layout->getCreatedBy(); // to get the user details as ZCRMUser instance
-            if ($user != NULL) {
+            if (NULL != $user) {
                 echo $user->getId(); // to get the id of the user
                 echo $user->getName(); // to get the name of the user
             }
@@ -285,7 +285,7 @@ class Module
                         echo $permission; // to display the permissions
                     }
                     $lookupfield = $field->getLookupField(); // to get the field lookup information
-                    if ($field->getDataType() == "Lookup") {
+                    if ('Lookup' == $field->getDataType()) {
                         echo $lookupfield->getModule(); // to get the module name of lookupfield
                         echo $lookupfield->getDisplayLabel(); // to get the display label of the lookup field
                         echo $lookupfield->getId(); // to get the id of the lookup field
@@ -317,7 +317,7 @@ class Module
                     echo $field->getJsonType(); // to get the json type of the field
                     $convertmaps = $field->getConvertMapping();
                     foreach ($convertmaps as $key => $value) {
-                        echo $key . ":" . $value;
+                        echo $key . ':' . $value;
                     }
                 }
             }
@@ -340,8 +340,8 @@ class Module
 
     public function getCustomView()
     {
-        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance("{module_api_name}"); // To get module instance
-        $response = $moduleIns->getCustomView("{custom_view_id}"); // to get the custom view
+        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance('{module_api_name}'); // To get module instance
+        $response = $moduleIns->getCustomView('{custom_view_id}'); // to get the custom view
         $customView = $response->getData(); // to get the custom view in form of ZCRMCustomView
         echo $customView->getDisplayValue(); // to get the display value of the custom view
         echo $customView->isDefault(); // to check if the custom view is default
@@ -362,11 +362,10 @@ class Module
             echo $criteria->getComparator(); // to get the comparator of the criteria
             echo $criteria->getField(); // to get the field of the criteria
             echo $criteria->getValue(); // to get the value of the criteria
-            
         }
         echo $customView->getModuleAPIName(); // to get the module api name of the custom view
         $categories = $customView->getCategoriesList(); // to get the categories list as an array of ZCRMCustomViewCategory
-        foreach ($categories as $category) { //
+        foreach ($categories as $category) {
             echo $category->getDisplayValue(); // to get the display value of the category
             echo $category->getActualValue(); // to get the actual value of the category
         }
@@ -375,8 +374,8 @@ class Module
 
     public function getAllCustomViews()
     {
-        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance("{module_api_name}"); // To get module instance
-        $param_map = array("page"=>"5","per_page"=>"10");//parameters to be passed
+        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance('{module_api_name}'); // To get module instance
+        $param_map = ['page' => '5', 'per_page' => '10']; // parameters to be passed
         $response = $moduleIns->getAllCustomViews($param_map); // to get all the custom views /$param_map - optional
         $customViews = $response->getData(); // to get the custom view in form of ZCRMCustomView
         foreach ($customViews as $customView) {
@@ -387,12 +386,12 @@ class Module
             echo $customView->getSystemName(); // to get the system name of the custom view
             echo $customView->getSortBy(); // to get the customview Sorted By field Name
             echo $customView->getCategory(); // to get the the category of the custom view
-            
+
             echo $customView->isFavorite(); // to check if the custom view is favourite
             echo $customView->getSortOrder(); // to get the sort order
             echo $customView->getCriteriaPattern(); // to get the criteria pattern
             $criterias = $customView->getCriteria(); // to get the criteria as a ZCRMCustomViewCriteria instance
-            if($criterias!=NULL){
+            if (NULL != $criterias){
                 foreach ($criterias as $criteria) {
                     echo $criteria->getComparator(); // to get the comparator of the criteria
                     echo $criteria->getField(); // to get the field of the criteria
@@ -401,8 +400,8 @@ class Module
             }
             echo $customView->getModuleAPIName(); // to get the module api name of the custom view
             $categories = $customView->getCategoriesList(); // to get the categories list as an array of ZCRMCustomViewCategory
-            if($categories!=NULL){
-                foreach ($categories as $category) { //
+            if (NULL != $categories){
+                foreach ($categories as $category) {
                     echo $category->getDisplayValue(); // to get the display value of the category
                     echo $category->getActualValue(); // to get the actual value of the category
                 }
@@ -413,22 +412,22 @@ class Module
 
     public function updateCustomView()
     {
-        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance("{module_api_name}"); // to get the instance of the module
-        $customViewInstance = ZCRMCustomView::getInstance("{module_api_name}","{custom_view_id}"); // to get the custom view instance
-        $customViewInstance->setSortOrder("desc"); // for ascending order
-        $customViewInstance->setSortBy("Lead_owner"); // field api names
+        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance('{module_api_name}'); // to get the instance of the module
+        $customViewInstance = ZCRMCustomView::getInstance('{module_api_name}','{custom_view_id}'); // to get the custom view instance
+        $customViewInstance->setSortOrder('desc'); // for ascending order
+        $customViewInstance->setSortBy('Lead_owner'); // field api names
         $responseIns = $moduleIns->updateCustomView($customViewInstance);
-        echo "HTTP Status Code:" . $responseIns->getHttpStatusCode(); // To get update customview http response code
-        echo "Status:" . $responseIns->getStatus(); // To get update customview response status
-        echo "Message:" . $responseIns->getMessage(); // To get update customview response message
-        echo "Code:" . $responseIns->getCode(); // To get update customview status code
-        echo "Details:" . json_encode($responseIns->getDetails());
+        echo 'HTTP Status Code:' . $responseIns->getHttpStatusCode(); // To get update customview http response code
+        echo 'Status:' . $responseIns->getStatus(); // To get update customview response status
+        echo 'Message:' . $responseIns->getMessage(); // To get update customview response message
+        echo 'Code:' . $responseIns->getCode(); // To get update customview status code
+        echo 'Details:' . json_encode($responseIns->getDetails());
     }
 
     public function getRelatedListDetails()
     {
-        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance("{module_api_name}"); // To get module instance
-        $response = $moduleIns->getRelatedListDetails("{related_list_id}"); // to get the related list
+        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance('{module_api_name}'); // To get module instance
+        $response = $moduleIns->getRelatedListDetails('{related_list_id}'); // to get the related list
         $relatedlist = $response->getData(); // to get the related lists as the instance of ZCRMModuleRelatedList
         echo $relatedlist->getApiName(); // to get the api name of the module related list
         echo $relatedlist->getModule(); // to get the module api name to which this module related list is belongs
@@ -442,7 +441,7 @@ class Module
 
     public function getAllRelatedLists()
     {
-        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance("{module_api_name}"); // To get module instance
+        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance('{module_api_name}'); // To get module instance
         $response = $moduleIns->getAllRelatedLists(); // to get all the related lists
         $relatedlists = $response->getData(); // to get the related lists as the instance of ZCRMModuleRelatedList
         foreach ($relatedlists as $relatedlist) // for eachrelated list
@@ -460,9 +459,9 @@ class Module
 
     public function getRecords()
     {
-        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance("{module_api_name}"); // To get module instance
-        $param_map=array("page"=>10,"per_page"=>10); // key-value pair containing all the parameters - optional
-        $header_map = array("if-modified-since"=>"2019-11-15T15:26:49+05:30"); // key-value pair containing all the headers - optional
+        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance('{module_api_name}'); // To get module instance
+        $param_map = ['page' => 10, 'per_page' => 10]; // key-value pair containing all the parameters - optional
+        $header_map = ['if-modified-since' => '2019-11-15T15:26:49+05:30']; // key-value pair containing all the headers - optional
         $response = $moduleIns->getRecords($param_map,$header_map); // to get the records($param_map - parameter map,$header_map - header map
         $records = $response->getData(); // To get response data
 
@@ -484,7 +483,7 @@ class Module
                 echo $record->getCreatedTime(); // To get record created time
                 echo $record->getModifiedTime(); // To get record modified time
                 echo $record->getLastActivityTime(); // To get last activity time(latest modify/view time)
-                echo $record->getFieldValue("FieldApiName"); // To get particular field value
+                echo $record->getFieldValue('FieldApiName'); // To get particular field value
                 $map = $record->getData(); // To get record data as map
                 foreach ($map as $key => $value) {
                     if ($value instanceof ZCRMRecord) // If value is ZCRMRecord object
@@ -494,10 +493,10 @@ class Module
                         echo $value->getLookupLabel(); // to get the lookup label of the record
                     } else // If value is not ZCRMRecord object
                     {
-                        echo $key . ":" . $value;
+                        echo $key . ':' . $value;
                     }
                 }
-                /**
+                /*
                  * Fields which start with "$" are considered to be property fields *
                  */
                 echo $record->getProperty('$fieldName'); // To get a particular property value
@@ -505,27 +504,27 @@ class Module
                 foreach ($properties as $key => $value) {
                     if (is_array($value)) // If value is an array
                     {
-                        echo "KEY::" . $key . "=";
+                        echo 'KEY::' . $key . '=';
                         foreach ($value as $key1 => $value1) {
                             if (is_array($value1)) {
                                 foreach ($value1 as $key2 => $value2) {
-                                    echo $key2 . ":" . $value2;
+                                    echo $key2 . ':' . $value2;
                                 }
                             } else {
-                                echo $key1 . ":" . $value1;
+                                echo $key1 . ':' . $value1;
                             }
                         }
                     } else {
-                        echo $key . ":" . $value;
+                        echo $key . ':' . $value;
                     }
                 }
                 $layouts = $record->getLayout(); // To get record layout
-                if($layouts != null)
+                if (null != $layouts)
                 {
                     echo $layouts->getId(); // To get layout_id
                     echo $layouts->getName(); // To get layout name
                 }
-                
+
                 $taxlists = $record->getTaxList(); // To get the tax list
                 foreach ($taxlists as $taxlist) {
                     echo $taxlist->getTaxName(); // To get tax name
@@ -573,7 +572,7 @@ class Module
                     echo $participant->getStatus(); // To get the record's participants' status
                 }
                 $tags = $record->getTags();
-                foreach($tags as $tag)
+                foreach ($tags as $tag)
                 {
                     echo $tag->getId();
                     echo $tag->getName();
@@ -589,10 +588,10 @@ class Module
 
     public function getRecord()
     {
-        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance("{module_api_name}"); // To get module instance
-        $param_map = array("fields"=>"Company,Last_Name"); // key-value pair containing all the params - optional
-        $header_map = array("header_name"=>"header_value"); // key-value pair containing all the headers - optional
-        $response = $moduleIns->getRecord("{record_id}",$param_map,$header_map); // To get module records
+        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance('{module_api_name}'); // To get module instance
+        $param_map = ['fields' => 'Company,Last_Name']; // key-value pair containing all the params - optional
+        $header_map = ['header_name' => 'header_value']; // key-value pair containing all the headers - optional
+        $response = $moduleIns->getRecord('{record_id}',$param_map,$header_map); // To get module records
         $record = $response->getData(); // To get response data
         try {
             echo "\n\n";
@@ -611,7 +610,7 @@ class Module
             echo $record->getCreatedTime(); // To get record created time
             echo $record->getModifiedTime(); // To get record modified time
             echo $record->getLastActivityTime(); // To get last activity time(latest modify/view time)
-            echo $record->getFieldValue("FieldApiName"); // To get particular field value
+            echo $record->getFieldValue('FieldApiName'); // To get particular field value
             $map = $record->getData(); // To get record data as map
             foreach ($map as $key => $value) {
                 if ($value instanceof ZCRMRecord) // If value is ZCRMRecord object
@@ -621,10 +620,10 @@ class Module
                     echo $value->getLookupLabel(); // to get the lookup label of the record
                 } else // If value is not ZCRMRecord object
                 {
-                    echo $key . ":" . $value;
+                    echo $key . ':' . $value;
                 }
             }
-            /**
+            /*
              * Fields which start with "$" are considered to be property fields *
              */
             echo $record->getProperty('$fieldName'); // To get a particular property value
@@ -632,22 +631,22 @@ class Module
             foreach ($properties as $key => $value) {
                 if (is_array($value)) // If value is an array
                 {
-                    echo "KEY::" . $key . "=";
+                    echo 'KEY::' . $key . '=';
                     foreach ($value as $key1 => $value1) {
                         if (is_array($value1)) {
                             foreach ($value1 as $key2 => $value2) {
-                                echo $key2 . ":" . $value2;
+                                echo $key2 . ':' . $value2;
                             }
                         } else {
-                            echo $key1 . ":" . $value1;
+                            echo $key1 . ':' . $value1;
                         }
                     }
                 } else {
-                    echo $key . ":" . $value;
+                    echo $key . ':' . $value;
                 }
             }
             $layouts = $record->getLayout(); // To get record layout
-            if($layouts != null)
+            if (null != $layouts)
             {
                 echo $layouts->getId(); // To get layout_id
                 echo $layouts->getName(); // To get layout name
@@ -699,9 +698,9 @@ class Module
                 echo $participant->isInvited(); // To check if the record's participant(s) are invited or not
                 echo $participant->getStatus(); // To get the record's participants' status
             }
-            
+
             $tags = $record->getTags();
-            foreach($tags as $tag)
+            foreach ($tags as $tag)
             {
                 echo $tag->getId();
                 echo $tag->getName();
@@ -716,10 +715,10 @@ class Module
 
     public function searchRecordsByWord()
     {
-        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance("{module_api_name}"); // To get module instance
-        $searchWord="automated";//word to search for
-        $param_map=array("page"=>1,"per_page"=>1); // key-value pair containing all the parameters
-        $response = $moduleIns->searchRecordsByWord($searchWord,$param_map) ;// To get module records// $searchWord word to be searched// $param_map-parameters key-value pair - optional
+        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance('{module_api_name}'); // To get module instance
+        $searchWord = 'automated'; // word to search for
+        $param_map = ['page' => 1, 'per_page' => 1]; // key-value pair containing all the parameters
+        $response = $moduleIns->searchRecordsByWord($searchWord,$param_map); // To get module records// $searchWord word to be searched// $param_map-parameters key-value pair - optional
         $records = $response->getData(); // To get response data
         try {
             foreach ($records as $record) {
@@ -739,7 +738,7 @@ class Module
                 echo $record->getCreatedTime(); // To get record created time
                 echo $record->getModifiedTime(); // To get record modified time
                 echo $record->getLastActivityTime(); // To get last activity time(latest modify/view time)
-                echo $record->getFieldValue("FieldApiName"); // To get particular field value
+                echo $record->getFieldValue('FieldApiName'); // To get particular field value
                 $map = $record->getData(); // To get record data as map
                 foreach ($map as $key => $value) {
                     if ($value instanceof ZCRMRecord) // If value is ZCRMRecord object
@@ -749,10 +748,10 @@ class Module
                         echo $value->getLookupLabel(); // to get the lookup label of the record
                     } else // If value is not ZCRMRecord object
                     {
-                        echo $key . ":" . $value;
+                        echo $key . ':' . $value;
                     }
                 }
-                /**
+                /*
                  * Fields which start with "$" are considered to be property fields *
                  */
                 echo $record->getProperty('$fieldName'); // To get a particular property value
@@ -760,18 +759,18 @@ class Module
                 foreach ($properties as $key => $value) {
                     if (is_array($value)) // If value is an array
                     {
-                        echo "KEY::" . $key . "=";
+                        echo 'KEY::' . $key . '=';
                         foreach ($value as $key1 => $value1) {
                             if (is_array($value1)) {
                                 foreach ($value1 as $key2 => $value2) {
-                                    echo $key2 . ":" . $value2;
+                                    echo $key2 . ':' . $value2;
                                 }
                             } else {
-                                echo $key1 . ":" . $value1;
+                                echo $key1 . ':' . $value1;
                             }
                         }
                     } else {
-                        echo $key . ":" . $value;
+                        echo $key . ':' . $value;
                     }
                 }
                 $layouts = $record->getLayout(); // To get record layout
@@ -835,10 +834,10 @@ class Module
 
     public function searchRecordsByPhone()
     {
-        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance("{module_api_name}"); // To get module instance
-        $phone=313213;//phone number to search for
-        $param_map=array("page"=>1,"per_page"=>1); // key-value pair containing all the parameters
-        $response = $moduleIns->searchRecordsByPhone($phone,$param_map) ;// To get module records// $phone phone to be searched// $param_map-parameters key-value pair - optional
+        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance('{module_api_name}'); // To get module instance
+        $phone = 313213; // phone number to search for
+        $param_map = ['page' => 1, 'per_page' => 1]; // key-value pair containing all the parameters
+        $response = $moduleIns->searchRecordsByPhone($phone,$param_map); // To get module records// $phone phone to be searched// $param_map-parameters key-value pair - optional
         $records = $response->getData(); // To get response data
         try {
             foreach ($records as $record) {
@@ -858,7 +857,7 @@ class Module
                 echo $record->getCreatedTime(); // To get record created time
                 echo $record->getModifiedTime(); // To get record modified time
                 echo $record->getLastActivityTime(); // To get last activity time(latest modify/view time)
-                echo $record->getFieldValue("FieldApiName"); // To get particular field value
+                echo $record->getFieldValue('FieldApiName'); // To get particular field value
                 $map = $record->getData(); // To get record data as map
                 foreach ($map as $key => $value) {
                     if ($value instanceof ZCRMRecord) // If value is ZCRMRecord object
@@ -868,10 +867,10 @@ class Module
                         echo $value->getLookupLabel();
                     } else // If value is not ZCRMRecord object
                     {
-                        echo $key . ":" . $value;
+                        echo $key . ':' . $value;
                     }
                 }
-                /**
+                /*
                  * Fields which start with "$" are considered to be property fields *
                  */
                 echo $record->getProperty('$fieldName'); // To get a particular property value
@@ -879,18 +878,18 @@ class Module
                 foreach ($properties as $key => $value) {
                     if (is_array($value)) // If value is an array
                     {
-                        echo "KEY::" . $key . "=";
+                        echo 'KEY::' . $key . '=';
                         foreach ($value as $key1 => $value1) {
                             if (is_array($value1)) {
                                 foreach ($value1 as $key2 => $value2) {
-                                    echo $key2 . ":" . $value2;
+                                    echo $key2 . ':' . $value2;
                                 }
                             } else {
-                                echo $key1 . ":" . $value1;
+                                echo $key1 . ':' . $value1;
                             }
                         }
                     } else {
-                        echo $key . ":" . $value;
+                        echo $key . ':' . $value;
                     }
                 }
                 $layouts = $record->getLayout(); // To get record layout
@@ -954,11 +953,11 @@ class Module
 
     public function searchRecordsByEmail()
     {
-        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance("{module_api_name}"); // To get module instance
-        $email="email_id";//email id  to search for
-        $param_map=array("page"=>1,"per_page"=>1); // key-value pair containing all the parameters
+        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance('{module_api_name}'); // To get module instance
+        $email = 'email_id'; // email id  to search for
+        $param_map = ['page' => 1, 'per_page' => 1]; // key-value pair containing all the parameters
         try {
-            $response = $moduleIns->searchRecordsByEmail($email,$param_map) ;// To get module records// $email email id  to search for// $param_map-parameters key-value pair - optional
+            $response = $moduleIns->searchRecordsByEmail($email,$param_map); // To get module records// $email email id  to search for// $param_map-parameters key-value pair - optional
             $records = $response->getData(); // To get response data
             foreach ($records as $record) {
                 echo "\n\n";
@@ -977,7 +976,7 @@ class Module
                 echo $record->getCreatedTime(); // To get record created time
                 echo $record->getModifiedTime(); // To get record modified time
                 echo $record->getLastActivityTime(); // To get last activity time(latest modify/view time)
-                echo $record->getFieldValue("FieldApiName"); // To get particular field value
+                echo $record->getFieldValue('FieldApiName'); // To get particular field value
                 $map = $record->getData(); // To get record data as map
                 foreach ($map as $key => $value) {
                     if ($value instanceof ZCRMRecord) // If value is ZCRMRecord object
@@ -987,10 +986,10 @@ class Module
                         echo $value->getLookupLabel();
                     } else // If value is not ZCRMRecord object
                     {
-                        echo $key . ":" . $value;
+                        echo $key . ':' . $value;
                     }
                 }
-                /**
+                /*
                  * Fields which start with "$" are considered to be property fields *
                  */
                 echo $record->getProperty('$fieldName'); // To get a particular property value
@@ -998,18 +997,18 @@ class Module
                 foreach ($properties as $key => $value) {
                     if (is_array($value)) // If value is an array
                     {
-                        echo "KEY::" . $key . "=";
+                        echo 'KEY::' . $key . '=';
                         foreach ($value as $key1 => $value1) {
                             if (is_array($value1)) {
                                 foreach ($value1 as $key2 => $value2) {
-                                    echo $key2 . ":" . $value2;
+                                    echo $key2 . ':' . $value2;
                                 }
                             } else {
-                                echo $key1 . ":" . $value1;
+                                echo $key1 . ':' . $value1;
                             }
                         }
                     } else {
-                        echo $key . ":" . $value;
+                        echo $key . ':' . $value;
                     }
                 }
                 $layouts = $record->getLayout(); // To get record layout
@@ -1073,10 +1072,10 @@ class Module
 
     public function searchRecordsByCriteria()
     {
-        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance("{module_api_name}"); // To get module instance
-        $criteria="criteria";//criteria to search for
-        $param_map=array("page"=>1,"per_page"=>1); // key-value pair containing all the parameters
-        $response = $moduleIns->searchRecordsByCriteria($criteria,$param_map) ;// To get module records// $criteria to search for  to search for// $param_map-parameters key-value pair - optional
+        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance('{module_api_name}'); // To get module instance
+        $criteria = 'criteria'; // criteria to search for
+        $param_map = ['page' => 1, 'per_page' => 1]; // key-value pair containing all the parameters
+        $response = $moduleIns->searchRecordsByCriteria($criteria,$param_map); // To get module records// $criteria to search for  to search for// $param_map-parameters key-value pair - optional
         $records = $response->getData(); // To get response data
         try {
             foreach ($records as $record) {
@@ -1096,7 +1095,7 @@ class Module
                 echo $record->getCreatedTime(); // To get record created time
                 echo $record->getModifiedTime(); // To get record modified time
                 echo $record->getLastActivityTime(); // To get last activity time(latest modify/view time)
-                echo $record->getFieldValue("FieldApiName"); // To get particular field value
+                echo $record->getFieldValue('FieldApiName'); // To get particular field value
                 $map = $record->getData(); // To get record data as map
                 foreach ($map as $key => $value) {
                     if ($value instanceof ZCRMRecord) // If value is ZCRMRecord object
@@ -1106,10 +1105,10 @@ class Module
                         echo $value->getLookupLabel(); // to get the lookup label of the record
                     } else // If value is not ZCRMRecord object
                     {
-                        echo $key . ":" . $value;
+                        echo $key . ':' . $value;
                     }
                 }
-                /**
+                /*
                  * Fields which start with "$" are considered to be property fields *
                  */
                 echo $record->getProperty('$fieldName'); // To get a particular property value
@@ -1117,18 +1116,18 @@ class Module
                 foreach ($properties as $key => $value) {
                     if (is_array($value)) // If value is an array
                     {
-                        echo "KEY::" . $key . "=";
+                        echo 'KEY::' . $key . '=';
                         foreach ($value as $key1 => $value1) {
                             if (is_array($value1)) {
                                 foreach ($value1 as $key2 => $value2) {
-                                    echo $key2 . ":" . $value2;
+                                    echo $key2 . ':' . $value2;
                                 }
                             } else {
-                                echo $key1 . ":" . $value1;
+                                echo $key1 . ':' . $value1;
                             }
                         }
                     } else {
-                        echo $key . ":" . $value;
+                        echo $key . ':' . $value;
                     }
                 }
                 $layouts = $record->getLayout(); // To get record layout
@@ -1192,179 +1191,173 @@ class Module
 
     public function massUpdateRecords()
     {
-        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance("{module_api_name}"); // to get the instance of the module
-        $entityIds = array(
-            "{record_id}"
-        ); // array of entity ids
-        $responseIn = $moduleIns->massUpdateRecords($entityIds, "{field_api_name}", "field_value}"); // to update the field api name with corresponding field value for the entities
+        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance('{module_api_name}'); // to get the instance of the module
+        $entityIds = [
+            '{record_id}',
+        ]; // array of entity ids
+        $responseIn = $moduleIns->massUpdateRecords($entityIds, '{field_api_name}', 'field_value}'); // to update the field api name with corresponding field value for the entities
         foreach ($responseIn->getEntityResponses() as $responseIns) {
-            echo "HTTP Status Code:" . $responseIn->getHttpStatusCode(); // To get http response code
-            echo "Status:" . $responseIns->getStatus(); // To get response status
-            echo "Message:" . $responseIns->getMessage(); // To get response message
-            echo "Code:" . $responseIns->getCode(); // To get status code
-            echo "Details:" . json_encode($responseIns->getDetails());
+            echo 'HTTP Status Code:' . $responseIn->getHttpStatusCode(); // To get http response code
+            echo 'Status:' . $responseIns->getStatus(); // To get response status
+            echo 'Message:' . $responseIns->getMessage(); // To get response message
+            echo 'Code:' . $responseIns->getCode(); // To get status code
+            echo 'Details:' . json_encode($responseIns->getDetails());
         }
     }
 
     public function updateRecords()
     {
-        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance("{module_api_name}"); // to get the instance of the module
-        $inventoryRecords = array();
+        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance('{module_api_name}'); // to get the instance of the module
+        $inventoryRecords = [];
         /**
-         * Following methods are being used only by same Inventory only  *
+         * Following methods are being used only by same Inventory only  *.
          */
-        $record = ZCRMRecord::getInstance("{module_api_name}", "{record_id}"); // to get the instance of the record
-        $record->setFieldValue("Subject", "Invoice3"); // This function use to set FieldApiName and value similar to all other FieldApis and Custom field
-        $record->setFieldValue("Account_Name", "{account_id}");
-        $lineItem = ZCRMInventoryLineItem::getInstance("{line_item_id}"); // To get ZCRMInventoryLineItem instance
-        $lineItem->setDescription("Product_description"); // To set line item description
+        $record = ZCRMRecord::getInstance('{module_api_name}', '{record_id}'); // to get the instance of the record
+        $record->setFieldValue('Subject', 'Invoice3'); // This function use to set FieldApiName and value similar to all other FieldApis and Custom field
+        $record->setFieldValue('Account_Name', '{account_id}');
+        $lineItem = ZCRMInventoryLineItem::getInstance('{line_item_id}'); // To get ZCRMInventoryLineItem instance
+        $lineItem->setDescription('Product_description'); // To set line item description
         $lineItem->setDiscount(20); // To set line item discount
         $lineItem->setListPrice(3412); // To set line item list price
 
-        $taxInstance1 = ZCRMTax::getInstance("{tax_name}"); // to get the tax instance
+        $taxInstance1 = ZCRMTax::getInstance('{tax_name}'); // to get the tax instance
         $taxInstance1->setPercentage(20); // to set the tax percentage
         $taxInstance1->setValue(50); // to set the tax value
         $lineItem->addLineTax($taxInstance1); // to add the tax to the line item
 
         $lineItem->setQuantity(101); // To set product quantity to this line item
         $record->addLineItem($lineItem); // to add the line item to the record of invoice
-        
 
-        
         array_push($inventoryRecords, $record); // pushing the record to the array
-        
-        $record2 = ZCRMRecord::getInstance("{module_api_name}", "{record_id}"); // to get the instance of the record
-        $record2->setFieldValue("Subject", "Invoice3"); // This function use to set FieldApiName and value similar to all other FieldApis and Custom field
-        $record2->setFieldValue("Account_Name", "{account_id}");
-        $lineItem = ZCRMInventoryLineItem::getInstance("{line_item_id}"); // To get ZCRMInventoryLineItem instance
-        $lineItem->setDescription("Product_description"); // To set line item description
+
+        $record2 = ZCRMRecord::getInstance('{module_api_name}', '{record_id}'); // to get the instance of the record
+        $record2->setFieldValue('Subject', 'Invoice3'); // This function use to set FieldApiName and value similar to all other FieldApis and Custom field
+        $record2->setFieldValue('Account_Name', '{account_id}');
+        $lineItem = ZCRMInventoryLineItem::getInstance('{line_item_id}'); // To get ZCRMInventoryLineItem instance
+        $lineItem->setDescription('Product_description'); // To set line item description
         $lineItem->setDiscount(20); // To set line item discount
         $lineItem->setListPrice(3412); // To set line item list price
 
-        $taxInstance1 = ZCRMTax::getInstance("{tax_name}"); // to get the tax instance
+        $taxInstance1 = ZCRMTax::getInstance('{tax_name}'); // to get the tax instance
         $taxInstance1->setPercentage(20); // to set the tax percentage
         $taxInstance1->setValue(50); // to set the tax value
         $lineItem->addLineTax($taxInstance1); // to add the tax to the line item
 
         $lineItem->setQuantity(101); // To set product quantity to this line item
         $record2->addLineItem($lineItem); // to add the line item to the record of invoice
-        
 
-        
         array_push($inventoryRecords, $record2); // pushing the record to the array
-        
-        
+
         /**
-         * for Price books module only
+         * for Price books module only.
          */
-        $pricebookRecords = array();
-        
-        $record = ZCRMRecord::getInstance("Price_Books", "price_book_id"); // to get the price book record
-        $record->setFieldValue("Pricing_Details", json_decode('[ { "to_range": 5, "discount": 0, "from_range": 1 }, { "to_range": 11, "discount": 1, "from_range": 6 }, { "to_range": 17, "discount": 2, "from_range": 12 }, { "to_range": 23, "discount": 3, "from_range": 18 }, { "to_range": 29, "discount": 4, "from_range": 24 } ]', true)); // setting the discount , range of the pricebook record
-        $record->setFieldValue("Pricing_Model", "Flat"); // setting the price book model
+        $pricebookRecords = [];
+
+        $record = ZCRMRecord::getInstance('Price_Books', 'price_book_id'); // to get the price book record
+        $record->setFieldValue('Pricing_Details', json_decode('[ { "to_range": 5, "discount": 0, "from_range": 1 }, { "to_range": 11, "discount": 1, "from_range": 6 }, { "to_range": 17, "discount": 2, "from_range": 12 }, { "to_range": 23, "discount": 3, "from_range": 18 }, { "to_range": 29, "discount": 4, "from_range": 24 } ]', true)); // setting the discount , range of the pricebook record
+        $record->setFieldValue('Pricing_Model', 'Flat'); // setting the price book model
         array_push($pricebookRecords, $record); // pushing the record to the array
 
-        
-        $trigger=array();//triggers to include
+        $trigger = []; // triggers to include
         $responseIn = $moduleIns->updateRecords($inventoryRecords,$trigger); // updating the records.$trigger is optional , to update price book records$pricebookRecords can be used in the place of $inventoryRecords
         foreach ($responseIn->getEntityResponses() as $responseIns) {
-            echo "HTTP Status Code:" . $responseIn->getHttpStatusCode(); // To get http response code
-            echo "Status:" . $responseIns->getStatus(); // To get response status
-            echo "Message:" . $responseIns->getMessage(); // To get response message
-            echo "Code:" . $responseIns->getCode(); // To get status code
-            echo "Details:" . json_encode($responseIns->getDetails());
+            echo 'HTTP Status Code:' . $responseIn->getHttpStatusCode(); // To get http response code
+            echo 'Status:' . $responseIns->getStatus(); // To get response status
+            echo 'Message:' . $responseIns->getMessage(); // To get response message
+            echo 'Code:' . $responseIns->getCode(); // To get status code
+            echo 'Details:' . json_encode($responseIns->getDetails());
         }
     }
+
     public function upsertRecords()
     {
-        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance("Leads"); // to get the instance of the module
-        $records = array();
+        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance('Leads'); // to get the instance of the module
+        $records = [];
         /**
-         * Following methods are being used only by Inventory modules *
+         * Following methods are being used only by Inventory modules *.
          */
-        $record = ZCRMRecord::getInstance("Leads", null); // to get the instance of the record
-        $record->setFieldValue("Comapny", "Invoice3"); // This function use to set FieldApiName and value similar to all other FieldApis and Custom field
-        $record->setFieldValue("Email", "asdasd@asd.com");
+        $record = ZCRMRecord::getInstance('Leads', null); // to get the instance of the record
+        $record->setFieldValue('Comapny', 'Invoice3'); // This function use to set FieldApiName and value similar to all other FieldApis and Custom field
+        $record->setFieldValue('Email', 'asdasd@asd.com');
 
-         
         array_push($records, $record); // pushing the record to the array
 
         $responseIn = $moduleIns->upsertRecords($records); // updating the records.$trigger
         foreach ($responseIn->getEntityResponses() as $responseIns) {
-            echo "HTTP Status Code:" . $responseIn->getHttpStatusCode(); // To get http response code
-            echo "Status:" . $responseIns->getStatus(); // To get response status
-            echo "Message:" . $responseIns->getMessage(); // To get response message
-            echo "Code:" . $responseIns->getCode(); // To get status code
-            echo "Details:" . json_encode($responseIns->getDetails());
+            echo 'HTTP Status Code:' . $responseIn->getHttpStatusCode(); // To get http response code
+            echo 'Status:' . $responseIns->getStatus(); // To get response status
+            echo 'Message:' . $responseIns->getMessage(); // To get response message
+            echo 'Code:' . $responseIns->getCode(); // To get status code
+            echo 'Details:' . json_encode($responseIns->getDetails());
         }
     }
+
     public function createRecords()
     {
-        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance("{module_api_name}"); // to get the instance of the module
-        $records = array();
-        $record = ZCRMRecord::getInstance("{module_api_name}", null); // To get ZCRMRecord instance
-        $record->setFieldValue("Subject", "Invoice"); // This function use to set FieldApiName and value similar to all other FieldApis and Custom field
-        $record->setFieldValue("Account_Name", "{account_id}"); // This function is for Invoices module
+        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance('{module_api_name}'); // to get the instance of the module
+        $records = [];
+        $record = ZCRMRecord::getInstance('{module_api_name}', null); // To get ZCRMRecord instance
+        $record->setFieldValue('Subject', 'Invoice'); // This function use to set FieldApiName and value similar to all other FieldApis and Custom field
+        $record->setFieldValue('Account_Name', '{account_id}'); // This function is for Invoices module
         /**
-         * Following methods are being used only by Inventory modules *
+         * Following methods are being used only by Inventory modules *.
          */
-
         $lineItem = ZCRMInventoryLineItem::getInstance(null); // To get ZCRMInventoryLineItem instance
-        $lineItem->setDescription("Product_description"); // To set line item description
+        $lineItem->setDescription('Product_description'); // To set line item description
         $lineItem->setDiscount(5); // To set line item discount
         $lineItem->setListPrice(100); // To set line item list price
 
-        $taxInstance1 = ZCRMTax::getInstance("{tax_name}"); // To get ZCRMTax instance
+        $taxInstance1 = ZCRMTax::getInstance('{tax_name}'); // To get ZCRMTax instance
         $taxInstance1->setPercentage(2); // To set tax percentage
         $taxInstance1->setValue(50); // To set tax value
         $lineItem->addLineTax($taxInstance1); // To set line tax to line item
 
-        $taxInstance1 = ZCRMTax::getInstance("{tax_name}"); // to get the tax instance
+        $taxInstance1 = ZCRMTax::getInstance('{tax_name}'); // to get the tax instance
         $taxInstance1->setPercentage(12); // to set the tax percentage
         $taxInstance1->setValue(50); // to set the tax value
         $lineItem->addLineTax($taxInstance1); // to add the tax to line item
 
-        $lineItem->setProduct(ZCRMRecord::getInstance("{module_api_name}", "{record_id}")); // To set product to line item
+        $lineItem->setProduct(ZCRMRecord::getInstance('{module_api_name}', '{record_id}')); // To set product to line item
         $lineItem->setQuantity(100); // To set product quantity to this line item
 
         $record->addLineItem($lineItem); // to add the line item to the record
 
         array_push($records, $record); // pushing the record to the array.
-        $trigger=array();//triggers to include
-        $lar_id="lar_id";//lead assignment rule id
+        $trigger = []; // triggers to include
+        $lar_id = 'lar_id'; // lead assignment rule id
         $responseIn = $moduleIns->createRecords($records,$trigger,$lar_id); // updating the records.$trigger,$lar_id are optional
         foreach ($responseIn->getEntityResponses() as $responseIns) {
-            echo "HTTP Status Code:" . $responseIn->getHttpStatusCode(); // To get http response code
-            echo "Status:" . $responseIns->getStatus(); // To get response status
-            echo "Message:" . $responseIns->getMessage(); // To get response message
-            echo "Code:" . $responseIns->getCode(); // To get status code
-            echo "Details:" . json_encode($responseIns->getDetails());
+            echo 'HTTP Status Code:' . $responseIn->getHttpStatusCode(); // To get http response code
+            echo 'Status:' . $responseIns->getStatus(); // To get response status
+            echo 'Message:' . $responseIns->getMessage(); // To get response message
+            echo 'Code:' . $responseIns->getCode(); // To get status code
+            echo 'Details:' . json_encode($responseIns->getDetails());
         }
     }
 
     public function deleteRecords()
     {
-        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance("{module_api_name}"); // to get the instance of the module
-        $recordids = array(
-            "{record_id}",
-            "{record_id}"
-        ); // to create an array of record ids
+        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance('{module_api_name}'); // to get the instance of the module
+        $recordids = [
+            '{record_id}',
+            '{record_id}',
+        ]; // to create an array of record ids
         $responseIn = $moduleIns->deleteRecords($recordids); // to delete the records
 
         foreach ($responseIn->getEntityResponses() as $responseIns) {
-            echo "HTTP Status Code:" . $responseIn->getHttpStatusCode(); // To get http response code
-            echo "Status:" . $responseIns->getStatus(); // To get response status
-            echo "Message:" . $responseIns->getMessage(); // To get response message
-            echo "Code:" . $responseIns->getCode(); // To get status code
-            echo "Details:" . json_encode($responseIns->getDetails());
+            echo 'HTTP Status Code:' . $responseIn->getHttpStatusCode(); // To get http response code
+            echo 'Status:' . $responseIns->getStatus(); // To get response status
+            echo 'Message:' . $responseIns->getMessage(); // To get response message
+            echo 'Code:' . $responseIns->getCode(); // To get status code
+            echo 'Details:' . json_encode($responseIns->getDetails());
         }
     }
 
     public function getAllDeletedRecords()
     {
-        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance("{module_api_name}"); // to get the instance of the module
-        $param_map=array("page"=>"20","per_page"=>"200"); // key-value pair containing all the parameters - optional
-        $header_map = array("if-modified-since"=>"2019-11-10T15:26:49+05:30"); // key-value pair containing all the headers - optional
+        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance('{module_api_name}'); // to get the instance of the module
+        $param_map = ['page' => '20', 'per_page' => '200']; // key-value pair containing all the parameters - optional
+        $header_map = ['if-modified-since' => '2019-11-10T15:26:49+05:30']; // key-value pair containing all the headers - optional
         $trashRecords = $moduleIns->getAllDeletedRecords($param_map,$header_map)->getData(); // to get the trashrecords inform of ZCRMTrashRecord array instances/$param_map - parameter map, $header_map - header_map
         foreach ($trashRecords as $trashrecord) {
             echo $trashrecord->getEntityId(); // to get the entity if of the trash record
@@ -1374,9 +1367,9 @@ class Module
 
     public function getRecycleBinRecords()
     {
-        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance("{module_api_name}"); // to get the instance of the module
-        $param_map=array("page"=>"20","per_page"=>"200"); // key-value pair containing all the parameters - optional
-        $header_map = array("if-modified-since"=>"2019-11-10T15:26:49+05:30"); // key-value pair containing all the headers - optional
+        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance('{module_api_name}'); // to get the instance of the module
+        $param_map = ['page' => '20', 'per_page' => '200']; // key-value pair containing all the parameters - optional
+        $header_map = ['if-modified-since' => '2019-11-10T15:26:49+05:30']; // key-value pair containing all the headers - optional
         $trashRecords = $moduleIns->getRecycleBinRecords($param_map,$header_map)->getData(); // to get the trashrecords inform of ZCRMTrashRecord array instances/$param_map - parameter map, $header_map - header_map
         foreach ($trashRecords as $trashrecord) {
             echo $trashrecord->getEntityId(); // to get the entity if of the trash record
@@ -1386,9 +1379,9 @@ class Module
 
     public function getPermanentlyDeletedRecords()
     {
-        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance("{module_api_name}"); // to get the instance of the module
-        $param_map=array("page"=>"20","per_page"=>"200"); // key-value pair containing all the parameters - optional
-        $header_map = array("if-modified-since"=>"2019-11-10T15:26:49+05:30"); // key-value pair containing all the headers - optional
+        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance('{module_api_name}'); // to get the instance of the module
+        $param_map = ['page' => '20', 'per_page' => '200']; // key-value pair containing all the parameters - optional
+        $header_map = ['if-modified-since' => '2019-11-10T15:26:49+05:30']; // key-value pair containing all the headers - optional
         $trashRecords = $moduleIns->getPermanentlyDeletedRecords($param_map,$header_map)->getData(); // to get the trashrecords inform of ZCRMTrashRecord array instances/$param_map - parameter map, $header_map - header_map
         foreach ($trashRecords as $trashrecord) {
             echo $trashrecord->getEntityId(); // to get the entity if of the trash record
@@ -1398,8 +1391,8 @@ class Module
 
     public function getTagCount()
     {
-        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance("{module_api_name}"); // to get the instance of the module
-        $tag_count = $moduleIns->getTagCount("{record_id}")
+        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance('{module_api_name}'); // to get the instance of the module
+        $tag_count = $moduleIns->getTagCount('{record_id}')
             ->getData()
             ->getCount(); // to get the tag count
         echo $tag_count;
@@ -1407,82 +1400,82 @@ class Module
 
     public function createTags()
     {
-        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance("{module_api_name}"); // to get the module instance
-        $tags = array(); // to create ZCRMTag instances array
+        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance('{module_api_name}'); // to get the module instance
+        $tags = []; // to create ZCRMTag instances array
         $tag = ZCRMTag::getInstance(); // to get the tag instance
-        $tag->setName("test4"); // to set the tag name
+        $tag->setName('test4'); // to set the tag name
         array_push($tags, $tag); // to push the tag to array of ZCRMTag instances
         $responseIn = $moduleIns->createTags($tags); // to create the tags
         foreach ($responseIn->getEntityResponses() as $responseIns) {
-            echo "HTTP Status Code:" . $responseIn->getHttpStatusCode(); // To get http response code
-            echo "Status:" . $responseIns->getStatus(); // To get response status
-            echo "Message:" . $responseIns->getMessage(); // To get response message
-            echo "Code:" . $responseIns->getCode(); // To get status code
-            echo "Details:" . json_encode($responseIns->getDetails());
+            echo 'HTTP Status Code:' . $responseIn->getHttpStatusCode(); // To get http response code
+            echo 'Status:' . $responseIns->getStatus(); // To get response status
+            echo 'Message:' . $responseIns->getMessage(); // To get response message
+            echo 'Code:' . $responseIns->getCode(); // To get status code
+            echo 'Details:' . json_encode($responseIns->getDetails());
         }
     }
 
     public function updateTags()
     {
-        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance("{module_api_name}"); // to get the module instance
-        $tags = array(); // to create ZCRMTag instances array
-        $tag = ZCRMTag::getInstance("{tag_id}"); // to get the tag instance
-        $tag->setName("testnew"); // to set the tag name
+        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance('{module_api_name}'); // to get the module instance
+        $tags = []; // to create ZCRMTag instances array
+        $tag = ZCRMTag::getInstance('{tag_id}'); // to get the tag instance
+        $tag->setName('testnew'); // to set the tag name
         array_push($tags, $tag); // to push the tag to array of ZCRMTag instances
-        $tag = ZCRMTag::getInstance("{tag_id}"); // to get the tag instance
-        $tag->setName("testnew2"); // to set the tag name
+        $tag = ZCRMTag::getInstance('{tag_id}'); // to get the tag instance
+        $tag->setName('testnew2'); // to set the tag name
         array_push($tags, $tag); // to push the tag to array of ZCRMTag instances
         $responseIn = $moduleIns->updateTags($tags); // to update the tags
         foreach ($responseIn->getEntityResponses() as $responseIns) {
-            echo "HTTP Status Code:" . $responseIn->getHttpStatusCode(); // To get http response code
-            echo "Status:" . $responseIns->getStatus(); // To get response status
-            echo "Message:" . $responseIns->getMessage(); // To get response message
-            echo "Code:" . $responseIns->getCode(); // To get status code
-            echo "Details:" . json_encode($responseIns->getDetails());
+            echo 'HTTP Status Code:' . $responseIn->getHttpStatusCode(); // To get http response code
+            echo 'Status:' . $responseIns->getStatus(); // To get response status
+            echo 'Message:' . $responseIns->getMessage(); // To get response message
+            echo 'Code:' . $responseIns->getCode(); // To get status code
+            echo 'Details:' . json_encode($responseIns->getDetails());
         }
     }
 
     public function addTagsToRecords()
     {
-        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance("{module_api_name}"); // to get the module instance
-        $recordids = array(
-            "{record_id}",
-            "{record_id}"
-        ); // array of record ids from which tags must be added
-        $tagnames = array(
-            "tea",
-            "test2",
-            "test3"
-        ); // array of tags to be added
+        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance('{module_api_name}'); // to get the module instance
+        $recordids = [
+            '{record_id}',
+            '{record_id}',
+        ]; // array of record ids from which tags must be added
+        $tagnames = [
+            'tea',
+            'test2',
+            'test3',
+        ]; // array of tags to be added
         $responseIn = $moduleIns->addTagsToRecords($recordids, $tagnames); // to add the tags to the record
         foreach ($responseIn->getEntityResponses() as $responseIns) {
-            echo "HTTP Status Code:" . $responseIn->getHttpStatusCode(); // To get http response code
-            echo "Status:" . $responseIns->getStatus(); // To get response status
-            echo "Message:" . $responseIns->getMessage(); // To get response message
-            echo "Code:" . $responseIns->getCode(); // To get status code
-            echo "Details:" . json_encode($responseIns->getDetails());
+            echo 'HTTP Status Code:' . $responseIn->getHttpStatusCode(); // To get http response code
+            echo 'Status:' . $responseIns->getStatus(); // To get response status
+            echo 'Message:' . $responseIns->getMessage(); // To get response message
+            echo 'Code:' . $responseIns->getCode(); // To get status code
+            echo 'Details:' . json_encode($responseIns->getDetails());
         }
     }
 
     public function removeTagsFromRecords()
     {
-        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance("{module_api_name}"); // to get the module instance
-        $recordids = array(
-            "{record_id}",
-            "{record_id}"
-        ); // array of record ids from which tags must be removed
-        $tagnames = array(
-            "tea",
-            "test2",
-            "test3"
-        ); // array of tags to be removed
+        $moduleIns = ZCRMRestClient::getInstance()->getModuleInstance('{module_api_name}'); // to get the module instance
+        $recordids = [
+            '{record_id}',
+            '{record_id}',
+        ]; // array of record ids from which tags must be removed
+        $tagnames = [
+            'tea',
+            'test2',
+            'test3',
+        ]; // array of tags to be removed
         $responseIn = $moduleIns->removeTagsFromRecords($recordids, $tagnames); // to remove the tags from the records
         foreach ($responseIn->getEntityResponses() as $responseIns) {
-            echo "HTTP Status Code:" . $responseIn->getHttpStatusCode(); // To get http response code
-            echo "Status:" . $responseIns->getStatus();  //To get response status
-        echo "Message:".$responseIns->getMessage();  //To get response message
-        echo "Code:".$responseIns->getCode();  //To get status code
-        echo "Details:".json_encode($responseIns->getDetails());
+            echo 'HTTP Status Code:' . $responseIn->getHttpStatusCode(); // To get http response code
+            echo 'Status:' . $responseIns->getStatus();  // To get response status
+        echo 'Message:' . $responseIns->getMessage();  // To get response message
+        echo 'Code:' . $responseIns->getCode();  // To get status code
+        echo 'Details:' . json_encode($responseIns->getDetails());
     }
 }
 }

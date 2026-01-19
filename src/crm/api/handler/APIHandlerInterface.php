@@ -4,17 +4,17 @@ namespace zcrmsdk\crm\api\handler;
 
 interface APIHandlerInterface
 {
-    public function getRequestMethod();
+    public function getRequestMethod(): ?string;
 
-    public function getUrlPath();
+    public function getUrlPath(): ?string;
 
-    public function getRequestBody();
+    public function getRequestBody(): mixed;
 
-    public function getRequestHeaders();
+    public function getRequestHeaders(): ?array;
 
-    public function getRequestParams();
+    public function getRequestParams(): ?array;
 
-    public function getRequestHeadersAsMap();
+    public function getRequestHeadersAsMap(): ?array;
 
-    public function getRequestParamsAsMap();
+    public function getRequestParamsAsMap(): ?array;
 }

@@ -11,23 +11,23 @@ use zcrmsdk\crm\api\response\CommonAPIResponse;
  */
 class ZohoHTTPConnector
 {
-    private null|string $url = null;
+    private ?string $url = null;
 
-    private null|array $requestParams = [];
+    private ?array $requestParams = [];
 
-    private null|array $requestHeaders = [];
+    private ?array $requestHeaders = [];
 
-    private null|int $requestParamCount = 0;
+    private ?int $requestParamCount = 0;
 
     private mixed $requestBody = null;
 
-    private null|string $requestType = APIConstants::REQUEST_METHOD_GET;
+    private ?string $requestType = APIConstants::REQUEST_METHOD_GET;
 
-    private null|string $userAgent = 'ZohoCRM PHP SDK';
+    private ?string $userAgent = 'ZohoCRM PHP SDK';
 
-    private null|string $apiKey = null;
+    private ?string $apiKey = null;
 
-    private null|bool $isBulkRequest = false;
+    private ?bool $isBulkRequest = false;
 
     private function __construct()
     {
@@ -105,17 +105,17 @@ class ZohoHTTPConnector
         ];
     }
 
-    public function getUrl(): null|string
+    public function getUrl(): ?string
     {
         return $this->url;
     }
 
-    public function setUrl(null|string $url): void
+    public function setUrl(?string $url): void
     {
         $this->url = $url;
     }
 
-    public function addParam(int|string $key, mixed $value): void
+    public function addParam(int | string $key, mixed $value): void
     {
         if (null == $this->requestParams[$key]) {
             $this->requestParams[$key] = [
@@ -128,7 +128,7 @@ class ZohoHTTPConnector
         }
     }
 
-    public function addHeader(string $key, int|float|string $value): void
+    public function addHeader(string $key, int | float | string $value): void
     {
         if (null == $this->requestHeaders[$key]) {
             $this->requestHeaders[$key] = [
@@ -141,7 +141,7 @@ class ZohoHTTPConnector
         }
     }
 
-    public function getUrlParamsAsString(iterable $urlParams): array|string
+    public function getUrlParamsAsString(iterable $urlParams): array | string
     {
         $params_as_string = '';
         foreach ($urlParams as $key => $valueArray) {
@@ -155,22 +155,22 @@ class ZohoHTTPConnector
         return str_replace(PHP_EOL, '', $params_as_string);
     }
 
-    public function setRequestHeadersMap(null|array $headers): void
+    public function setRequestHeadersMap(?array $headers): void
     {
         $this->requestHeaders = $headers;
     }
 
-    public function getRequestHeadersMap(): null|array
+    public function getRequestHeadersMap(): ?array
     {
         return $this->requestHeaders;
     }
 
-    public function setRequestParamsMap(null|array $params): void
+    public function setRequestParamsMap(?array $params): void
     {
         $this->requestParams = $params;
     }
 
-    public function getRequestParamsMap(): null|array
+    public function getRequestParamsMap(): ?array
     {
         return $this->requestParams;
     }
@@ -185,12 +185,12 @@ class ZohoHTTPConnector
         return $this->requestBody;
     }
 
-    public function setRequestType(null|string $reqType): void
+    public function setRequestType(?string $reqType): void
     {
         $this->requestType = $reqType;
     }
 
-    public function getRequestType(): null|string
+    public function getRequestType(): ?string
     {
         return $this->requestType;
     }
@@ -217,7 +217,7 @@ class ZohoHTTPConnector
     /**
      * Set the API Key used in the input json data(like 'modules', 'data','layouts',..etc).
      */
-    public function setApiKey(null|string $apiKey): void
+    public function setApiKey(?string $apiKey): void
     {
         $this->apiKey = $apiKey;
     }
@@ -225,7 +225,7 @@ class ZohoHTTPConnector
     /**
      * isBulkRequest.
      */
-    public function isBulkRequest(): null|bool
+    public function isBulkRequest(): ?bool
     {
         return $this->isBulkRequest;
     }
@@ -236,7 +236,7 @@ class ZohoHTTPConnector
      * @param
      *            $isBulkRequest
      */
-    public function setBulkRequest(null|bool $isBulkRequest): void
+    public function setBulkRequest(?bool $isBulkRequest): void
     {
         $this->isBulkRequest = $isBulkRequest;
     }

@@ -4,3 +4,4 @@
 /vendor
 /.settings
 /composer.lock
+.php-cs-fixer.cache

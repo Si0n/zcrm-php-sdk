@@ -74,7 +74,7 @@ class ZohoOAuth
         }
     }
 
-    public static function getConfigValue($key)
+    public static function getConfigValue(string $key): string
     {
         return self::$configProperties[$key] ?? '';
     }
@@ -84,7 +84,7 @@ class ZohoOAuth
         return self::$configProperties;
     }
 
-    public static function getIAMUrl()
+    public static function getIAMUrl(): string
     {
         return self::getConfigValue(ZohoOAuthConstants::IAM_URL);
     }
@@ -114,22 +114,22 @@ class ZohoOAuth
         return self::getIAMUrl() . '/oauth/user/info';
     }
 
-    public static function getClientID()
+    public static function getClientID(): string
     {
         return self::getConfigValue(ZohoOAuthConstants::CLIENT_ID);
     }
 
-    public static function getClientSecret()
+    public static function getClientSecret(): string
     {
         return self::getConfigValue(ZohoOAuthConstants::CLIENT_SECRET);
     }
 
-    public static function getRedirectURL()
+    public static function getRedirectURL(): string
     {
         return self::getConfigValue(ZohoOAuthConstants::REDIRECT_URL);
     }
 
-    public static function getAccessType()
+    public static function getAccessType(): string
     {
         return self::getConfigValue(ZohoOAuthConstants::ACCESS_TYPE);
     }

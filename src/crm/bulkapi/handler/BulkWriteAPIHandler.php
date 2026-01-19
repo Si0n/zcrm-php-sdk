@@ -48,7 +48,7 @@ class BulkWriteAPIHandler extends APIHandler
             }
             $responseInstance = APIRequest::getInstance($this)->uploadFile($filePath);
             $responseJson = $responseInstance->getResponseJSON();
-            $detailsJSON = isset($responseJson[APIConstants::DETAILS]) ? $responseJson[APIConstants::DETAILS] : [];
+            $detailsJSON = $responseJson[APIConstants::DETAILS] ?? [];
             $responseInstance->setData(self::getZCRMAttachmentObject($detailsJSON));
 
             return $responseInstance;

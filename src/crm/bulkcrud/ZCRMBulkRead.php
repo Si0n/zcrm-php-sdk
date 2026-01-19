@@ -327,7 +327,7 @@ class ZCRMBulkRead
     /**
      * Method download the bulk read job as a CSV file.
      *
-     * @return fileAPIResponse - FileAPIResponse instance of the FileAPIResponse class which holds the response
+     * @return FileAPIResponse - FileAPIResponse instance of the FileAPIResponse class which holds the response
      */
     public function downloadBulkReadResult()
     {
@@ -339,7 +339,7 @@ class ZCRMBulkRead
      *
      * @param string $filePath - file path to store the downloaded file
      *
-     * @return bulkResponse - BulkResponse instance of the BulkResponse class which holds the response
+     * @return BulkResponse - BulkResponse instance of the BulkResponse class which holds the response
      */
     public function downloadANDGetRecords($filePath)
     {
@@ -356,7 +356,7 @@ class ZCRMBulkRead
      * @param string $filePath - file path of the downloaded file
      * @param string $fileName - file name of the downloaded file
      *
-     * @return bulkResponse - BulkResponse instance of the BulkResponse class which holds the response
+     * @return BulkResponse - BulkResponse instance of the BulkResponse class which holds the response
      */
     public function getRecords($filePath, $fileName)
     {
