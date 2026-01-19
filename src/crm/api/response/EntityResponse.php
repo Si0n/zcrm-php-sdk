@@ -6,66 +6,20 @@ use zcrmsdk\crm\utility\APIConstants;
 
 class EntityResponse
 {
-    /**
-     * status of the response.
-     *
-     * @var string
-     */
-    private $status;
+    private ?string $status;
+    private ?string $message;
+    private ?string $code;
+    private array $responseJSON;
+    private mixed $data;
+    private array $upsertDetails = [];
+    private array $details;
 
-    /**
-     * the response message.
-     *
-     * @var string
-     */
-    private $message;
-
-    /**
-     * the response code like SUCCESS,INVALID_DATA,..etc.
-     *
-     * @var string
-     */
-    private $code;
-
-    /**
-     * response json object.
-     *
-     * @var object
-     */
-    private $responseJSON;
-
-    /**
-     * data of the response.
-     *
-     * @var array
-     */
-    private $data;
-
-    /**
-     * upsert details like action,duplicate field.
-     *
-     * @var array
-     */
-    private $upsertDetails = [];
-
-    /**
-     * details of the response.
-     *
-     * @var array
-     */
-    private $details;
-
-    /**
-     * constructor to set the entity response.
-     *
-     * @param object $entityResponseJSON the entity response
-     */
-    public function __construct($entityResponseJSON)
+    public function __construct(array $entityResponseJSON)
     {
         $this->responseJSON = $entityResponseJSON;
-        $this->status = $entityResponseJSON[APIConstants::STATUS];
-        $this->message = $entityResponseJSON[APIConstants::MESSAGE];
-        $this->code = $entityResponseJSON[APIConstants::CODE];
+        $this->status = $entityResponseJSON[APIConstants::STATUS] ?? null;
+        $this->message = $entityResponseJSON[APIConstants::MESSAGE] ?? null;
+        $this->code = $entityResponseJSON[APIConstants::CODE] ?? null;
         if (array_key_exists(APIConstants::ACTION, $entityResponseJSON)) {
             $this->upsertDetails[APIConstants::ACTION] = $entityResponseJSON[APIConstants::ACTION];
         }
@@ -77,123 +31,62 @@ class EntityResponse
         }
     }
 
-    /**
-     * method to Get the response status like error or success.
-     *
-     * @return string the response status
-     */
-    public function getStatus()
+    public function getStatus(): ?string
     {
         return $this->status;
     }
 
-    /**
-     * method to Set the response status like error or success.
-     *
-     * @param string $status the response status
-     */
-    public function setStatus($status)
+    public function setStatus(?string $status): void
     {
         $this->status = $status;
     }
 
-    /**
-     * method to get the response message.
-     *
-     * @return string the response message
-     */
-    public function getMessage()
+    public function getMessage(): ?string
     {
         return $this->message;
     }
 
-    /**
-     * method to get the response message.
-     *
-     * @param string $message the response message
-     */
-    public function setMessage($message)
+    public function setMessage(?string $message): void
     {
         $this->message = $message;
     }
 
-    /**
-     * method to Get the response code like SUCCESS,INVALID_DATA,..etc.
-     *
-     * @return string the response code like SUCCESS,INVALID_DATA,..etc
-     */
-    public function getCode()
+    public function getCode(): ?string
     {
         return $this->code;
     }
 
-    /**
-     * method to set the response code like SUCCESS,INVALID_DATA,..etc.
-     *
-     * @param string $code
-     *                     the response code like SUCCESS,INVALID_DATA,..etc
-     */
-    public function setCode($code)
+    public function setCode(?string $code): void
     {
         $this->code = $code;
     }
 
-    /**
-     * method to get the json object.
-     *
-     * @return object the json object
-     */
-    public function getResponseJSON()
+    public function getResponseJSON(): array
     {
         return $this->responseJSON;
     }
 
-    /**
-     * method to get the data of the response.
-     *
-     * @return array array of the data
-     */
-    public function getData()
+    public function getData(): mixed
     {
         return $this->data;
     }
 
-    /**
-     * method to set the data of the response.
-     *
-     * @param array $data array of the data
-     */
-    public function setData($data)
+    public function setData(mixed $data): void
     {
         $this->data = $data;
     }
 
-    /**
-     * method to get the upsert details like action,duplicate field.
-     *
-     * @return array array containg the upsert details like action,duplicate field
-     */
-    public function getUpsertDetails()
+    public function getUpsertDetails(): array
     {
         return $this->upsertDetails;
     }
 
-    /**
-     * method to set the details.
-     *
-     * @param array $details array containing the details
-     */
-    public function setDetails($details)
+    public function setDetails(array $details): void
     {
         $this->details = $details;
     }
 
-    /**
-     * method to get the details.
-     *
-     * @return array array containing the details
-     */
-    public function getDetails()
+    public function getDetails(): array
     {
         return $this->details;
     }

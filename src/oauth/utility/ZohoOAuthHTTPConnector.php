@@ -12,7 +12,7 @@ class ZohoOAuthHTTPConnector
 
     private int $requestParamCount = 0;
 
-    public function post(): bool|string
+    public function post(): bool | string
     {
         $curl_pointer = curl_init();
         curl_setopt($curl_pointer, CURLOPT_URL, self::getUrl());
@@ -29,7 +29,7 @@ class ZohoOAuthHTTPConnector
         return $result;
     }
 
-    public function get(): bool|string
+    public function get(): bool | string
     {
         $curl_pointer = curl_init();
         $url = self::getUrl() . '?' . http_build_query($this->requestParams);

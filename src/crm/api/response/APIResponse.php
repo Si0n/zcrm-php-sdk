@@ -8,34 +8,16 @@ use zcrmsdk\crm\utility\APIConstants;
 
 class APIResponse extends CommonAPIResponse
 {
-    /**
-     * data of the api response.
-     *
-     * @var object
-     */
-    private $data;
+    private mixed $data = null;
 
-    /**
-     * response status of the api.
-     */
-    private null|string $status = null;
+    private ?string $status = null;
 
-    /**
-     * method to set the data of the class object.
-     *
-     * @param object $data data to be set for the object
-     */
-    public function setData($data)
+    public function setData(mixed $data): void
     {
         $this->data = $data;
     }
 
-    /**
-     * method to get the data of the class object.
-     *
-     * @return object data of the object
-     */
-    public function getData()
+    public function getData(): mixed
     {
         return $this->data;
     }
@@ -45,7 +27,7 @@ class APIResponse extends CommonAPIResponse
      *
      * @return string the response status
      */
-    public function getStatus(): null|string
+    public function getStatus(): ?string
     {
         return $this->status;
     }
@@ -55,7 +37,7 @@ class APIResponse extends CommonAPIResponse
      *
      * @param string $status the response status
      */
-    public function setStatus(null|string $status): void
+    public function setStatus(?string $status): void
     {
         $this->status = $status;
     }

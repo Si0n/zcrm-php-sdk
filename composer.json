@@ -12,6 +12,7 @@
 	],
 	"require" : {
 		"php" : ">=8.4",
+		"ext-zip": "*",
 		"ext-fileinfo" : "*",
 		"ext-curl" : "*",
 		"psr/log": "^3.0"

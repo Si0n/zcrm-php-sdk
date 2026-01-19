@@ -150,8 +150,8 @@ class BulkReadAPIHandler extends APIHandler
     private function setZCRMBulkCriteriaObject($criteriaJSON)
     {
         $recordCriteria = ZCRMBulkCriteria::getInstance();
-        $recordCriteria->setAPIName(isset($criteriaJSON['api_name']) ? $criteriaJSON['api_name'] : null);
-        $recordCriteria->setComparator(isset($criteriaJSON['comparator']) ? $criteriaJSON['comparator'] : null);
+        $recordCriteria->setAPIName($criteriaJSON['api_name'] ?? null);
+        $recordCriteria->setComparator($criteriaJSON['comparator'] ?? null);
         if (isset($criteriaJSON['value'])) {
             if (is_bool($criteriaJSON['value'])) {
                 $recordCriteria->setValue((bool) $criteriaJSON['value']);

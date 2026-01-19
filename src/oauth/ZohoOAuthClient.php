@@ -25,7 +25,7 @@ class ZohoOAuthClient
         return self::$zohoOAuthClient;
     }
 
-    public static function getInstanceWithOutParam(): ZohoOAuthClient
+    public static function getInstanceWithOutParam(): ?ZohoOAuthClient
     {
         return self::$zohoOAuthClient;
     }
@@ -151,9 +151,9 @@ class ZohoOAuthClient
         return $jsonResponse['Email'];
     }
 
-    public function processResponse($apiResponse): mixed
+    public function processResponse(string $apiResponse): mixed
     {
-        list($headers, $content) = explode("\r\n\r\n", $apiResponse, 2);
+        [$headers, $content] = explode("\r\n\r\n", $apiResponse, 2);
 
         return json_decode($content, true);
     }

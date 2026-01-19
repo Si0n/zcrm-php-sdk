@@ -2,80 +2,73 @@
 
 namespace zcrmsdk\crm\bulkapi\response;
 
+use zcrmsdk\crm\bulkapi\handler\BulkAPIHandler;
 use zcrmsdk\crm\exception\ZCRMException;
 use zcrmsdk\crm\utility\APIConstants;
 
 class BulkResponse
 {
-    private $filePointer;
-    private $moduleAPIName;
-    private $fieldAPINames = [];
-    private $fieldsvsValue = [];
-    private $apiHandlerIns;
-    private $rowNumber = 0;
-    private $checkFailedRecord = false;
-    private $data = [];
-    private $fileType;
+    private array $fieldAPINames = [];
+    private array $fieldsvsValue = [];
+    private ?BulkAPIHandler $apiHandlerIns = null;
+    private int $rowNumber = 0;
+    private ?array $data = [];
 
-    /**
-     * @return multitype:
-     */
-    public function getData()
+    public function __construct(
+        protected string $moduleAPIName,
+        protected mixed $filePointer,
+        protected ?bool $checkFailedRecord,
+        protected ?string $fileType
+    ) {
+    }
+
+    public function getData(): ?array
     {
         return $this->data;
     }
 
-    /**
-     * @param multitype: $data
-     */
-    public function setData($data)
+    public function setData(?array $data): void
     {
         $this->data = $data;
     }
 
-    public function __construct($moduleAPIName, $filePointer, $checkFailedRecord, $fileType)
+    public function setFieldValues(array $fieldValues): void
     {
-        $this->moduleAPIName = $moduleAPIName;
-        $this->filePointer = $filePointer;
-        $this->checkFailedRecord = $checkFailedRecord;
-        $this->fileType = $fileType;
-    }
+        if (sizeof($fieldValues) !== sizeof($this->fieldAPINames)) {
+            return;
+        }
 
-    public function setFieldValues($fieldValues)
-    {
-        if (sizeof($fieldValues) == sizeof($this->fieldAPINames)) {
-            for ($index = 0; $index < sizeof($this->fieldAPINames); ++$index) {
-                $this->fieldsvsValue[$this->fieldAPINames[$index]] = $fieldValues[$index];
-            }
+        foreach ($this->fieldAPINames as $index => $fieldName) {
+            $this->fieldsvsValue[$fieldName] = $fieldValues[$index];
         }
     }
 
-    public function setModuleAPIName($moduleAPIName)
+    public function setModuleAPIName(string $moduleAPIName): void
     {
         $this->moduleAPIName = $moduleAPIName;
     }
 
-    public function getModuleAPIName()
+    public function getModuleAPIName(): string
     {
         return $this->moduleAPIName;
     }
 
-    public function setFieldNames($fieldAPINames)
+    public function setFieldNames(array $fieldAPINames): void
     {
         $this->fieldAPINames = $fieldAPINames;
     }
 
-    public function getFieldNames()
+    public function getFieldNames(): array
     {
         return $this->fieldAPINames;
     }
 
-    public function setEntityAPIHandlerIns($apiHandlerIns)
+    public function setEntityAPIHandlerIns(?BulkAPIHandler $apiHandlerIns): void
     {
         $this->apiHandlerIns = $apiHandlerIns;
     }
 
-    public function getEntityAPIHandlerIns()
+    public function getEntityAPIHandlerIns(): ?BulkAPIHandler
     {
         return $this->apiHandlerIns;
     }
@@ -101,9 +94,8 @@ class BulkResponse
                                 $this->fieldsvsValue[$value[0]] = $value[1];
 
                                 return true;
-                            } else {
+                            }  
                                 $this->fieldsvsValue[$value[0]] = $value[1];
-                            }
                         }
                     } while (($fieldValues = fgetcsv($this->filePointer)) !== false);
                     fclose($this->filePointer);
@@ -127,10 +119,9 @@ class BulkResponse
                         ++$this->rowNumber;
 
                         return true;
-                    } else {
+                    }  
                         $this->rowNumber = 0;
                         fclose($this->filePointer);
-                    }
                 }
             }
 

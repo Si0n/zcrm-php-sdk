@@ -6,162 +6,77 @@ use zcrmsdk\crm\utility\APIConstants;
 
 class ResponseInfo
 {
-    /**
-     * *
-     * more records.
-     *
-     * @var bool
-     */
-    private $moreRecords;
+    protected ?bool $moreRecords = null;
+    protected ?int $recordCount = null;
+    protected ?int $pageNo = null;
+    protected ?int $perPage = null;
+    protected ?int $allowedCount = null;
 
-    /**
-     * record count.
-     *
-     * @var int
-     */
-    private $recordCount;
-
-    /**
-     * page number.
-     *
-     * @var int
-     */
-    private $pageNo;
-
-    /**
-     * records per page.
-     *
-     * @var int
-     */
-    private $perPage;
-
-    /**
-     * number of tags allowed.
-     *
-     * @var int
-     */
-    private $tagAllowedCount;
-
-    /**
-     * constructor to set response information.
-     *
-     * @param ResponseInfo $reponseInfoJSON instance if the ResponseInfo class
-     */
-    public function __construct($reponseInfoJSON)
+    public function __construct(array $responseInfoJSON)
     {
-        if (array_key_exists(APIConstants::MORE_RECORDS, $reponseInfoJSON)) {
-            $this->moreRecords = (bool) $reponseInfoJSON[APIConstants::MORE_RECORDS];
+        if (array_key_exists(APIConstants::MORE_RECORDS, $responseInfoJSON)) {
+            $this->moreRecords = (bool) $responseInfoJSON[APIConstants::MORE_RECORDS];
         }
-        if (array_key_exists(APIConstants::COUNT, $reponseInfoJSON)) {
-            $this->recordCount = $reponseInfoJSON[APIConstants::COUNT] + 0;
+        if (array_key_exists(APIConstants::COUNT, $responseInfoJSON)) {
+            $this->recordCount = (int) $responseInfoJSON[APIConstants::COUNT];
         }
-        if (array_key_exists(APIConstants::PAGE, $reponseInfoJSON)) {
-            $this->pageNo = $reponseInfoJSON[APIConstants::PAGE] + 0;
+        if (array_key_exists(APIConstants::PAGE, $responseInfoJSON)) {
+            $this->pageNo = (int) $responseInfoJSON[APIConstants::PAGE];
         }
-        if (array_key_exists(APIConstants::PER_PAGE, $reponseInfoJSON)) {
-            $this->perPage = $reponseInfoJSON[APIConstants::PER_PAGE] + 0;
+        if (array_key_exists(APIConstants::PER_PAGE, $responseInfoJSON)) {
+            $this->perPage = (int) $responseInfoJSON[APIConstants::PER_PAGE];
         }
-        if (array_key_exists(APIConstants::ALLOWED_COUNT, $reponseInfoJSON)) {
-            $this->tagAllowedCount = $reponseInfoJSON[APIConstants::ALLOWED_COUNT] + 0;
+        if (array_key_exists(APIConstants::ALLOWED_COUNT, $responseInfoJSON)) {
+            $this->allowedCount = (int) $responseInfoJSON[APIConstants::ALLOWED_COUNT];
         }
     }
 
-    /**
-     * method to check whether more records are available or not.
-     *
-     * @return bool true if more records are available otherwise false
-     */
-    public function getMoreRecords()
+    public function getMoreRecords(): ?bool
     {
         return $this->moreRecords;
     }
 
-    /**
-     * method to set more records are available.
-     *
-     * @param bool $moreRecords true for more records available otherwise false
-     */
-    public function setMoreRecords($moreRecords)
+    public function setMoreRecords(?bool $moreRecords): void
     {
         $this->moreRecords = $moreRecords;
     }
 
-    /**
-     * method to get the record count.
-     *
-     * @return int the record count
-     */
-    public function getRecordCount()
+    public function getRecordCount(): ?int
     {
         return $this->recordCount;
     }
 
-    /**
-     * method to set the record count.
-     *
-     * @param int $recordCount the record count
-     */
-    public function setRecordCount($recordCount)
+    public function setRecordCount(?int $recordCount): void
     {
         $this->recordCount = $recordCount;
     }
 
-    /**
-     * method to get the page number of the records.
-     *
-     * @return int the page number of the records
-     */
-    public function getPageNo()
+    public function getPageNo(): ?int
     {
         return $this->pageNo;
     }
 
-    /**
-     * method to set the page number of the records.
-     *
-     * @param int $pageNo the page number of the records
-     */
-    public function setPageNo($pageNo)
+    public function setPageNo(?int $pageNo): void
     {
         $this->pageNo = $pageNo;
     }
 
-    /**
-     * method to get the number of records per page.
-     *
-     * @return int the number of records per page
-     */
-    public function getPerPage()
+    public function getPerPage(): ?int
     {
         return $this->perPage;
     }
 
-    /**
-     * method to set the number of records per page.
-     *
-     * @param int $perPage the number of records per page
-     */
-    public function setPerPage($perPage)
+    public function setPerPage(?int $perPage): void
     {
         $this->perPage = $perPage;
     }
 
-    /**
-     * method to get the allowed count of the records.
-     *
-     * @return int the allowed count of the records
-     */
-    public function getAllowedCount()
+    public function getAllowedCount(): ?int
     {
         return $this->allowedCount;
     }
 
-    /**
-     * method to set the allowed count of the records.
-     *
-     * @param int $allowedCount allowed count of the records
-     */
-    public function setAllowedCount($allowedCount)
+    public function setAllowedCount(?int $allowedCount): void
     {
         $this->allowedCount = $allowedCount;
     }

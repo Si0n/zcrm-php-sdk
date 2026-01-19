@@ -1,13 +1,12 @@
 <?php
+
 use zcrmsdk\crm\crud\ZCRMRecord;
 use zcrmsdk\crm\exception\ZCRMException;
 use zcrmsdk\crm\setup\restclient\ZCRMRestClient;
 require_once __DIR__ . '/../vendor/autoload.php';
 
-
 class customView
 {
-
     public function __construct()
     {
         $configuration = [];
@@ -16,9 +15,9 @@ class customView
 
     public function getrecords()
     {
-        $param_map=array("page"=>10,"per_page"=>10); // key-value pair containing all the parameters - optional
-        $header_map = array("if-modified-since"=>"2019-11-15T15:26:49+05:30");//key-value pair  containing Headers to be passed    -optional
-        $response = ZCRMRestClient::getCustomViewInstance("{module_api_name}","{custom_view_id}" )->getRecords($param_map, $header_map );//to get the records($param_map - parameter map,$header_map - header map
+        $param_map = ['page' => 10, 'per_page' => 10]; // key-value pair containing all the parameters - optional
+        $header_map = ['if-modified-since' => '2019-11-15T15:26:49+05:30']; // key-value pair  containing Headers to be passed    -optional
+        $response = ZCRMRestClient::getCustomViewInstance('{module_api_name}','{custom_view_id}' )->getRecords($param_map, $header_map ); // to get the records($param_map - parameter map,$header_map - header map
         $records = $response->getData();
         try {
             foreach ($records as $record) {
@@ -38,7 +37,7 @@ class customView
                 echo $record->getCreatedTime(); // To get record created time
                 echo $record->getModifiedTime(); // To get record modified time
                 echo $record->getLastActivityTime(); // To get last activity time(latest modify/view time)
-                echo $record->getFieldValue("FieldApiName"); // To get particular field value
+                echo $record->getFieldValue('FieldApiName'); // To get particular field value
                 $map = $record->getData(); // To get record data as map
                 foreach ($map as $key => $value) {
                     if ($value instanceof ZCRMRecord) // If value is ZCRMRecord object
@@ -48,10 +47,10 @@ class customView
                         echo $value->getLookupLabel(); // to get the lookup label of the record
                     } else // If value is not ZCRMRecord object
                     {
-                        echo $key . ":" . $value;
+                        echo $key . ':' . $value;
                     }
                 }
-                /**
+                /*
                  * Fields which start with "$" are considered to be property fields *
                  */
                 echo $record->getProperty('$fieldName'); // To get a particular property value
@@ -59,18 +58,18 @@ class customView
                 foreach ($properties as $key => $value) {
                     if (is_array($value)) // If value is an array
                     {
-                        echo "KEY::" . $key . "=";
+                        echo 'KEY::' . $key . '=';
                         foreach ($value as $key1 => $value1) {
                             if (is_array($value1)) {
                                 foreach ($value1 as $key2 => $value2) {
-                                    echo $key2 . ":" . $value2;
+                                    echo $key2 . ':' . $value2;
                                 }
                             } else {
-                                echo $key1 . ":" . $value1;
+                                echo $key1 . ':' . $value1;
                             }
                         }
                     } else {
-                        echo $key . ":" . $value;
+                        echo $key . ':' . $value;
                     }
                 }
                 $layouts = $record->getLayout(); // To get record layout
@@ -132,5 +131,5 @@ class customView
         }
     }
 }
-$obj=new customView();
+$obj = new customView();
 $obj->getrecords();

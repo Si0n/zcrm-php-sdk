@@ -342,7 +342,7 @@ class ZCRMBulkWrite
      *
      * @param string $downloadedFileURL - the download URL from which you can download the result(CSV file) of the bulk write job
      *
-     * @return fileAPIResponse - FileAPIResponse instance of the FileAPIResponse class which holds the response
+     * @return FileAPIResponse - FileAPIResponse instance of the FileAPIResponse class which holds the response
      */
     public function downloadBulkWriteResult($downloadedFileURL)
     {
@@ -355,7 +355,7 @@ class ZCRMBulkWrite
      * @param string $filePath        - file path to store the downloaded file
      * @param string $downloadFileURL - the download URL from which you can download the result(CSV file) of the bulk write job
      *
-     * @return bulkResponse - BulkResponse instance of the BulkResponse class which holds the response
+     * @return BulkResponse - BulkResponse instance of the BulkResponse class which holds the response
      */
     public function downloadANDGetRecords($filePath, $downloadFileURL)
     {
@@ -375,7 +375,7 @@ class ZCRMBulkWrite
      * @param string $filePath - file path of the downloaded file
      * @param string $fileName - file name of the downloaded file
      *
-     * @return bulkResponse - BulkResponse instance of the BulkResponse class which holds the response
+     * @return BulkResponse - BulkResponse instance of the BulkResponse class which holds the response
      */
     public function getRecords($filePath, $fileName)
     {
@@ -395,7 +395,7 @@ class ZCRMBulkWrite
      * @param string $filePath        - file path to store the downloaded file
      * @param string $downloadFileURL - the download URL from which you can download the result(CSV file) of the bulk write job
      *
-     * @return bulkResponse - BulkResponse instance of the BulkResponse class which holds the response
+     * @return BulkResponse - BulkResponse instance of the BulkResponse class which holds the response
      */
     public function downloadANDGetFailedRecords($filePath, $downloadFileURL)
     {
@@ -415,7 +415,7 @@ class ZCRMBulkWrite
      * @param string $filePath - file path of the downloaded file
      * @param string $fileName - file name of the downloaded file
      *
-     * @return bulkResponse - BulkResponse instance of the BulkResponse class which holds the response
+     * @return BulkResponse - BulkResponse instance of the BulkResponse class which holds the response
      */
     public function getFailedRecords($filePath, $fileName)
     {

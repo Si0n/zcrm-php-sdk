@@ -6,115 +6,93 @@ class ZCRMBulkResult
 {
     /**
      * result page.
-     *
-     * @var int
      */
-    private $page;
+    private ?int $page = null;
 
     /**
      * record count.
-     *
-     * @var int
      */
-    private $count;
+    private ?int $count = null;
 
     /**
      * result download url.
-     *
-     * @var string
      */
-    private $downloadUrl;
+    private ?string $downloadUrl = null;
 
     /**
      * result per page.
      *
      * @var string
      */
-    private $perPage;
+    private ?int $perPage = null;
 
     /**
      * result more records.
-     *
-     * @var bool
      */
-    private $moreRecords;
+    private ?bool $moreRecords = null;
 
     /**
      * Method to get instance of ZCRMBulkResult class.
      *
      * @return ZCRMBulkResult - class instance
      */
-    public static function getInstance()
+    public static function getInstance(): ZCRMBulkResult
     {
         return new ZCRMBulkResult();
     }
 
     /**
      * Method to set the range of the number of records exported.
-     *
-     * @param int $page
      */
-    public function setPage($page)
+    public function setPage(int $page): void
     {
         $this->page = $page;
     }
 
     /**
      * Method to get the range of the number of records exported.
-     *
-     * @return int
      */
-    public function getPage()
+    public function getPage(): ?int
     {
         return $this->page;
     }
 
     /**
      * Method to set the actual number of records exported.
-     *
-     * @param int $count
      */
-    public function setCount($count)
+    public function setCount(int $count): void
     {
         $this->count = $count;
     }
 
     /**
      * Method to get the actual number of records exported.
-     *
-     * @return int
      */
-    public function getCount()
+    public function getCount(): ?int
     {
         return $this->count;
     }
 
     /**
      * Method to set the url which contains the CSV file.
-     *
-     * @param string $downloadUrl
      */
-    public function setDownloadUrl($downloadUrl)
+    public function setDownloadUrl(string $downloadUrl): void
     {
         $this->downloadUrl = $downloadUrl;
     }
 
     /**
      * Method to get the url which contains the CSV file.
-     *
-     * @return string
      */
-    public function getDownloadUrl()
+    public function getDownloadUrl(): ?string
     {
         return $this->downloadUrl;
     }
 
     /**
      * Method to set the number of records in each page.
-     *
-     * @param int $perPage
      */
-    public function setPerPage($perPage)
+    public function setPerPage(?int $perPage): void
     {
         $this->perPage = $perPage;
     }
@@ -124,27 +102,23 @@ class ZCRMBulkResult
      *
      * @return string
      */
-    public function getPerPage()
+    public function getPerPage(): ?int
     {
         return $this->perPage;
     }
 
     /**
      * Method to set the response can be used to detect if there are any further records.
-     *
-     * @param bool $moreRecords
      */
-    public function setMoreRecords($moreRecords)
+    public function setMoreRecords(?bool $moreRecords): void
     {
         $this->moreRecords = $moreRecords;
     }
 
     /**
      * Method to get the response can be used to detect if there are any further records.
-     *
-     * @return bool
      */
-    public function getMoreRecords()
+    public function getMoreRecords(): ?bool
     {
         return $this->moreRecords;
     }

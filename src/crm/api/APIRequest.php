@@ -18,21 +18,21 @@ use zcrmsdk\crm\utility\ZohoHTTPConnector;
  */
 class APIRequest
 {
-    private null|string $url = null;
+    private ?string $url = null;
 
-    private null|array $requestParams = [];
+    private ?array $requestParams = [];
 
-    private null|array $requestHeaders = [];
+    private ?array $requestHeaders = [];
 
     private mixed $requestBody = null;
 
-    private null|string $requestMethod = null;
+    private ?string $requestMethod = null;
 
-    private null|string $apiKey = null;
+    private ?string $apiKey = null;
 
-    private null|string $response = null;
+    private ?string $response = null;
 
-    private null|array $responseInfo = null;
+    private ?array $responseInfo = null;
 
     private function __construct(APIHandler $apiHandler)
     {
@@ -77,7 +77,7 @@ class APIRequest
      */
     private function authenticateRequest(): void
     {
-        $accessToken = (new ZCRMConfigUtil())->getAccessToken();
+        $accessToken = new ZCRMConfigUtil()->getAccessToken();
         if (str_contains($this->url, 'content') || str_contains($this->url, 'upload') || str_contains($this->url, 'bulk-write')) {
             $this->requestHeaders[APIConstants::AUTHORIZATION] = ' ' . APIConstants::OAUTH_HEADER_PREFIX . $accessToken;
         } else {
@@ -218,7 +218,7 @@ class APIRequest
     /**
      * Set the request url.
      */
-    public function setUrl(null|string $url): void
+    public function setUrl(?string $url): void
     {
         $this->url = $url;
     }
@@ -226,7 +226,7 @@ class APIRequest
     /**
      * Get the request parameters.
      */
-    public function getRequestParams(): null|array
+    public function getRequestParams(): ?array
     {
         return $this->requestParams;
     }
@@ -234,7 +234,7 @@ class APIRequest
     /**
      * Set the request parameters.
      */
-    public function setRequestParams(null|array $requestParams): void
+    public function setRequestParams(?array $requestParams): void
     {
         $this->requestParams = $requestParams;
     }
@@ -242,7 +242,7 @@ class APIRequest
     /**
      * Get the request headers.
      */
-    public function getRequestHeaders(): null|array
+    public function getRequestHeaders(): ?array
     {
         return $this->requestHeaders;
     }
@@ -250,7 +250,7 @@ class APIRequest
     /**
      * Set the request headers.
      */
-    public function setRequestHeaders(null|array $requestHeaders): void
+    public function setRequestHeaders(?array $requestHeaders): void
     {
         $this->requestHeaders = $requestHeaders;
     }
@@ -298,7 +298,7 @@ class APIRequest
     /**
      * Set the API Key used in the input json data(like 'modules', 'data','layouts',..etc).
      */
-    public function setApiKey(null|string $apiKey): void
+    public function setApiKey(?string $apiKey): void
     {
         $this->apiKey = $apiKey;
     }

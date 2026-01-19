@@ -4,63 +4,63 @@ namespace zcrmsdk\oauth\utility;
 
 class ZohoOAuthParams
 {
-    private $clientId;
+    private ?string $clientId = null;
 
-    private $clientSecret;
+    private ?string $clientSecret = null;
 
-    private $redirectUrl;
+    private ?string $redirectUrl = null;
 
-    private $accessType;
+    private ?string $accessType = null;
 
-    private $scopes;
+    private ?string $scopes = null;
 
-    public function getClientId()
+    public function getClientId(): ?string
     {
         return $this->clientId;
     }
 
-    public function setClientId($clientId)
+    public function setClientId(?string $clientId): void
     {
-        return $this->clientId = $clientId;
+        $this->clientId = $clientId;
     }
 
-    public function getClientSecret()
+    public function getClientSecret(): ?string
     {
         return $this->clientSecret;
     }
 
-    public function setClientSecret($clientSecret)
+    public function setClientSecret(?string $clientSecret): void
     {
-        return $this->clientSecret = $clientSecret;
+        $this->clientSecret = $clientSecret;
     }
 
-    public function getRedirectUrl()
+    public function getRedirectURL(): ?string
     {
         return $this->redirectUrl;
     }
 
-    public function setRedirectUrl($redirectUrl)
+    public function setRedirectURL(?string $redirectUrl): void
     {
-        return $this->redirectUrl = $redirectUrl;
+        $this->redirectUrl = $redirectUrl;
     }
 
-    public function getAccessType()
+    public function getAccessType(): ?string
     {
         return $this->accessType;
     }
 
-    public function setAccessType($accessType)
+    public function setAccessType(?string $accessType): void
     {
-        return $this->accessType = $accessType;
+        $this->accessType = $accessType;
     }
 
-    public function getScopes()
+    public function getScopes(): ?string
     {
         return $this->scopes;
     }
 
-    public function setScopes($scopes)
+    public function setScopes(?string $scopes): void
     {
-        return $this->scopes = $scopes;
+        $this->scopes = $scopes;
     }
 }

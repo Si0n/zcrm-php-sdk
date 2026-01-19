@@ -20,7 +20,7 @@ class CommonAPIResponse
     /**
      * response code.
      */
-    protected null|string $code = null;
+    protected ?string $code = null;
 
     /**
      * response message.
@@ -35,9 +35,9 @@ class CommonAPIResponse
     protected array $details = [];
 
     public function __construct(
-        protected null|string $response,
-        protected null|int $httpStatusCode,
-        protected null|string $apiName = null
+        protected ?string $response,
+        protected ?int $httpStatusCode,
+        protected ?string $apiName = null
     ) {
         [$this->responseJSON, $this->responseHeaders] = self::handleCurlResponse($this->response, $this->httpStatusCode);
         $this->processResponse();
@@ -69,7 +69,7 @@ class CommonAPIResponse
     {
     }
 
-    public static function handleCurlResponse(string $curlResponse, null|int $statusCode): array
+    public static function handleCurlResponse(string $curlResponse, ?int $statusCode): array
     {
         if (in_array($statusCode, [APIConstants::RESPONSECODE_NO_CONTENT, APIConstants::RESPONSECODE_NOT_MODIFIED])) {
             return [[], []];
@@ -102,7 +102,7 @@ class CommonAPIResponse
      *
      * @param int $statusCode the http status code
      */
-    public function setHttpStatusCode(null|int $statusCode): void
+    public function setHttpStatusCode(?int $statusCode): void
     {
         $this->httpStatusCode = $statusCode;
     }
@@ -122,7 +122,7 @@ class CommonAPIResponse
      *
      * @return array array contaions the json response in key-value format
      */
-    public function getResponseJSON()
+    public function getResponseJSON(): array
     {
         return $this->responseJSON;
     }
@@ -152,7 +152,7 @@ class CommonAPIResponse
      *
      * @return string expiry time if the access token in iso8601 format
      */
-    public function getExpiryTimeOfAccessToken(): null|string
+    public function getExpiryTimeOfAccessToken(): ?string
     {
         return $this->responseHeaders[APIConstants::ACCESS_TOKEN_EXPIRY] ?? null;
     }
@@ -162,7 +162,7 @@ class CommonAPIResponse
      *
      * @return int the api limit for the current window
      */
-    public function getAPILimitForCurrentWindow(): null|int
+    public function getAPILimitForCurrentWindow(): ?int
     {
         return $this->responseHeaders[APIConstants::CURR_WINDOW_API_LIMIT] ?? null;
     }
@@ -172,7 +172,7 @@ class CommonAPIResponse
      *
      * @return string the remaining api count for the current window
      */
-    public function getRemainingAPICountForCurrentWindow(): null|string
+    public function getRemainingAPICountForCurrentWindow(): ?string
     {
         return $this->responseHeaders[APIConstants::CURR_WINDOW_REMAINING_API_COUNT] ?? null;
     }
@@ -182,7 +182,7 @@ class CommonAPIResponse
      *
      * @return int the reset time of the current window in milli seconds
      */
-    public function getCurrentWindowResetTimeInMillis(): null|int
+    public function getCurrentWindowResetTimeInMillis(): ?int
     {
         return $this->responseHeaders[APIConstants::CURR_WINDOW_RESET] ?? null;
     }
@@ -192,7 +192,7 @@ class CommonAPIResponse
      *
      * @return int the remaining api count for the day
      */
-    public function getRemainingAPICountForTheDay(): null|int
+    public function getRemainingAPICountForTheDay(): ?int
     {
         return $this->responseHeaders[APIConstants::API_COUNT_REMAINING_FOR_THE_DAY] ?? null;
     }
@@ -202,7 +202,7 @@ class CommonAPIResponse
      *
      * @return string the api limit of the day
      */
-    public function getAPILimitForTheDay(): null|string
+    public function getAPILimitForTheDay(): ?string
     {
         return $this->responseHeaders[APIConstants::API_LIMIT_FOR_THE_DAY] ?? null;
     }
@@ -223,7 +223,7 @@ class CommonAPIResponse
      * @param string $code
      *                     the response code like SUCCESS,INVALID_DATA,..etc
      */
-    public function setCode(null|string $code): void
+    public function setCode(?string $code): void
     {
         $this->code = $code;
     }
@@ -263,7 +263,7 @@ class CommonAPIResponse
      * @param array $details
      *                       array containing the extra details of the response
      */
-    public function setDetails(null|array $details): void
+    public function setDetails(?array $details): void
     {
         $this->details = $details ?? [];
     }
@@ -284,7 +284,7 @@ class CommonAPIResponse
      * @param string $response
      *                         the entire response
      */
-    public function setResponse(null|string $response): void
+    public function setResponse(?string $response): void
     {
         $this->response = $response;
     }
