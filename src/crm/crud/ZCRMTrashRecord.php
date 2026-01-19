@@ -8,24 +8,18 @@ class ZCRMTrashRecord
 {
     /**
      * trash record id.
-     *
-     * @var string
      */
-    private $entityId;
+    private ?string $entityId = null;
 
     /**
      * trash record display name.
-     *
-     * @var string
      */
-    private $displayName;
+    private ?string $displayName = null;
 
     /**
      * trash record type.
-     *
-     * @var string
      */
-    private $type;
+    private ?string $type = null;
 
     /**
      * trash record delete time.
@@ -54,7 +48,7 @@ class ZCRMTrashRecord
      * @param string $type trash record type
      * @param string $id   trash record id
      */
-    private function __construct($type, $id)
+    private function __construct(string $type, ?string $id = null)
     {
         $this->type = $type;
         $this->entityId = $id;
@@ -68,7 +62,7 @@ class ZCRMTrashRecord
      *
      * @return ZCRMTrashRecord instance of the ZCRMTrashRecord
      */
-    public static function getInstance($type, $id = null)
+    public static function getInstance(string $type, ?string $id = null): ZCRMTrashRecord
     {
         return new ZCRMTrashRecord($type, $id);
     }

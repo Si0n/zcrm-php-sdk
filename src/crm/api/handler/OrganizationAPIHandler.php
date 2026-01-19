@@ -442,7 +442,7 @@ class OrganizationAPIHandler extends APIHandler
         return $orgTaxJson;
     }
 
-    public function constructJSONForUser($userInstanceArray): bool|string
+    public function constructJSONForUser($userInstanceArray): bool | string
     {
         $userArray = [];
         foreach ($userInstanceArray as $user) {
@@ -803,7 +803,7 @@ class OrganizationAPIHandler extends APIHandler
 
     public function getZCRMUser($userDetails): ZCRMUser
     {
-        $userInstance = ZCRMUser::getInstance($userDetails['id'], isset($userDetails['name']) ? $userDetails['name'] : null);
+        $userInstance = ZCRMUser::getInstance($userDetails['id'], $userDetails['name'] ?? null);
         $userInstance->setCountry($userDetails['country'] ?? null);
         $roleInstance = ZCRMRole::getInstance($userDetails['role']['id'], $userDetails['role']['name']);
         $userInstance->setRole($roleInstance);

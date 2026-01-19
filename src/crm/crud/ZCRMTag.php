@@ -9,23 +9,23 @@ use zcrmsdk\crm\setup\users\ZCRMUser;
 
 class ZCRMTag
 {
-    private null|ZCRMUser $createdBy = null;
+    private ?ZCRMUser $createdBy = null;
 
-    private null|string $createdTime = null;
+    private ?string $createdTime = null;
 
-    private null|ZCRMUser $modifiedBy = null;
+    private ?ZCRMUser $modifiedBy = null;
 
-    private null|string $modifiedTime = null;
+    private ?string $modifiedTime = null;
 
     /**
      * number of record tagged.
      */
-    private null|int $count = null;
+    private ?int $count = null;
 
     /**
      * api name of the module to which the tag belongs.
      */
-    private null|string $moduleAPIName = null;
+    private ?string $moduleAPIName = null;
 
     /**
      * constructor to assign tag id and module api name to the tag.
@@ -33,7 +33,7 @@ class ZCRMTag
      * @param string $id   tag id
      * @param string $name tag name
      */
-    private function __construct(protected null|string $id, protected null|string $name)
+    private function __construct(protected ?string $id, protected ?string $name)
     {
     }
 
@@ -45,7 +45,7 @@ class ZCRMTag
      *
      * @return ZCRMTag instance of the ZCRMTag class
      */
-    public static function getInstance(null|string $id = null, null|string $name = null): ZCRMTag
+    public static function getInstance(?string $id = null, ?string $name = null): ZCRMTag
     {
         return new ZCRMTag($id, $name);
     }
@@ -65,7 +65,7 @@ class ZCRMTag
      *
      * @param string $id the tag id
      */
-    public function setId(null|string $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id;
     }
@@ -85,7 +85,7 @@ class ZCRMTag
      *
      * @param string $name the tag name
      */
-    public function setName(null|string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
@@ -105,7 +105,7 @@ class ZCRMTag
      *
      * @param ZCRMUser $createdBy instance of the ZCRMUser class
      */
-    public function setCreatedBy(null|ZCRMUser $createdBy): void
+    public function setCreatedBy(?ZCRMUser $createdBy): void
     {
         $this->createdBy = $createdBy;
     }
@@ -125,7 +125,7 @@ class ZCRMTag
      *
      * @param ZCRMUser $modifiedBy instance of the ZCRMUser class
      */
-    public function setModifiedBy(null|ZCRMUser $modifiedBy): void
+    public function setModifiedBy(?ZCRMUser $modifiedBy): void
     {
         $this->modifiedBy = $modifiedBy;
     }
@@ -145,7 +145,7 @@ class ZCRMTag
      *
      * @param string $createdTime creation time in iso 8601 format
      */
-    public function setCreatedTime(null|string $createdTime): void
+    public function setCreatedTime(?string $createdTime): void
     {
         $this->createdTime = $createdTime;
     }
@@ -165,7 +165,7 @@ class ZCRMTag
      *
      * @param string $modifiedTime modification time in iso 8601 format
      */
-    public function setModifiedTime(null|string $modifiedTime): void
+    public function setModifiedTime(?string $modifiedTime): void
     {
         $this->modifiedTime = $modifiedTime;
     }
@@ -185,7 +185,7 @@ class ZCRMTag
      *
      * @param int $count record count of the tag
      */
-    public function setCount(null|int $count): void
+    public function setCount(?int $count): void
     {
         $this->count = $count;
     }
@@ -203,7 +203,7 @@ class ZCRMTag
     /**
      * method to set the module api name of the module to which tag belongs.
      */
-    public function setModuleAPIName(null|string $moduleAPIName): void
+    public function setModuleAPIName(?string $moduleAPIName): void
     {
         $this->moduleAPIName = $moduleAPIName;
     }
@@ -211,9 +211,9 @@ class ZCRMTag
     /**
      * method to delete the tag.
      *
-     * @return APIResponse instance of the APIResponse class containing the api response
-     *
      * @throws ZCRMException if tag is invalid
+     *
+     * @return APIResponse instance of the APIResponse class containing the api response
      */
     public function delete(): APIResponse
     {
@@ -229,9 +229,9 @@ class ZCRMTag
      *
      * @param ZCRMTag $tag tag to be merged with
      *
-     * @return APIResponse instance of the APIResponse class containing the api response
-     *
      * @throws ZCRMException if tags are invalid
+     *
+     * @return APIResponse instance of the APIResponse class containing the api response
      */
     public function merge(ZCRMTag $tag): APIResponse
     {
@@ -248,9 +248,9 @@ class ZCRMTag
     /**
      * method to update the tag.
      *
-     * @return APIResponse instance of the APIResponse class containing the api response
-     *
      * @throws ZCRMException if the tag id , tag name or the ,odule api name is invalid
+     *
+     * @return APIResponse instance of the APIResponse class containing the api response
      */
     public function update(): APIResponse
     {

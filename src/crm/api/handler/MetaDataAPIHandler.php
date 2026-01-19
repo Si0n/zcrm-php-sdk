@@ -229,7 +229,7 @@ class MetaDataAPIHandler extends APIHandler
      * Input:: custom view details as array
      * Returns ZCRMCustomView instance.
      */
-    public function getZCRMCustomView(null|string $moduleApiName, array $customViewDetails, $categoriesArr = null): ZCRMCustomView
+    public function getZCRMCustomView(?string $moduleApiName, array $customViewDetails, $categoriesArr = null): ZCRMCustomView
     {
         $customViewInstance = ZCRMCustomView::getInstance($moduleApiName, $customViewDetails['id']);
         $customViewInstance->setDisplayValue($customViewDetails['display_value']);

@@ -16,87 +16,87 @@ class ZCRMModule
     /**
      * convertable module.
      */
-    private null|bool $convertable = null;
+    private ?bool $convertable = null;
 
     /**
      * creatable module.
      */
-    private null|bool $creatable = null;
+    private ?bool $creatable = null;
 
     /**
      * editable module.
      */
-    private null|bool $editable = null;
+    private ?bool $editable = null;
 
     /**
      * deletable module.
      */
-    private null|bool $deletable = null;
+    private ?bool $deletable = null;
 
     /**
      * weblink of the webtab.
      */
-    private null|string $webLink = null;
+    private ?string $webLink = null;
 
     /**
      * singular label name of the module.
      */
-    private null|string $singularLabel = null;
+    private ?string $singularLabel = null;
 
     /**
      * plural label name of the module.
      */
-    private null|string $pluralLabel = null;
+    private ?string $pluralLabel = null;
 
     /**
      * the user who modified the module.
      */
-    private null|ZCRMUser $modifiedBy = null;
+    private ?ZCRMUser $modifiedBy = null;
 
     /**
      * modification time of the moduel.
      */
-    private null|string $modifiedTime = null;
+    private ?string $modifiedTime = null;
 
     /**
      * viewable module.
      */
-    private null|bool $viewable = null;
+    private ?bool $viewable = null;
 
     /**
      * api supported module.
      */
-    private null|bool $apiSupported = null;
+    private ?bool $apiSupported = null;
 
     /**
      * custom module.
      */
-    private null|bool $customModule = null;
+    private ?bool $customModule = null;
 
     /**
      * scoring supported module.
      */
-    private null|bool $scoringSupported = null;
+    private ?bool $scoringSupported = null;
 
     /**
      * module id.
      */
-    private null|string $id = null;
+    private ?string $id = null;
 
     /**
      * module display name.
      */
-    private null|string $moduleName = null;
+    private ?string $moduleName = null;
 
     /**
      * business card field limit.
      */
-    private null|int $businessCardFieldLimit = null;
+    private ?int $businessCardFieldLimit = null;
 
     /**
      * module api name.
      */
-    private null|string $apiName = null;
+    private ?string $apiName = null;
 
     /**
      * api names of the fields supported.
@@ -113,12 +113,12 @@ class ZCRMModule
     /**
      * display field name of the module.
      */
-    private null|string $displayFieldName = null;
+    private ?string $displayFieldName = null;
 
     /**
      * id of the display field of the module.
      */
-    private null|string $displayFieldId = null;
+    private ?string $displayFieldId = null;
 
     /**
      * related list of the module.
@@ -1028,9 +1028,11 @@ class ZCRMModule
      *
      * @param string $entityId record id
      *
+     * @throws ZCRMException
+     *
      * @return APIResponse instance of the APIResponse class which holds the API response
      */
-    public function getRecord($entityId, $param_map = [], $header_map = [])
+    public function getRecord(string $entityId, array $param_map = [], array $header_map = []): APIResponse
     {
         $record = ZCRMRecord::getInstance($this->apiName, $entityId);
 
@@ -1043,9 +1045,11 @@ class ZCRMModule
      ** @param array  $param_map key-value pair containing parameter names and the value
      * @param array $header_map key-value pair containing header names and the value
      *
+     * @throws ZCRMException
+     *
      * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
      */
-    public function getRecords($param_map = [], $header_map = [])
+    public function getRecords(array $param_map = [], array $header_map = []): BulkAPIResponse
     {
         return MassEntityAPIHandler::getInstance($this)->getRecords($param_map, $header_map);
     }
@@ -1056,9 +1060,11 @@ class ZCRMModule
      * @param string $searchWord word to be searched
      * @param array  $param_map  key-value pairs containing parameters
      *
+     * @throws ZCRMException
+     *
      * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
      */
-    public function searchRecordsByWord($searchWord, $param_map = [])
+    public function searchRecordsByWord(string $searchWord, array $param_map = []): BulkAPIResponse
     {
         return MassEntityAPIHandler::getInstance($this)->searchRecords($param_map, 'word', $searchWord);
     }
@@ -1069,9 +1075,11 @@ class ZCRMModule
      * @param int   $phone     phone number to be searched
      * @param array $param_map key-value pairs containing parameters
      *
+     * @throws ZCRMException
+     *
      * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
      */
-    public function searchRecordsByPhone($phone, $param_map = [])
+    public function searchRecordsByPhone(string $phone, array $param_map = []): BulkAPIResponse
     {
         return MassEntityAPIHandler::getInstance($this)->searchRecords($param_map, 'phone', $phone);
     }
@@ -1082,9 +1090,11 @@ class ZCRMModule
      * @param string $email     email id to be searched
      * @param array  $param_map key-value pairs containing parameters
      *
+     * @throws ZCRMException
+     *
      * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
      */
-    public function searchRecordsByEmail($email, $param_map = [])
+    public function searchRecordsByEmail(string $email, array $param_map = []): BulkAPIResponse
     {
         return MassEntityAPIHandler::getInstance($this)->searchRecords($param_map, 'email', $email);
     }
@@ -1095,9 +1105,11 @@ class ZCRMModule
      * @param string $criteria  criteria of search
      * @param array  $param_map key-value pairs containing parameters
      *
+     * @throws ZCRMException
+     *
      * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
      */
-    public function searchRecordsByCriteria($criteria, $param_map = [])
+    public function searchRecordsByCriteria(mixed $criteria, array $param_map = []): BulkAPIResponse
     {
         return MassEntityAPIHandler::getInstance($this)->searchRecords($param_map, 'criteria', $criteria);
     }
@@ -1109,62 +1121,43 @@ class ZCRMModule
      * @param string $fieldApiName field api name of the field
      * @param string $value        updated value
      *
+     * @throws ZCRMException
+     *
      * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
      */
-    public function massUpdateRecords($entityIds, $fieldApiName, $value)
+    public function massUpdateRecords(array $entityIds, array $fieldApiName, mixed $value)
     {
         return MassEntityAPIHandler::getInstance($this)->massUpdateRecords($entityIds, $fieldApiName, $value);
     }
 
     /**
-     * method to update the records in the module.
-     *
-     * @param array  $records array of instances of ZCRMRecord class
-     * @param string $trigger array of triggers
-     *
-     * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
+     * @throws ZCRMException
      */
-    public function updateRecords($records, $trigger = null, $process = null)
+    public function updateRecords(array $records, ?array $trigger = null): BulkAPIResponse
     {
-        return MassEntityAPIHandler::getInstance($this)->updateRecords($records, $trigger, $process);
+        return MassEntityAPIHandler::getInstance($this)->updateRecords($records, $trigger);
     }
 
     /**
-     * method to create the records in the module.
-     *
-     * @param array  $records array of instances of ZCRMRecord class
-     * @param string $trigger array of triggers
-     * @param string $lar_id  lead assignment rule id
-     *
-     * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
+     * @throws ZCRMException
      */
-    public function createRecords($records, $trigger = null, $lar_id = null, $process = null)
+    public function createRecords(array $records, ?array $trigger = null, ?string $lar_id = null, ?string $layoutId = null): BulkAPIResponse
     {
-        return MassEntityAPIHandler::getInstance($this)->createRecords($records, $trigger, $lar_id, $process);
+        return MassEntityAPIHandler::getInstance($this)->createRecords($records, $trigger, $lar_id, $layoutId);
     }
 
     /**
-     * method to upsert the records of the module.
-     *
-     * @param array  $records array of instances of ZCRMRecord class
-     * @param string $trigger array of triggers
-     * @param string $lar_id  lead assignment rule id
-     *
-     * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
+     * @throws ZCRMException
      */
-    public function upsertRecords($records, $trigger = null, $lar_id = null, $duplicate_check_fields = null, $process = null)
+    public function upsertRecords(array $records, ?array $trigger = null, ?string $lar_id = null, ?array $duplicate_check_fields = null): BulkAPIResponse
     {
-        return MassEntityAPIHandler::getInstance($this)->upsertRecords($records, $trigger, $lar_id, $duplicate_check_fields, $process);
+        return MassEntityAPIHandler::getInstance($this)->upsertRecords($records, $trigger, $lar_id, $duplicate_check_fields);
     }
 
     /**
-     * method to delete the records of the module.
-     *
-     * @param array $entityIds array of record ids of the records in the module
-     *
-     * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
+     * @throws ZCRMException
      */
-    public function deleteRecords($entityIds)
+    public function deleteRecords(array $entityIds): BulkAPIResponse
     {
         return MassEntityAPIHandler::getInstance($this)->deleteRecords($entityIds);
     }
@@ -1175,9 +1168,11 @@ class ZCRMModule
      * @param array $param_map  key-value pairs containing parameters
      * @param array $header_map key-value pairs containing headers
      *
+     * @throws ZCRMException
+     *
      * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
      */
-    public function getAllDeletedRecords($param_map = [], $header_map = [])
+    public function getAllDeletedRecords(array $param_map = [], array $header_map = []): BulkAPIResponse
     {
         return MassEntityAPIHandler::getInstance($this)->getAllDeletedRecords($param_map, $header_map);
     }
@@ -1188,22 +1183,19 @@ class ZCRMModule
      * @param array $param_map  key-value pairs containing parameters
      * @param array $header_map key-value pairs containing headers
      *
+     * @throws ZCRMException
+     *
      * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
      */
-    public function getRecycleBinRecords($param_map = [], $header_map = [])
+    public function getRecycleBinRecords(array $param_map = [], array $header_map = []): BulkAPIResponse
     {
         return MassEntityAPIHandler::getInstance($this)->getRecycleBinRecords($param_map, $header_map);
     }
 
     /**
-     * method to get the permanently deleted records of the module.
-     *
-     * @param array $param_map  key-value pairs containing parameters
-     * @param array $header_map key-value pairs containing headers
-     *
-     * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
+     * @throws ZCRMException
      */
-    public function getPermanentlyDeletedRecords($param_map = [], $header_map = [])
+    public function getPermanentlyDeletedRecords(array $param_map = [], array $header_map = []): BulkAPIResponse
     {
         return MassEntityAPIHandler::getInstance($this)->getPermanentlyDeletedRecords($param_map, $header_map);
     }
@@ -1211,11 +1203,11 @@ class ZCRMModule
     /**
      * method to get the tags of the module.
      *
-     * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
+     * @throws ZCRMException if the module api name is invalid
      *
-     * @throws ZCRMException ifthe module api name is invalid
+     * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
      */
-    public function getTags()
+    public function getTags(): BulkAPIResponse
     {
         if (null == $this->apiName || '' == $this->apiName) {
             throw new ZCRMException('Module Api Name MUST NOT be null/empty for getTags operation');
@@ -1227,22 +1219,22 @@ class ZCRMModule
     /**
      * method to get the tag count of the module.
      *
-     * @param string $tagid tag id of the tag
-     *
-     * @return APIResponse instance of the APIResponse class which holds the API response
+     * @param string $tagId tag id of the tag
      *
      * @throws ZCRMException if the tag id and the module api name is invalid
+     *
+     * @return APIResponse instance of the APIResponse class which holds the API response
      */
-    public function getTagCount($tagid)
+    public function getTagCount(?string $tagId): APIResponse
     {
         if (null == $this->apiName || '' == $this->apiName) {
             throw new ZCRMException('Module Api Name MUST NOT be null/empty for getTagCount operation');
         }
-        if (null == $tagid || 0 == $tagid) {
+        if (null == $tagId || 0 == $tagId) {
             throw new ZCRMException('Tag ID MUST NOT be null/empty for getTagCount operation');
         }
 
-        return TagAPIHandler::getInstance($this)->getTagCount($tagid);
+        return TagAPIHandler::getInstance($this)->getTagCount($tagId);
     }
 
     /**
@@ -1250,16 +1242,16 @@ class ZCRMModule
      *
      * @param array $tags array of ZCRMTag instances
      *
-     * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
-     *
      * @throws ZCRMException if the tag object array or the module api name is invalid
+     *
+     * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
      */
-    public function createTags($tags)
+    public function createTags(array $tags): BulkAPIResponse
     {
         if (null == $this->apiName || '' == $this->apiName) {
             throw new ZCRMException('Module Api Name MUST NOT be null/empty for createTags operation');
         }
-        if (sizeof($tags) <= 0) {
+        if (count($tags) <= 0) {
             throw new ZCRMException('Tag object list MUST NOT be null/empty for createTags operation');
         }
 
@@ -1271,16 +1263,16 @@ class ZCRMModule
      *
      * @param array $tags array of ZCRMTag instances
      *
-     * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
-     *
      * @throws ZCRMException if the tag object array or the module api name is invalid
+     *
+     * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
      */
-    public function updateTags($tags)
+    public function updateTags(array $tags): BulkAPIResponse
     {
         if (null == $this->apiName || '' == $this->apiName) {
             throw new ZCRMException('Module Api Name MUST NOT be null/empty for updateTags operation');
         }
-        if (sizeof($tags) <= 0) {
+        if (count($tags) <= 0) {
             throw new ZCRMException('Tag object list MUST NOT be null/empty for updateTags operation');
         }
 
@@ -1293,19 +1285,19 @@ class ZCRMModule
      * @param array $recordIds array of record ids of the records in the module
      * @param array $tagNames  array of tag names
      *
-     * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
-     *
      * @throws ZCRMException if the module api name or tag name list or record ID list is invalid
+     *
+     * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
      */
-    public function addTagsToRecords($recordIds, $tagNames)
+    public function addTagsToRecords(array $recordIds, array $tagNames): BulkAPIResponse
     {
         if (null == $this->apiName || '' == $this->apiName) {
             throw new ZCRMException('Module Api Name MUST NOT be null/empty for Add Tags to Multiple records operation');
         }
-        if (sizeof($tagNames) <= 0) {
+        if (count($tagNames) <= 0) {
             throw new ZCRMException('Tag Name list MUST NOT be null/empty for Add Tags to Multiple records operation');
         }
-        if (sizeof($recordIds) <= 0) {
+        if (count($recordIds) <= 0) {
             throw new ZCRMException('Record ID list MUST NOT be null/empty for Add Tags to Multiple records operation');
         }
 
@@ -1318,19 +1310,19 @@ class ZCRMModule
      * @param array $recordIds array of record ids of the records in the module
      * @param array $tagNames  array of tag names
      *
-     * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
-     *
      * @throws ZCRMException if the module api name or tag name list or record ID list is invalid
+     *
+     * @return BulkAPIResponse instance of the BulkAPIResponse class which holds the Bulk API response
      */
-    public function removeTagsFromRecords($recordIds, $tagNames)
+    public function removeTagsFromRecords(array $recordIds, array $tagNames): BulkAPIResponse
     {
         if (null == $this->apiName || '' == $this->apiName) {
             throw new ZCRMException('Module Api Name MUST NOT be null/empty for Remove Tags from Multiple records operation');
         }
-        if (sizeof($tagNames) <= 0) {
+        if (count($tagNames) <= 0) {
             throw new ZCRMException('Tag Name list MUST NOT be null/empty for Remove Tags from Multiple records operation');
         }
-        if (sizeof($recordIds) <= 0) {
+        if (count($recordIds) <= 0) {
             throw new ZCRMException('Record ID list MUST NOT be null/empty for Remove Tags from Multiple records operation');
         }
 

@@ -19,7 +19,6 @@ use zcrmsdk\crm\utility\APIConstants;
 
 class EntityAPIHandler extends APIHandler
 {
-
     private function __construct(protected ZCRMRecord $record)
     {
     }
@@ -58,7 +57,7 @@ class EntityAPIHandler extends APIHandler
         }
     }
 
-    public function createRecord(?array $trigger, ?string $lar_id, ?array $process): APIResponse
+    public function createRecord(?array $trigger, ?string $lar_id, ?string $layoutId = null): APIResponse
     {
         try {
             if (null != $this->record->getEntityId()) {
@@ -74,11 +73,11 @@ class EntityAPIHandler extends APIHandler
             if (is_array($trigger)) {
                 $requestBodyObj['trigger'] = $trigger;
             }
-            if (null !== $lar_id) {
+            if (!empty($lar_id)) {
                 $requestBodyObj['lar_id'] = $lar_id;
             }
-            if (is_array($process)) {
-                $requestBodyObj['process'] = $process;
+            if (!empty($layoutId)) {
+                $requestBodyObj['Layout'] = ['id' => $layoutId];
             }
 
             $this->requestBody = json_encode($requestBodyObj);

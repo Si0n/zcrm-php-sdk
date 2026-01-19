@@ -183,7 +183,7 @@ class RelatedListAPIHandler extends APIHandler
             $responseInstance = APIRequest::getInstance($this)->getAPIResponse();
             $responseJSON = $responseInstance->getResponseJSON();
             $responseData = $responseJSON['data'][0];
-            $responseDetails = isset($responseData['details']) ? $responseData['details'] : [];
+            $responseDetails = $responseData['details'] ?? [];
             $zcrmNote = self::getZCRMNote($responseDetails, $zcrmNote);
 
             $responseInstance->setData($zcrmNote);
@@ -211,7 +211,7 @@ class RelatedListAPIHandler extends APIHandler
             $responseInstance = APIRequest::getInstance($this)->getAPIResponse();
             $responseJSON = $responseInstance->getResponseJSON();
             $responseData = $responseJSON['data'][0];
-            $responseDetails = isset($responseData['details']) ? $responseData['details'] : [];
+            $responseDetails = $responseData['details'] ?? [];
             $zcrmNote = self::getZCRMNote($responseDetails, $zcrmNote);
             $responseInstance->setData($zcrmNote);
 
@@ -363,9 +363,9 @@ class RelatedListAPIHandler extends APIHandler
         if (null == $noteIns) {
             $noteIns = ZCRMNote::getInstance($this->parentRecord, $noteDetails['id']);
         }
-        $noteIns->setId(isset($noteDetails['id']) ? $noteDetails['id'] : null);
-        $noteIns->setTitle(isset($noteDetails['Note_Title']) ? $noteDetails['Note_Title'] : null);
-        $noteIns->setContent(isset($noteDetails['Note_Content']) ? $noteDetails['Note_Content'] : null);
+        $noteIns->setId($noteDetails['id'] ?? null);
+        $noteIns->setTitle($noteDetails['Note_Title'] ?? null);
+        $noteIns->setContent($noteDetails['Note_Content'] ?? null);
         if (isset($noteDetails['Owner'])) {
             $ownerObj = $noteDetails['Owner'];
             $ownerIns = ZCRMUser::getInstance($ownerObj['id'], $ownerObj['name']);
@@ -377,15 +377,15 @@ class RelatedListAPIHandler extends APIHandler
         $modifiedByObj = $noteDetails['Modified_By'];
         $modifiedBy = ZCRMUser::getInstance($modifiedByObj['id'], $modifiedByObj['name']);
         $noteIns->setModifiedBy($modifiedBy);
-        $noteIns->setCreatedTime(isset($noteDetails['Created_Time']) ? $noteDetails['Created_Time'] : null);
-        $noteIns->setModifiedTime(isset($noteDetails['Modified_Time']) ? $noteDetails['Modified_Time'] : null);
+        $noteIns->setCreatedTime($noteDetails['Created_Time'] ?? null);
+        $noteIns->setModifiedTime($noteDetails['Modified_Time'] ?? null);
         if (isset($noteDetails['$voice_note'])) {
             $noteIns->setVoiceNote($noteDetails['$voice_note']);
         }
         if (isset($noteDetails['$se_module'])) {
             $noteIns->setParentModule($noteDetails['$se_module']);
         }
-        $parentDetails = isset($noteDetails['Parent_Id']) ? $noteDetails['Parent_Id'] : null;
+        $parentDetails = $noteDetails['Parent_Id'] ?? null;
         if (null != $parentDetails) {
             if (isset($parentDetails['id'])) {
                 $noteIns->setParentId($parentDetails['id']);
