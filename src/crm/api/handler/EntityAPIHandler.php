@@ -57,7 +57,7 @@ class EntityAPIHandler extends APIHandler
         }
     }
 
-    public function createRecord(?array $trigger, ?string $lar_id, ?string $layoutId = null): APIResponse
+    public function createRecord(?array $trigger, ?string $lar_id): APIResponse
     {
         try {
             if (null != $this->record->getEntityId()) {
@@ -75,9 +75,6 @@ class EntityAPIHandler extends APIHandler
             }
             if (!empty($lar_id)) {
                 $requestBodyObj['lar_id'] = $lar_id;
-            }
-            if (!empty($layoutId)) {
-                $requestBodyObj['Layout'] = ['id' => $layoutId];
             }
 
             $this->requestBody = json_encode($requestBodyObj);
@@ -278,8 +275,8 @@ class EntityAPIHandler extends APIHandler
         if (null != $this->record->getOwner()) {
             $recordJSON['Owner'] = '' . $this->record->getOwner()->getId();
         }
-        if (null != $this->record->getLayout()) {
-            $recordJSON['Layout'] = '' . $this->record->getLayout()->getId();
+        if (null !== $this->record->getLayout()) {
+            $recordJSON['Layout'] = ['id' => (string) $this->record->getLayout()->getId()];
         }
         foreach ($apiNameVsValues as $key => $value) {
             if ($value instanceof ZCRMRecord) {

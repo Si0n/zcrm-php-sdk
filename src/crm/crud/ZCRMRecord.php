@@ -527,8 +527,11 @@ class ZCRMRecord
 
             throw $exception;
         }
+        if ($layoutId) {
+            $this->setLayout(ZCRMLayout::getInstance($layoutId));
+        }
 
-        return EntityAPIHandler::getInstance($this)->createRecord($trigger, $lar_id, $layoutId);
+        return EntityAPIHandler::getInstance($this)->createRecord($trigger, $lar_id);
     }
 
     /**

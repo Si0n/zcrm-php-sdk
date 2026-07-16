@@ -4,6 +4,7 @@ namespace zcrmsdk\crm\api\handler;
 
 use zcrmsdk\crm\api\APIRequest;
 use zcrmsdk\crm\api\response\BulkAPIResponse;
+use zcrmsdk\crm\crud\ZCRMLayout;
 use zcrmsdk\crm\crud\ZCRMModule;
 use zcrmsdk\crm\crud\ZCRMRecord;
 use zcrmsdk\crm\crud\ZCRMTrashRecord;
@@ -36,9 +37,13 @@ class MassEntityAPIHandler extends APIHandler
         $this->addHeader('Content-Type', 'application/json');
         $requestBodyObj = [];
         $dataArray = [];
+        /** @var ZCRMRecord $record */
         foreach ($records as $record) {
             if (null !== $record->getEntityId()) {
                 throw new ZCRMException('Entity ID MUST be null for create operation.', APIConstants::RESPONSECODE_BAD_REQUEST);
+            }
+            if ($layoutId) {
+                $record->setLayout(ZCRMLayout::getInstance($layoutId));
             }
             $dataArray[] = EntityAPIHandler::getInstance($record)->getZCRMRecordAsJSON();
         }
@@ -48,9 +53,6 @@ class MassEntityAPIHandler extends APIHandler
         }
         if (!empty($lar_id)) {
             $requestBodyObj['lar_id'] = $lar_id;
-        }
-        if (!empty($layoutId)) {
-            $requestBodyObj['Layout'] = ['id' => $layoutId];
         }
 
         $this->setRequestBody($requestBodyObj);
